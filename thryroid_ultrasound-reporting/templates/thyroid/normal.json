@@ -1,0 +1,26 @@
+{
+    "thyroid": {
+      "overallSize": "Normal",
+      "echotexture": "Homogeneous",
+      "vascularity": "Normal",
+      "rightLobeD1": "15",
+      "rightLobeD2": "14",
+      "rightLobeD3": "45",
+      "rightLobeVolume": "5.0",
+      "rightLobeFindings": "Normal size and echotexture. No focal lesions.",
+      "leftLobeD1": "14",
+      "leftLobeD2": "13",
+      "leftLobeD3": "44",
+      "leftLobeVolume": "4.2",
+      "leftLobeFindings": "Normal size and echotexture. No focal lesions.",
+      "isthmusThickness": "3",
+      "isthmusFindings": "Normal thickness.",
+      "lesions": [],
+      "lymphNodes": "No suspicious cervical lymphadenopathy.",
+      "impression": "Normal thyroid ultrasound."
+    },
+    "metadata": {
+      "name": "Normal Thyroid Example",
+      "source": "File Template"
+    }
+  }

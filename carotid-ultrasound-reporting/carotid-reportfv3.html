@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carotid Ultrasound Report / Báo cáo Siêu âm Động mạch Cảnh</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Carotid Ultrasound Report / Báo cáo Siêu âm Động mạch Cảnh</h1>
+        <p>Today's Date: <span id="current-date"></span></p>
+
+        <div class="toolbar">
+             <div class="template-controls">
+                <div class="template-name-group">
+                    <label for="template-name" data-en="Save As:" data-vi="Lưu với tên:">Save As:</label>
+                    <input type="text" id="template-name" placeholder="Enter template name...">
+                    <button id="save-template-btn" class="icon-btn" title="Save current form as template">
+                        <i class="fas fa-save"></i>
+                    </button>
+                </div>
+
+                <div class="template-load-group">
+                    <label for="template-dropdown" data-en="Load:" data-vi="Tải mẫu:">Load:</label>
+                    <select id="template-dropdown">
+                        <option value="" data-en="-- Select Template --" data-vi="-- Chọn Mẫu --">-- Select Template --</option>
+                         <optgroup label="Presets"></optgroup>
+                         <optgroup label="My Templates"></optgroup>
+                    </select>
+                    <button id="delete-template-btn" class="icon-btn danger-icon" title="Delete selected user template">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+            </div>
+             <div class="io-controls">
+                 <button id="export-template-btn" class="icon-btn" title="Export current form as JSON">
+                     <i class="fas fa-file-export"></i>
+                 </button>
+                 <label for="import-template-file" class="icon-btn" title="Import template from JSON">
+                     <i class="fas fa-file-import"></i>
+                     <input type="file" id="import-template-file" accept=".json" style="display: none;">
+                 </label>
+             </div>
+            <div class="language-switcher">
+                <button id="lang-en" class="active">English</button>
+                <button id="lang-vi">Tiếng Việt</button>
+            </div>
+        </div>
+
+        <div class="tab-container">
+            <div class="tab-nav">
+                <button class="tab-button active" data-tab="patient-info-tab" data-en="Patient Info" data-vi="Thông tin BN">Patient Info</button>
+                <button class="tab-button" data-tab="carotid-assessment-tab" data-en="Carotid Assessment" data-vi="Khảo sát ĐM Cảnh">Carotid Assessment</button>
+                <button class="tab-button" data-tab="images-tab" data-en="Images" data-vi="Hình ảnh">Images</button>
+                <button class="tab-button" data-tab="report-preview-tab" data-en="Report Preview" data-vi="Xem trước">Report Preview</button>
+            </div>
+
+            <div id="patient-info-tab" class="tab-content active">
+                <div class="section"> <h2 data-en="Patient Information" data-vi="Thông tin bệnh nhân">Patient Information</h2>
+                    <form id="patient-info-form" class="input-form">
+                         <div class="form-row">
+                            <div class="form-group">
+                                <label for="patient-id" data-en="Patient ID / Mã BN:" data-vi="Mã BN / Patient ID:">Patient ID / Mã BN:</label>
+                                <input type="text" id="patient-id" name="patientId">
+                            </div>
+                            <div class="form-group">
+                                <label for="patient-name" data-en="Patient Name / Tên BN:" data-vi="Tên BN / Patient Name:">Patient Name / Tên BN:</label>
+                                <input type="text" id="patient-name" name="patientName" required>
+                            </div>
+                         </div>
+                         <div class="form-row">
+                            <div class="form-group">
+                                <label for="patient-dob" data-en="Date of Birth / Ngày sinh:" data-vi="Ngày sinh / Date of Birth:">Date of Birth / Ngày sinh:</label>
+                                <input type="date" id="patient-dob" name="patientDob">
+                            </div>
+                             <div class="form-group">
+                                <label for="patient-gender" data-en="Gender / Giới tính:" data-vi="Giới tính / Gender:">Gender / Giới tính:</label>
+                                <select id="patient-gender" name="patientGender">
+                                    <option value="Male" data-en="Male" data-vi="Nam">Male</option>
+                                    <option value="Female" data-en="Female" data-vi="Nữ">Female</option>
+                                    <option value="Other" data-en="Other" data-vi="Khác">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exam-date" data-en="Exam Date / Ngày khám:" data-vi="Ngày khám / Exam Date:">Exam Date / Ngày khám:</label>
+                                <input type="date" id="exam-date" name="examDate" required>
+                            </div>
+                         </div>
+                         <div class="form-row">
+                             <div class="form-group">
+                                <label for="requesting-physician" data-en="Requesting Dr / BS Chỉ định:" data-vi="BS Chỉ định / Requesting Dr:">Requesting Dr / BS Chỉ định:</label>
+                                <input type="text" id="requesting-physician" name="requestingPhysician">
+                             </div>
+                             <div class="form-group">
+                                <label for="reporting-doctor" data-en="Reporting Dr / BS Siêu âm:" data-vi="BS Siêu âm / Reporting Dr:">Reporting Dr / BS Siêu âm:</label>
+                                <input type="text" id="reporting-doctor" name="reportingDoctor" required>
+                             </div>
+                         </div>
+                         <div class="form-row">
+                            <div class="form-group form-group-full">
+                                <label for="clinical-history" data-en="Reason for Exam / Lý do khám:" data-vi="Lý do khám / Reason for Exam:">Reason for Exam / Lý do khám:</label>
+                                <input type="text" id="clinical-history" name="reason" list="reason-suggestions-carotid">
+                                 <datalist id="reason-suggestions-carotid">
+                                    <option value="TIA (Transient Ischemic Attack)">
+                                    <option value="Stroke / Cerebrovascular Accident (CVA)">
+                                    <option value="Carotid Bruit">
+                                    <option value="Vertigo / Dizziness">
+                                    <option value="Syncope / Presyncope">
+                                    <option value="Pre-operative assessment (e.g., CABG)">
+                                    <option value="Cardiovascular risk assessment">
+                                    <option value="Follow-up carotid stenosis">
+                                    <option value="Follow-up post-intervention (CEA/CAS)">
+                                    <option value="Pulsatile neck mass">
+                                    <option value="Screening">
+                                    <option value="Cơn thiếu máu não thoáng qua (TIA)">
+                                    <option value="Đột quỵ / Tai biến mạch máu não">
+                                    <option value="Tiếng thổi động mạch cảnh">
+                                    <option value="Chóng mặt">
+                                    <option value="Ngất / Tiền ngất">
+                                    <option value="Đánh giá trước phẫu thuật (ví dụ: CABG)">
+                                    <option value="Đánh giá nguy cơ tim mạch">
+                                    <option value="Theo dõi hẹp động mạch cảnh">
+                                    <option value="Theo dõi sau can thiệp (CEA/CAS)">
+                                    <option value="Khối vùng cổ đập theo mạch">
+                                    <option value="Tầm soát">
+                                </datalist>
+                            </div>
+                         </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="carotid-assessment-tab" class="tab-content">
+                <h2> <span data-en="Carotid Assessment" data-vi="Khảo sát Động mạch Cảnh">Carotid Assessment</span>
+                </h2>
+                <form id="carotid-assessment-form" class="input-form">
+                    <div class="side-by-side-container">
+                        <div class="section collapsible side-section">
+                             <h3 class="section-toggle" data-en="LEFT SIDE" data-vi="BÊN TRÁI">
+                                 LEFT SIDE
+                                 <i class="fas fa-chevron-down toggle-icon"></i>
+                            </h3>
+                             <div class="section-content"> <div class="section vessel-section">
+                                    <h4 data-en="Common Carotid Artery (CCA) (L)" data-vi="ĐM Cảnh Chung (CCA) (T)">Common Carotid Artery (CCA) (L)</h4>
+                                    <table class="vessel-table">
+                                         <tr><td><label for="left_cca_psv">PSV (cm/s):</label></td><td><input type="number" step="any" id="left_cca_psv" name="left_cca_psv"></td><td><label for="left_cca_edv">EDV (cm/s):</label></td><td><input type="number" step="any" id="left_cca_edv" name="left_cca_edv"></td></tr>
+                                         <tr><td><label for="left_cca_imt_mean">IMT Mean (mm):</label></td><td><input type="number" step="any" id="left_cca_imt_mean" name="left_cca_imt_mean"></td><td><label for="left_cca_imt_max">IMT Max (mm):</label></td><td><input type="number" step="any" id="left_cca_imt_max" name="left_cca_imt_max"></td></tr>
+                                    </table>
+                                    <div class="form-group form-group-full"><label for="left_cca_plaque" data-en="Plaque Description:" data-vi="Mô tả mảng xơ vữa:">Plaque Description:</label><textarea id="left_cca_plaque" name="left_cca_plaque" rows="2"></textarea></div>
+                                    <div class="form-group"><label for="left_cca_waveform" data-en="Waveform:" data-vi="Dạng sóng:">Waveform:</label><input id="left_cca_waveform" name="left_cca_waveform" list="waveform-suggestions-cca"></div>
+                                </div>
+                                <div class="section vessel-section">
+                                    <h4 data-en="Internal Carotid Artery (ICA) (L)" data-vi="ĐM Cảnh Trong (ICA) (T)">Internal Carotid Artery (ICA) (L)</h4>
+                                    <table class="vessel-table">
+                                         <tr><td><label for="left_ica_psv">PSV (cm/s):</label></td><td><input type="number" step="any" id="left_ica_psv" name="left_ica_psv"></td><td><label for="left_ica_edv">EDV (cm/s):</label></td><td><input type="number" step="any" id="left_ica_edv" name="left_ica_edv"></td></tr>
+                                         <tr><td><label for="left_ica_ratio" data-en="ICA/CCA Ratio:" data-vi="Tỷ lệ ICA/CCA:">ICA/CCA Ratio:</label></td><td><input type="number" step="any" id="left_ica_ratio" name="left_ica_ratio"></td><td><label for="left_ica_stenosis" data-en="Stenosis % (NASCET):" data-vi="Hẹp % (NASCET):">Stenosis % (NASCET):</label></td><td><input type="number" step="any" id="left_ica_stenosis" name="left_ica_stenosis" min="0" max="100"></td></tr>
+                                    </table>
+                                    <div class="form-group form-group-full"><label for="left_ica_plaque" data-en="Plaque Description:" data-vi="Mô tả mảng xơ vữa:">Plaque Description:</label><textarea id="left_ica_plaque" name="left_ica_plaque" rows="2"></textarea></div>
+                                    <div class="form-group"><label for="left_ica_waveform" data-en="Waveform:" data-vi="Dạng sóng:">Waveform:</label><input id="left_ica_waveform" name="left_ica_waveform" list="waveform-suggestions-ica"></div>
+                                </div>
+                                <div class="section vessel-section">
+                                    <h4 data-en="External Carotid Artery (ECA) (L)" data-vi="ĐM Cảnh Ngoài (ECA) (T)">External Carotid Artery (ECA) (L)</h4>
+                                    <table class="vessel-table">
+                                         <tr><td><label for="left_eca_psv">PSV (cm/s):</label></td><td><input type="number" step="any" id="left_eca_psv" name="left_eca_psv"></td><td><label for="left_eca_edv">EDV (cm/s):</label></td><td><input type="number" step="any" id="left_eca_edv" name="left_eca_edv"></td></tr>
+                                    </table>
+                                      <div class="form-group form-group-full"><label for="left_eca_plaque" data-en="Plaque Description:" data-vi="Mô tả mảng xơ vữa:">Plaque Description:</label><textarea id="left_eca_plaque" name="left_eca_plaque" rows="2"></textarea></div>
+                                    <div class="form-group"><label for="left_eca_waveform" data-en="Waveform:" data-vi="Dạng sóng:">Waveform:</label><input id="left_eca_waveform" name="left_eca_waveform" list="waveform-suggestions-eca"></div>
+                                </div>
+                                <div class="section vessel-section">
+                                    <h4 data-en="Vertebral Artery (VA) (L)" data-vi="ĐM Đốt Sống (VA) (T)">Vertebral Artery (VA) (L)</h4>
+                                     <table class="vessel-table">
+                                         <tr><td><label for="left_va_psv">PSV (cm/s):</label></td><td><input type="number" step="any" id="left_va_psv" name="left_va_psv"></td><td><label for="left_va_edv">EDV (cm/s):</label></td><td><input type="number" step="any" id="left_va_edv" name="left_va_edv"></td></tr>
+                                     </table>
+                                     <div class="form-group"><label for="left_va_flow_direction" data-en="Flow Direction:" data-vi="Chiều dòng chảy:">Flow Direction:</label><select id="left_va_flow_direction" name="left_va_flow_direction"><option value="Antegrade" data-en="Antegrade" data-vi="Xuôi dòng">Antegrade</option><option value="Retrograde" data-en="Retrograde" data-vi="Ngược dòng">Retrograde</option><option value="Bidirectional" data-en="Bidirectional" data-vi="Hai chiều">Bidirectional</option><option value="Not visualized" data-en="Not visualized" data-vi="Không thấy">Not visualized</option></select></div>
+                                    <div class="form-group"><label for="left_va_waveform" data-en="Waveform:" data-vi="Dạng sóng:">Waveform:</label><input id="left_va_waveform" name="left_va_waveform" list="waveform-suggestions-va"></div>
+                                </div>
+                                <div class="section vessel-section">
+                                    <h4 data-en="Subclavian Artery (SCA) (L) - Optional" data-vi="ĐM Dưới Đòn (SCA) (T) - Tùy chọn">Subclavian Artery (SCA) (L) - Optional</h4>
+                                     <table class="vessel-table">
+                                         <tr><td><label for="left_sca_psv">PSV (cm/s):</label></td><td><input type="number" step="any" id="left_sca_psv" name="left_sca_psv"></td><td><label for="left_sca_edv">EDV (cm/s):</label></td><td><input type="number" step="any" id="left_sca_edv" name="left_sca_edv"></td></tr>
+                                     </table>
+                                    <div class="form-group"><label for="left_sca_waveform" data-en="Waveform:" data-vi="Dạng sóng:">Waveform:</label><input id="left_sca_waveform" name="left_sca_waveform" list="waveform-suggestions-sca"></div>
+                                </div>
+                             </div>
+                        </div>
+
+                        <div class="section collapsible side-section">
+                            <h3 class="section-toggle" data-en="RIGHT SIDE" data-vi="BÊN PHẢI">
+                                RIGHT SIDE
+                                <i class="fas fa-chevron-down toggle-icon"></i>
+                            </h3>
+                            <div class="section-content"> <div class="section vessel-section">
+                                    <h4 data-en="Common Carotid Artery (CCA) (R)" data-vi="ĐM Cảnh Chung (CCA) (P)">Common Carotid Artery (CCA) (R)</h4>
+                                    <table class="vessel-table">
+                                         <tr><td><label for="right_cca_psv">PSV (cm/s):</label></td><td><input type="number" step="any" id="right_cca_psv" name="right_cca_psv"></td><td><label for="right_cca_edv">EDV (cm/s):</label></td><td><input type="number" step="any" id="right_cca_edv" name="right_cca_edv"></td></tr>
+                                         <tr><td><label for="right_cca_imt_mean">IMT Mean (mm):</label></td><td><input type="number" step="any" id="right_cca_imt_mean" name="right_cca_imt_mean"></td><td><label for="right_cca_imt_max">IMT Max (mm):</label></td><td><input type="number" step="any" id="right_cca_imt_max" name="right_cca_imt_max"></td></tr>
+                                    </table>
+                                    <div class="form-group form-group-full"><label for="right_cca_plaque" data-en="Plaque Description:" data-vi="Mô tả mảng xơ vữa:">Plaque Description:</label><textarea id="right_cca_plaque" name="right_cca_plaque" rows="2"></textarea></div>
+                                    <div class="form-group"><label for="right_cca_waveform" data-en="Waveform:" data-vi="Dạng sóng:">Waveform:</label><input id="right_cca_waveform" name="right_cca_waveform" list="waveform-suggestions-cca"></div>
+                                </div>
+                                <div class="section vessel-section">
+                                    <h4 data-en="Internal Carotid Artery (ICA) (R)" data-vi="ĐM Cảnh Trong (ICA) (P)">Internal Carotid Artery (ICA) (R)</h4>
+                                    <table class="vessel-table">
+                                         <tr><td><label for="right_ica_psv">PSV (cm/s):</label></td><td><input type="number" step="any" id="right_ica_psv" name="right_ica_psv"></td><td><label for="right_ica_edv">EDV (cm/s):</label></td><td><input type="number" step="any" id="right_ica_edv" name="right_ica_edv"></td></tr>
+                                         <tr><td><label for="right_ica_ratio" data-en="ICA/CCA Ratio:" data-vi="Tỷ lệ ICA/CCA:">ICA/CCA Ratio:</label></td><td><input type="number" step="any" id="right_ica_ratio" name="right_ica_ratio"></td><td><label for="right_ica_stenosis" data-en="Stenosis % (NASCET):" data-vi="Hẹp % (NASCET):">Stenosis % (NASCET):</label></td><td><input type="number" step="any" id="right_ica_stenosis" name="right_ica_stenosis" min="0" max="100"></td></tr>
+                                    </table>
+                                    <div class="form-group form-group-full"><label for="right_ica_plaque" data-en="Plaque Description:" data-vi="Mô tả mảng xơ vữa:">Plaque Description:</label><textarea id="right_ica_plaque" name="right_ica_plaque" rows="2"></textarea></div>
+                                    <div class="form-group"><label for="right_ica_waveform" data-en="Waveform:" data-vi="Dạng sóng:">Waveform:</label><input id="right_ica_waveform" name="right_ica_waveform" list="waveform-suggestions-ica"></div>
+                                </div>
+                                <div class="section vessel-section">
+                                    <h4 data-en="External Carotid Artery (ECA) (R)" data-vi="ĐM Cảnh Ngoài (ECA) (P)">External Carotid Artery (ECA) (R)</h4>
+                                    <table class="vessel-table">
+                                        <tr><td><label for="right_eca_psv">PSV (cm/s):</label></td><td><input type="number" step="any" id="right_eca_psv" name="right_eca_psv"></td><td><label for="right_eca_edv">EDV (cm/s):</label></td><td><input type="number" step="any" id="right_eca_edv" name="right_eca_edv"></td></tr>
+                                    </table>
+                                    <div class="form-group form-group-full"><label for="right_eca_plaque" data-en="Plaque Description:" data-vi="Mô tả mảng xơ vữa:">Plaque Description:</label><textarea id="right_eca_plaque" name="right_eca_plaque" rows="2"></textarea></div>
+                                     <div class="form-group"><label for="right_eca_waveform" data-en="Waveform:" data-vi="Dạng sóng:">Waveform:</label><input id="right_eca_waveform" name="right_eca_waveform" list="waveform-suggestions-eca"></div>
+                                </div>
+                                <div class="section vessel-section">
+                                    <h4 data-en="Vertebral Artery (VA) (R)" data-vi="ĐM Đốt Sống (VA) (P)">Vertebral Artery (VA) (R)</h4>
+                                     <table class="vessel-table">
+                                        <tr><td><label for="right_va_psv">PSV (cm/s):</label></td><td><input type="number" step="any" id="right_va_psv" name="right_va_psv"></td><td><label for="right_va_edv">EDV (cm/s):</label></td><td><input type="number" step="any" id="right_va_edv" name="right_va_edv"></td></tr>
+                                     </table>
+                                     <div class="form-group"><label for="right_va_flow_direction" data-en="Flow Direction:" data-vi="Chiều dòng chảy:">Flow Direction:</label><select id="right_va_flow_direction" name="right_va_flow_direction"><option value="Antegrade" data-en="Antegrade" data-vi="Xuôi dòng">Antegrade</option><option value="Retrograde" data-en="Retrograde" data-vi="Ngược dòng">Retrograde</option><option value="Bidirectional" data-en="Bidirectional" data-vi="Hai chiều">Bidirectional</option><option value="Not visualized" data-en="Not visualized" data-vi="Không thấy">Not visualized</option></select></div>
+                                    <div class="form-group"><label for="right_va_waveform" data-en="Waveform:" data-vi="Dạng sóng:">Waveform:</label><input id="right_va_waveform" name="right_va_waveform" list="waveform-suggestions-va"></div>
+                                </div>
+                                <div class="section vessel-section">
+                                    <h4 data-en="Subclavian Artery (SCA) (R) - Optional" data-vi="ĐM Dưới Đòn (SCA) (P) - Tùy chọn">Subclavian Artery (SCA) (R) - Optional</h4>
+                                    <table class="vessel-table">
+                                        <tr><td><label for="right_sca_psv">PSV (cm/s):</label></td><td><input type="number" step="any" id="right_sca_psv" name="right_sca_psv"></td><td><label for="right_sca_edv">EDV (cm/s):</label></td><td><input type="number" step="any" id="right_sca_edv" name="right_sca_edv"></td></tr>
+                                    </table>
+                                    <div class="form-group"><label for="right_sca_waveform" data-en="Waveform:" data-vi="Dạng sóng:">Waveform:</label><input id="right_sca_waveform" name="right_sca_waveform" list="waveform-suggestions-sca"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <datalist id="waveform-suggestions-cca"><option value="Normal (Low Resistance)" data-en="Normal (Low Resistance)" data-vi="Bình thường (Kháng lực thấp)"></option><option value="High Resistance" data-en="High Resistance" data-vi="Kháng lực cao"></option><option value="Low Velocity" data-en="Low Velocity" data-vi="Vận tốc thấp"></option><option value="Turbulent" data-en="Turbulent" data-vi="Phổ rối"></option><option value="Dampened / Tardus Parvus" data-en="Dampened / Tardus Parvus" data-vi="Giảm âm độ / Tardus Parvus"></option></datalist>
+                    <datalist id="waveform-suggestions-ica"><option value="Normal (Low Resistance)" data-en="Normal (Low Resistance)" data-vi="Bình thường (Kháng lực thấp)"></option><option value="Post-stenotic Turbulence" data-en="Post-stenotic Turbulence" data-vi="Phổ rối sau hẹp"></option><option value="Tardus Parvus" data-en="Tardus Parvus" data-vi="Tardus Parvus"></option><option value="High Resistance (Distal Occlusion?)" data-en="High Resistance (Distal Occlusion?)" data-vi="Kháng lực cao (Tắc đoạn xa?)"></option><option value="String Sign (Near Occlusion)" data-en="String Sign (Near Occlusion)" data-vi="Dấu hiệu dây đàn (Gần tắc)"></option><option value="No Flow (Occlusion)" data-en="No Flow (Occlusion)" data-vi="Không có dòng chảy (Tắc)"></option></datalist>
+                    <datalist id="waveform-suggestions-eca"><option value="Normal (High Resistance)" data-en="Normal (High Resistance)" data-vi="Bình thường (Kháng lực cao)"></option><option value="Low Resistance (ICA Collateral)" data-en="Low Resistance (ICA Collateral)" data-vi="Kháng lực thấp (Bàng hệ ICA)"></option><option value="Turbulent" data-en="Turbulent" data-vi="Phổ rối"></option><option value="Reversed Flow (CCA occlusion)" data-en="Reversed Flow (CCA occlusion)" data-vi="Dòng chảy đảo ngược (Tắc CCA)"></option></datalist>
+                    <datalist id="waveform-suggestions-va"><option value="Normal (Low Resistance)" data-en="Normal (Low Resistance)" data-vi="Bình thường (Kháng lực thấp)"></option><option value="Tardus Parvus (Proximal Stenosis)" data-en="Tardus Parvus (Proximal Stenosis)" data-vi="Tardus Parvus (Hẹp đoạn gần)"></option><option value="High Resistance (Distal Occlusion?)" data-en="High Resistance (Distal Occlusion?)" data-vi="Kháng lực cao (Tắc đoạn xa?)"></option><option value="To-and-Fro / Bidirectional (Subclavian Steal)" data-en="To-and-Fro / Bidirectional (Subclavian Steal)" data-vi="Hai chiều (Cướp máu dưới đòn)"></option><option value="Absent Flow" data-en="Absent Flow" data-vi="Không có dòng chảy"></option></datalist>
+                    <datalist id="waveform-suggestions-sca"><option value="Normal (Triphasic/High Resistance)" data-en="Normal (Triphasic/High Resistance)" data-vi="Bình thường (Ba pha/Kháng lực cao)"></option><option value="Biphasic" data-en="Biphasic" data-vi="Hai pha"></option><option value="Monophasic (Stenosis/Occlusion)" data-en="Monophasic (Stenosis/Occlusion)" data-vi="Một pha (Hẹp/Tắc)"></option><option value="Turbulent" data-en="Turbulent" data-vi="Phổ rối"></option></datalist>
+
+                    <div class="section findings-summary collapsible">
+                         <h3 class="section-toggle" data-en="Impression" data-vi="Kết luận">
+                            Impression
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </h3>
+                         <div class="section-content">
+                            <textarea id="impression" name="impression" rows="5"></textarea>
+                            <div class="suggestion-buttons" id="impression-suggestions">
+                                 <button type="button" class="suggestion-btn" data-target="impression" data-en="Normal carotid ultrasound exam." data-vi="Siêu âm động mạch cảnh bình thường.">Normal carotid ultrasound exam.</button>
+                                 <button type="button" class="suggestion-btn" data-target="impression" data-en="Mild diffuse thickening of the intima-media complex (IMT)." data-vi="Dày lan tỏa nhẹ lớp nội trung mạc (IMT).">Mild diffuse thickening...</button>
+                                 <button type="button" class="suggestion-btn" data-target="impression" data-en="Non-obstructive atherosclerotic plaque bilaterally." data-vi="Mảng xơ vữa hai bên không gây tắc nghẽn.">Non-obstructive plaque...</button>
+                                 <button type="button" class="suggestion-btn" data-target="impression" data-en="Mild (<50%) stenosis of the [Left/Right] ICA origin..." data-vi="Hẹp nhẹ (<50%) gốc ĐMC trong [Trái/Phải]...">Mild (&lt;50%) stenosis...</button>
+                                 <button type="button" class="suggestion-btn" data-target="impression" data-en="Moderate (50-69% NASCET) stenosis of the [Left/Right] ICA origin." data-vi="Hẹp vừa (50-69% NASCET) gốc ĐMC trong [Trái/Phải].">Moderate (50-69%) stenosis...</button>
+                                 <button type="button" class="suggestion-btn" data-target="impression" data-en="Severe (≥70% NASCET) stenosis of the [Left/Right] ICA origin." data-vi="Hẹp nặng (≥70% NASCET) gốc ĐMC trong [Trái/Phải].">Severe (≥70%) stenosis...</button>
+                                 <button type="button" class="suggestion-btn" data-target="impression" data-en="Near occlusion ('string sign') of the [Left/Right] ICA." data-vi="Gần tắc ('dấu hiệu dây đàn') ĐMC trong [Trái/Phải].">Near occlusion...</button>
+                                 <button type="button" class="suggestion-btn" data-target="impression" data-en="Occlusion of the [Left/Right] Internal Carotid Artery." data-vi="Tắc động mạch cảnh trong [Trái/Phải].">Occlusion...</button>
+                                 <button type="button" class="suggestion-btn" data-target="impression" data-en="Evidence of [partial/complete] subclavian steal..." data-vi="Bằng chứng hiện tượng cướp máu dưới đòn [không hoàn toàn/hoàn toàn]...">Subclavian steal...</button>
+                                 <button type="button" class="suggestion-btn" data-target="impression" data-en="Technically limited study due to [reason]." data-vi="Khảo sát hạn chế về mặt kỹ thuật do [lý do].">Technically limited...</button>
+                            </div>
+                         </div>
+                    </div>
+
+                    <div class="section findings-summary collapsible">
+                        <h3 class="section-toggle" data-en="Recommendation" data-vi="Đề nghị">
+                            Recommendation
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </h3>
+                         <div class="section-content">
+                            <textarea id="recommendation" name="recommendation" rows="3"></textarea>
+                            <div class="suggestion-buttons" id="recommendation-suggestions">
+                                <button type="button" class="suggestion-btn" data-target="recommendation" data-en="Routine clinical follow-up." data-vi="Theo dõi lâm sàng định kỳ.">Routine follow-up.</button>
+                                <button type="button" class="suggestion-btn" data-target="recommendation" data-en="Follow-up ultrasound in [6/12] months..." data-vi="Siêu âm theo dõi sau [6/12] tháng...">Follow-up US...</button>
+                                <button type="button" class="suggestion-btn" data-target="recommendation" data-en="Consider CTA or MRA..." data-vi="Cân nhắc chụp CTA hoặc MRA...">Consider CTA/MRA...</button>
+                                <button type="button" class="suggestion-btn" data-target="recommendation" data-en="Medical management..." data-vi="Đề nghị điều trị nội khoa...">Medical management...</button>
+                                <button type="button" class="suggestion-btn" data-target="recommendation" data-en="Vascular surgery consultation..." data-vi="Đề nghị hội chẩn Ngoại khoa Mạch máu.">Vascular consultation...</button>
+                                <button type="button" class="suggestion-btn" data-target="recommendation" data-en="Clinical correlation recommended." data-vi="Đề nghị tương quan lâm sàng.">Clinical correlation.</button>
+                            </div>
+                         </div>
+                    </div>
+                </form>
+            </div>
+
+            <div id="images-tab" class="tab-content">
+                 <div class="section collapsible">
+                    <h2 class="section-toggle" data-en="Images" data-vi="Hình ảnh">
+                         Images
+                         <i class="fas fa-chevron-down toggle-icon"></i>
+                     </h2>
+                     <div class="section-content">
+                        <div class="image-upload-controls">
+                            <label for="image-upload" class="button-like-label" data-en="Select Images..." data-vi="Chọn Hình ảnh...">
+                                <i class="fas fa-upload"></i> Select Images...
+                            </label>
+                            <input type="file" id="image-upload" multiple accept="image/*" style="display: none;">
+                            <span class="image-upload-info" data-en=" (Supports PNG, JPG, GIF)" data-vi=" (Hỗ trợ PNG, JPG, GIF)"> (Supports PNG, JPG, GIF)</span>
+                             <button id="clear-images-btn" class="small-danger-btn"><i class="fas fa-times"></i> Clear All</button>
+                        </div>
+                         <div id="image-preview-container" class="image-grid">
+                             </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="report-preview-tab" class="tab-content">
+                <div class="section collapsible">
+                     <h2 class="section-toggle" data-en="Report Preview & Actions" data-vi="Xem trước & Thao tác">
+                         Report Preview & Actions
+                         <i class="fas fa-chevron-down toggle-icon"></i>
+                     </h2>
+                     <div class="section-content">
+                        <div class="report-actions">
+                            <button id="generate-report-btn"><i class="fas fa-cogs"></i> <span data-en="Generate Report" data-vi="Tạo Báo cáo">Generate Report</span></button>
+                            <button id="print-report-btn" style="display: none;" title="Print English Report"><i class="fas fa-print"></i> <span data-en="Print (EN)" data-vi="In (EN)">Print (EN)</span></button>
+                            <button id="export-report-html-btn" style="display: none;" title="Export English Report as HTML"><i class="fas fa-file-download"></i> <span data-en="Export HTML (EN)" data-vi="Xuất HTML (EN)">Export HTML (EN)</span></button>
+                            <button id="translate-report-btn" style="display: none;"><i class="fas fa-language"></i> <span data-en="Translate to Vietnamese" data-vi="Dịch sang Tiếng Việt">Translate to Vietnamese</span></button>
+                        </div>
+
+                        <div id="report-preview" class="report-output-area section">
+                            <p class="placeholder-text" data-en="Click 'Generate Report' to see the preview." data-vi="Nhấn 'Tạo Báo cáo' để xem trước.">Click 'Generate Report' to see the preview.</p>
+                        </div>
+
+                        <div id="translation-section" style="display: none;" class="section">
+                             <h3><i class="fas fa-language"></i> <span data-en="Vietnamese Translation" data-vi="Bản dịch Tiếng Việt">Vietnamese Translation</span></h3>
+                             <div id="translation-loading" style="display: none;">
+                                 <i class="fas fa-spinner fa-spin"></i> <span data-en="Translating..." data-vi="Đang dịch...">Translating...</span>
+                             </div>
+                             <div id="translation-content" class="report-output-area">
+                                 </div>
+                             <textarea id="translation-edit-area" rows="10" style="display: none; width: 100%; box-sizing: border-box; margin-top: 5px; font-family: monospace;"></textarea>
+                             <div class="translation-actions">
+                                 <button id="edit-translation-btn" style="display: none;"><i class="fas fa-edit"></i> <span data-en="Edit Translation" data-vi="Sửa bản dịch">Edit Translation</span></button>
+                                 <button id="print-translation-btn" style="display: none;"><i class="fas fa-print"></i> <span data-en="Print Translation (VI)" data-vi="In Bản dịch (VI)">Print Translation (VI)</span></button>
+                             </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> <div id="notifications"></div>
+
+    </div> <script src="js/core/ui-core.js" type="module"></script>
+    <script src="js/core/form-core.js" type="module"></script>
+    <script src="js/modules/image-handler.js" type="module"></script>
+    <script src="js/modules/report-translator.js" type="module"></script>
+    <script src="js/core/template-core.js" type="module"></script>
+    <script src="js/core/template-exporter.js" type="module"></script>
+    <script src="js/core/report-core.js" type="module"></script>
+    <script src="js/organs/carotid/carotid-presets.js" type="module"></script>
+    <script src="js/organs/carotid/carotid-module.js" type="module"></script>
+    <script src="js/main.js" type="module"></script>
+
+</body>
+</html>

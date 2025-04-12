@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdominal Ultrasound Report / Báo cáo Siêu âm Bụng Tổng quát</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Abdominal Ultrasound Reporting System / Hệ thống tạo báo cáo Siêu âm Bụng Tổng quát</h1>
+
+        <div class="tab-container">
+            <div class="tab-nav">
+                <button class="tab-button active" data-tab="patient-info">Patient Info / Thông tin BN</button>
+                <button class="tab-button" data-tab="abdominal-assessment">Abdominal Assessment / Đánh giá Bụng</button>
+                <button class="tab-button" data-tab="images">Images / Hình ảnh</button>
+                <button class="tab-button" data-tab="templates">Templates / Mẫu</button>
+                <button class="tab-button" data-tab="report">Report / Báo cáo</button>
+            </div>
+
+            <div class="tab-content active" id="patient-info">
+                 <h2>Patient Information / Thông tin Bệnh nhân</h2>
+                 <form id="patient-info-form">
+                    <div class="form-group">
+                        <label for="patient-name">Họ và Tên / Full Name:</label>
+                        <input type="text" id="patient-name" name="patientName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-id">Mã BN / Patient ID:</label>
+                        <input type="text" id="patient-id" name="patientId" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="patient-dob">Ngày sinh / Date of Birth:</label>
+                        <input type="date" id="patient-dob" name="patientDob">
+                    </div>
+                    <div class="form-group">
+                        <label for="requesting-physician">Bác sĩ chỉ định / Requesting Physician:</label>
+                        <input type="text" id="requesting-physician" name="requestingPhysician">
+                    </div>
+                    <div class="form-group">
+                        <label for="exam-date">Ngày siêu âm / Exam Date:</label>
+                        <input type="date" id="exam-date" name="examDate" value=""> </div>
+                    <div class="form-group">
+                        <label for="reason">Reason for Exam / Clinical Info / Lý do khám / LS:</label>
+                        <input type="text" id="reason" name="reason" list="reason-suggestions-abdominal" placeholder="Enter reason or select from list... / Nhập lý do hoặc chọn từ danh sách...">
+                        <datalist id="reason-suggestions-abdominal">
+                            <option value="Abdominal pain / Đau bụng"></option>
+                            <option value="Jaundice / Vàng da"></option>
+                            <option value="Abnormal LFTs / Bất thường chức năng gan"></option>
+                            <option value="RUQ pain / Đau HSP"></option>
+                            <option value="LUQ pain / Đau HST"></option>
+                            <option value="Epigastric pain / Đau thượng vị"></option>
+                             <option value="Pelvic pain / Đau bụng dưới"></option>
+                            <option value="Screening / Tầm soát"></option>
+                            <option value="Follow-up mass/stones / Theo dõi khối u/sỏi"></option>
+                            <option value="Organomegaly assessment / Đánh giá tạng to"></option>
+                            <option value="Ascites evaluation / Đánh giá dịch ổ bụng"></option>
+                            <option value="Trauma / Chấn thương"></option>
+                            <option value="Weight loss / Sụt cân"></option>
+                            <option value="Nausea/Vomiting / Buồn nôn/Nôn"></option>
+                             <option value="Abnormal bleeding / Chảy máu bất thường"></option>
+                             <option value="Urinary symptoms / Triệu chứng đường niệu"></option>
+                        </datalist>
+                    </div>
+                     <div class="form-group">
+                        <label for="reporting-doctor">Reporting Doctor / Bác sĩ siêu âm:</label>
+                        <input type="text" id="reporting-doctor" name="reportingDoctor" placeholder="Enter reporting doctor's name / Nhập tên BS đọc KQ">
+                    </div>
+                </form>
+            </div>
+
+            <div class="tab-content" id="abdominal-assessment">
+                <h2>Abdominal Assessment / Đánh giá Bụng Tổng quát</h2>
+                <form id="abdominal-assessment-form">
+
+                    <details class="section organ-section">
+                        <summary class="section-toggle"><h3><i class="fas fa-dot-circle"></i> Liver / Gan</h3></summary>
+                        <div class="section-content organ-details-grid">
+                            <div class="form-group">
+                                <label for="liverSpan">Size (Span) / Kích thước (Ngang):</label>
+                                <input type="number" step="0.1" id="liverSpan" name="liverSpan" placeholder="cm">
+                            </div>
+                            <div class="form-group">
+                                <label for="liverEchotexture">Echotexture / Cấu trúc hồi âm:</label>
+                                <input type="text" id="liverEchotexture" name="liverEchotexture" list="echotexture-suggestions" placeholder="Normal, Coarse, Fatty...">
+                                <datalist id="echotexture-suggestions">
+                                    <option value="Normal / Bình thường"></option>
+                                    <option value="Coarse / Thô"></option>
+                                    <option value="Fatty Infiltration - Grade I / Gan nhiễm mỡ - Độ I"></option>
+                                    <option value="Fatty Infiltration - Grade II / Gan nhiễm mỡ - Độ II"></option>
+                                    <option value="Fatty Infiltration - Grade III / Gan nhiễm mỡ - Độ III"></option>
+                                    <option value="Heterogeneous / Không đồng nhất"></option>
+                                </datalist>
+                            </div>
+                             <div class="form-group">
+                                <label for="liverMargins">Margins / Bờ:</label>
+                                <select id="liverMargins" name="liverMargins">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="Smooth / Trơn láng">Smooth / Trơn láng</option>
+                                    <option value="Nodular / Nốt"></option>
+                                    <option value="Irregular / Không đều"></option>
+                                </select>
+                            </div>
+                             <div class="form-group">
+                                <label for="portalVeinDiameter">Portal Vein Diameter / ĐK TMT:</label>
+                                <input type="number" step="0.1" id="portalVeinDiameter" name="portalVeinDiameter" placeholder="mm">
+                            </div>
+                             <div class="form-group">
+                                <label for="hepaticVeinsPatent">Hepatic Veins / TM Gan:</label>
+                                <select id="hepaticVeinsPatent" name="hepaticVeinsPatent">
+                                     <option value="">-- Select / Chọn --</option>
+                                     <option value="Patent / Thông thoáng">Patent / Thông thoáng</option>
+                                     <option value="Thrombosed / Huyết khối">Thrombosed / Huyết khối</option>
+                                     <option value="Not well visualized / Khó thấy">Not well visualized / Khó thấy</option>
+                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="hepaticArteryViz">Hepatic Artery / ĐM Gan:</label>
+                                <select id="hepaticArteryViz" name="hepaticArteryViz">
+                                     <option value="">-- Select / Chọn --</option>
+                                     <option value="Visualized, Normal flow / Thấy, dòng chảy BT">Visualized, Normal flow</option>
+                                     <option value="Visualized, Abnormal flow / Thấy, dòng chảy BPT">Visualized, Abnormal flow</option>
+                                     <option value="Not well visualized / Khó thấy">Not well visualized / Khó thấy</option>
+                                 </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="liverLesionsDesc">Focal Lesions Description / Mô tả tổn thương khu trú:</label>
+                                <textarea id="liverLesionsDesc" name="liverLesionsDesc" rows="3" class="lesion-description-area" placeholder="Describe cysts, masses, locations, sizes, characteristics... / Mô tả nang, u, vị trí, kích thước, đặc điểm..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="No focal liver lesions identified. / Không thấy tổn thương gan khu trú.">No Lesions / Không TT</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Simple cyst measuring [X] mm in segment [Y]. / Nang đơn giản kích thước [X] mm tại hạ phân thùy [Y].">Simple Cyst / Nang đơn giản</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Hyperechoic lesion measuring [X] mm in segment [Y], likely hemangioma. / Tổn thương hồi âm dày kích thước [X] mm tại HPT [Y], nghĩ u máu.">Hemangioma? / U máu?</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Multiple small cysts noted throughout the liver parenchyma. / Ghi nhận nhiều nang nhỏ rải rác nhu mô gan.">Multiple Cysts / Đa nang</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Hypoechoic lesion measuring [X] mm in segment [Y]. Recommend correlation/follow-up. / Tổn thương hồi âm kém kích thước [X] mm tại HPT [Y]. Đề nghị tương quan/theo dõi.">Hypoechoic Lesion / TT giảm âm</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Lesion with target appearance in segment [Y]. Suggest further investigation. / Tổn thương dạng bia bắn tại HPT [Y]. Đề nghị khảo sát thêm.">Target Lesion / TT dạng bia</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Complex cystic lesion measuring [X] mm. / Tổn thương dạng nang phức tạp kích thước [X] mm.">Complex Cyst / Nang phức tạp</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Calcified granuloma noted. / Ghi nhận nốt vôi hóa dạng u hạt.">Granuloma / U hạt</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="section organ-section">
+                        <summary class="section-toggle"><h3><i class="fas fa-dot-circle"></i> Gallbladder / Túi mật</h3></summary>
+                        <div class="section-content organ-details-grid">
+                            <div class="form-group">
+                                <label for="gallbladderStatus">Status / Tình trạng:</label>
+                                <select id="gallbladderStatus" name="gallbladderStatus">
+                                    <option value="Present / Hiện diện">Present / Hiện diện</option>
+                                    <option value="Surgically Removed / Đã cắt">Surgically Removed / Đã cắt</option>
+                                    <option value="Contracted / Co nhỏ">Contracted / Co nhỏ</option>
+                                    <option value="Not visualized / Không thấy">Not visualized / Không thấy</option>
+                                </select>
+                            </div>
+                             <div class="form-group">
+                                <label for="gallbladderWallThickness">Wall Thickness / Bề dày thành:</label>
+                                <input type="number" step="0.1" id="gallbladderWallThickness" name="gallbladderWallThickness" placeholder="mm">
+                            </div>
+                            <div class="form-group">
+                                <label for="gallbladderStones">Stones / Sỏi:</label>
+                                <select id="gallbladderStones" name="gallbladderStones">
+                                     <option value="">-- Select / Chọn --</option>
+                                     <option value="None / Không có">None / Không có</option>
+                                     <option value="Single / Một viên">Single / Một viên</option>
+                                     <option value="Multiple / Nhiều viên">Multiple / Nhiều viên</option>
+                                </select>
+                            </div>
+                             <div class="form-group">
+                                <label for="gallbladderStoneSize">Stone Size (Max) / KT Sỏi (Lớn nhất):</label>
+                                <input type="number" step="1" id="gallbladderStoneSize" name="gallbladderStoneSize" placeholder="mm">
+                            </div>
+                            <div class="form-group">
+                                <label for="gallbladderStoneShadow">Stone Shadowing / Bóng lưng:</label>
+                                <select id="gallbladderStoneShadow" name="gallbladderStoneShadow">
+                                     <option value="">-- Select / Chọn --</option>
+                                     <option value="Yes / Có">Yes / Có</option>
+                                     <option value="No / Không">No / Không</option>
+                                     <option value="Indeterminate / Không rõ">Indeterminate / Không rõ</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="gallbladderSludge">Sludge / Bùn:</label>
+                                <select id="gallbladderSludge" name="gallbladderSludge">
+                                     <option value="">-- Select / Chọn --</option>
+                                     <option value="None / Không có">None / Không có</option>
+                                     <option value="Present / Có">Present / Có</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="gallbladderPolyps">Polyps / Polyp:</label>
+                                 <select id="gallbladderPolyps" name="gallbladderPolyps">
+                                     <option value="">-- Select / Chọn --</option>
+                                     <option value="None / Không có">None / Không có</option>
+                                     <option value="Yes / Có">Yes / Có</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="gallbladderPolypSize">Polyp Size (Max) / KT Polyp (Lớn nhất):</label>
+                                <input type="number" step="1" id="gallbladderPolypSize" name="gallbladderPolypSize" placeholder="mm">
+                            </div>
+                            <div class="form-group">
+                                <label for="pericholecysticFluid">Pericholecystic Fluid / Dịch quanh túi mật:</label>
+                                <select id="pericholecysticFluid" name="pericholecysticFluid">
+                                     <option value="">-- Select / Chọn --</option>
+                                     <option value="No / Không">No / Không</option>
+                                     <option value="Yes / Có">Yes / Có</option>
+                                </select>
+                            </div>
+                             <div class="form-group">
+                                <label for="sonographicMurphy">Sonographic Murphy's Sign:</label>
+                                <select id="sonographicMurphy" name="sonographicMurphy">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="Negative / Âm tính">Negative / Âm tính</option>
+                                    <option value="Positive / Dương tính">Positive / Dương tính</option>
+                                    <option value="Indeterminate / Không rõ">Indeterminate / Không rõ</option>
+                                    <option value="Not Assessed / Không đánh giá">Not Assessed / Không đánh giá</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="gallbladderLesionsDesc">Focal Lesions Description / Mô tả tổn thương khu trú:</label>
+                                <textarea id="gallbladderLesionsDesc" name="gallbladderLesionsDesc" rows="2" class="lesion-description-area" placeholder="Describe other findings like adenomyomatosis, masses... / Mô tả các phát hiện khác như bệnh cơ tuyến túi mật, khối u..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="No other focal lesions identified. / Không có tổn thương khu trú khác.">No Other Lesions / Ko TT khác</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Diffuse wall thickening, suggestive of adenomyomatosis. / Dày thành lan tỏa, gợi ý bệnh cơ tuyến túi mật.">Adenomyomatosis? / Bệnh cơ tuyến?</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Focal wall thickening noted in the [fundus/body/neck]. / Dày thành khu trú tại [đáy/thân/cổ].">Focal Thickening / Dày khu trú</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Tumefactive sludge creating a mass-like appearance. / Bùn tạo thành dạng giả u.">Tumefactive Sludge / Bùn giả u</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Mass lesion identified in the [fundus/body/neck], measuring [X] mm. Recommend further evaluation. / Khối u tại [đáy/thân/cổ], kích thước [X] mm. Đề nghị khảo sát thêm.">Mass Lesion / Khối u</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Calcified gallbladder wall (Porcelain gallbladder). / Thành túi mật vôi hóa (Túi mật sứ).">Porcelain GB / Túi mật sứ</button>
+                                </div>
+                            </div>
+                            </div>
+                    </details>
+
+                    <details class="section organ-section">
+                        <summary class="section-toggle"><h3><i class="fas fa-stream"></i> Biliary Ducts / Đường mật</h3></summary>
+                        <div class="section-content organ-details-grid">
+                             <div class="form-group">
+                                <label for="cbdDiameter">Common Bile Duct (CBD) Diameter / ĐK OMC:</label>
+                                <input type="number" step="0.1" id="cbdDiameter" name="cbdDiameter" placeholder="mm">
+                            </div>
+                             <div class="form-group">
+                                <label for="ihdDilatation">Intrahepatic Duct Dilatation / Giãn ĐM trong gan:</label>
+                                <select id="ihdDilatation" name="ihdDilatation">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="No / Không">No / Không</option>
+                                    <option value="Yes / Có">Yes / Có</option>
+                                </select>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="section organ-section">
+                        <summary class="section-toggle"><h3><i class="fas fa-dot-circle"></i> Pancreas / Tụy</h3></summary>
+                        <div class="section-content organ-details-grid">
+                            <div class="form-group">
+                                <label for="pancreasVisualization">Visualization / Khảo sát:</label>
+                                <select id="pancreasVisualization" name="pancreasVisualization">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="Adequate / Đầy đủ">Adequate / Đầy đủ</option>
+                                    <option value="Limited - Gas / Hạn chế - Hơi">Limited - Gas / Hạn chế - Hơi</option>
+                                    <option value="Limited - Body Habitus / Hạn chế - Tạng người">Limited - Body Habitus / Hạn chế - Tạng người</option>
+                                    <option value="Not visualized / Không thấy">Not visualized / Không thấy</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pancreasHeadSize">Head Size / KT Đầu tụy:</label>
+                                <input type="number" step="1" id="pancreasHeadSize" name="pancreasHeadSize" placeholder="mm">
+                            </div>
+                             <div class="form-group">
+                                <label for="pancreasBodySize">Body Size / KT Thân tụy:</label>
+                                <input type="number" step="1" id="pancreasBodySize" name="pancreasBodySize" placeholder="mm">
+                            </div>
+                             <div class="form-group">
+                                <label for="pancreasTailSize">Tail Size / KT Đuôi tụy:</label>
+                                <input type="number" step="1" id="pancreasTailSize" name="pancreasTailSize" placeholder="mm">
+                            </div>
+                            <div class="form-group">
+                                <label for="pancreasEchotexture">Echotexture / Cấu trúc hồi âm:</label>
+                                <input type="text" id="pancreasEchotexture" name="pancreasEchotexture" list="pancreas-echotexture-suggestions" placeholder="Normal, Hyperechoic...">
+                                 <datalist id="pancreas-echotexture-suggestions">
+                                    <option value="Normal / Bình thường"></option>
+                                    <option value="Hyperechoic / Tăng âm"></option>
+                                    <option value="Hypoechoic / Giảm âm"></option>
+                                    <option value="Heterogeneous / Không đồng nhất"></option>
+                                </datalist>
+                            </div>
+                            <div class="form-group">
+                                <label for="pancreaticDuctDiameter">Pancreatic Duct Diameter / ĐK ống tụy:</label>
+                                <input type="number" step="0.1" id="pancreaticDuctDiameter" name="pancreaticDuctDiameter" placeholder="mm">
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="pancreasLesionsDesc">Focal Lesions Description / Mô tả tổn thương khu trú:</label>
+                                <textarea id="pancreasLesionsDesc" name="pancreasLesionsDesc" class="lesion-description-area" rows="2" placeholder="Describe cysts, masses, calcifications... / Mô tả nang, u, vôi hóa..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="No focal pancreatic lesions identified. / Không thấy tổn thương tụy khu trú.">No Lesions / Không TT</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Simple cyst in the pancreatic [head/body/tail] measuring [X] mm. / Nang đơn giản tại [đầu/thân/đuôi] tụy kích thước [X] mm.">Simple Cyst / Nang đơn giản</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Diffuse calcifications noted, suggestive of chronic pancreatitis. / Ghi nhận vôi hóa lan tỏa, gợi ý viêm tụy mạn.">Calcifications / Vôi hóa</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Hypoechoic mass in the pancreatic [head/body/tail]. Recommend further evaluation (CT/MRI). / Khối giảm âm tại [đầu/thân/đuôi] tụy. Đề nghị khảo sát thêm (CT/MRI).">Hypoechoic Mass / Khối giảm âm</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Pancreatic duct dilatation ([X] mm). / Giãn ống tụy ([X] mm).">Duct Dilatation / Giãn ống tụy</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Pseudocyst noted near the pancreatic tail, measuring [X x Y] mm. / Ghi nhận nang giả tụy gần đuôi tụy, kích thước [X x Y] mm.">Pseudocyst / Nang giả tụy</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                     <details class="section organ-section">
+                        <summary class="section-toggle"><h3><i class="fas fa-dot-circle"></i> Spleen / Lách</h3></summary>
+                        <div class="section-content organ-details-grid">
+                            <div class="form-group">
+                                <label for="spleenSize">Size (Longest Dimension) / KT (Trục dài nhất):</label>
+                                <input type="number" step="0.1" id="spleenSize" name="spleenSize" placeholder="cm">
+                            </div>
+                             <div class="form-group">
+                                <label for="spleenEchotexture">Echotexture / Cấu trúc hồi âm:</label>
+                                <select id="spleenEchotexture" name="spleenEchotexture">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="Normal / Bình thường">Normal / Bình thường</option>
+                                    <option value="Homogeneous / Đồng nhất">Homogeneous / Đồng nhất</option>
+                                    <option value="Heterogeneous / Không đồng nhất">Heterogeneous / Không đồng nhất</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="spleenLesionsDesc">Focal Lesions Description / Mô tả tổn thương khu trú:</label>
+                                <textarea id="spleenLesionsDesc" name="spleenLesionsDesc" class="lesion-description-area" rows="2" placeholder="Describe cysts, masses, calcifications, accessory spleen... / Mô tả nang, u, vôi hóa, lách phụ..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="No focal splenic lesions identified. / Không thấy tổn thương lách khu trú.">No Lesions / Không TT</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Simple cyst measuring [X] mm. / Nang đơn giản kích thước [X] mm.">Simple Cyst / Nang đơn giản</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Accessory spleen noted near the hilum. / Ghi nhận lách phụ gần rốn lách.">Accessory Spleen / Lách phụ</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Small calcification noted. / Ghi nhận nốt vôi hóa nhỏ.">Calcification / Vôi hóa</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Hypoechoic lesion measuring [X] mm. / Tổn thương hồi âm kém kích thước [X] mm.">Hypoechoic Lesion / TT giảm âm</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="section organ-section">
+                        <summary class="section-toggle"><h3><i class="fas fa-arrow-right"></i> Right Kidney / Thận Phải</h3></summary>
+                        <div class="section-content organ-details-grid">
+                            <div class="form-group">
+                                <label for="rightKidneyLength">Size (Length) / KT (Trục dọc):</label>
+                                <input type="number" step="0.1" id="rightKidneyLength" name="rightKidneyLength" placeholder="cm">
+                            </div>
+                            <div class="form-group">
+                                <label for="rightKidneyParenchymaThickness">Parenchymal Thickness / Bề dày chủ mô:</label>
+                                <input type="number" step="1" id="rightKidneyParenchymaThickness" name="rightKidneyParenchymaThickness" placeholder="mm">
+                            </div>
+                             <div class="form-group">
+                                <label for="rightKidneyParenchymaEchogenicity">Parenchymal Echogenicity / Hồi âm chủ mô:</label>
+                                <input type="text" id="rightKidneyParenchymaEchogenicity" name="rightKidneyParenchymaEchogenicity" list="kidney-echo-suggestions" placeholder="Normal, Increased...">
+                                <datalist id="kidney-echo-suggestions">
+                                    <option value="Normal / Bình thường"></option>
+                                    <option value="Increased - Grade I / Tăng - Độ I"></option>
+                                    <option value="Increased - Grade II / Tăng - Độ II"></option>
+                                    <option value="Increased - Grade III / Tăng - Độ III"></option>
+                                    <option value="Decreased / Giảm"></option>
+                                </datalist>
+                            </div>
+                            <div class="form-group">
+                                <label for="rightKidneyCMD">Corticomedullary Differentiation / Phân biệt vỏ tủy:</label>
+                                <select id="rightKidneyCMD" name="rightKidneyCMD">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="Preserved / Còn">Preserved / Còn</option>
+                                    <option value="Lost / Mất">Lost / Mất</option>
+                                    <option value="Indistinct / Không rõ">Indistinct / Không rõ</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="rightKidneyStones">Stones / Sỏi:</label>
+                                 <select id="rightKidneyStones" name="rightKidneyStones">
+                                     <option value="">-- Select / Chọn --</option>
+                                     <option value="None / Không có">None / Không có</option>
+                                     <option value="Yes / Có">Yes / Có</option>
+                                </select>
+                            </div>
+                             <div class="form-group">
+                                <label for="rightKidneyStoneSize">Stone Size (Max) / KT Sỏi (Lớn nhất):</label>
+                                <input type="number" step="1" id="rightKidneyStoneSize" name="rightKidneyStoneSize" placeholder="mm">
+                            </div>
+                             <div class="form-group">
+                                <label for="rightKidneyStoneLocation">Stone Location / Vị trí sỏi:</label>
+                                <input type="text" id="rightKidneyStoneLocation" list="stone-location-suggestions" placeholder="e.g., Calyx, Pelvis / Vd: Đài, Bể">
+                                <datalist id="stone-location-suggestions">
+                                    <option value="Upper pole calyx / Đài trên"></option>
+                                    <option value="Mid pole calyx / Đài giữa"></option>
+                                    <option value="Lower pole calyx / Đài dưới"></option>
+                                    <option value="Renal pelvis / Bể thận"></option>
+                                    <option value="Pelviureteric junction (PUJ) / Khúc nối bể thận-niệu quản"></option>
+                                </datalist>
+                            </div>
+                            <div class="form-group">
+                                <label for="rightKidneyHydro">Hydronephrosis / Ứ nước:</label>
+                                <select id="rightKidneyHydro" name="rightKidneyHydro">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="None / Không">None / Không</option>
+                                    <option value="Mild / Nhẹ">Mild / Nhẹ</option>
+                                    <option value="Moderate / Vừa">Moderate / Vừa</option>
+                                    <option value="Severe / Nặng">Severe / Nặng</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="rightKidneyLesionsDesc">Cysts / Masses Description / Mô tả Nang / Khối u:</label>
+                                <textarea id="rightKidneyLesionsDesc" name="rightKidneyLesionsDesc" class="lesion-description-area" rows="2" placeholder="Describe size, location, characteristics (simple, complex)... / Mô tả KT, vị trí, đặc điểm (đơn giản, phức tạp)..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="No renal cysts or masses identified. / Không thấy nang hay khối u thận.">No Lesions / Không TT</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Simple cortical cyst measuring [X] mm in the [upper/mid/lower] pole. / Nang đơn giản ở vỏ thận kích thước [X] mm tại cực [trên/giữa/dưới].">Simple Cyst / Nang đơn giản</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Complex cyst (Bosniak [II/IIF/III/IV]). Recommend further evaluation. / Nang phức tạp (Bosniak [II/IIF/III/IV]). Đề nghị khảo sát thêm.">Complex Cyst / Nang phức tạp</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Hyperechoic lesion measuring [X] mm, likely angiomyolipoma (AML). / Tổn thương hồi âm dày kích thước [X] mm, nghĩ u cơ mỡ mạch (AML).">Angiomyolipoma? / U cơ mỡ mạch?</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Solid renal mass measuring [X] mm. Recommend CT/MRI. / Khối u đặc ở thận kích thước [X] mm. Đề nghị CT/MRI.">Solid Mass / Khối u đặc</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Renal stone measuring [X] mm in the [location] causing posterior acoustic shadowing. / Sỏi thận kích thước [X] mm tại [vị trí] gây bóng lưng sau.">Stone w/ Shadowing / Sỏi có bóng lưng</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Multiple small non-shadowing echogenic foci, likely small calculi or papillary calcifications. / Nhiều nốt hồi âm dày nhỏ không bóng lưng, nghĩ sỏi nhỏ hoặc vôi hóa nhú thận.">Echogenic Foci / Nốt hồi âm dày</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="section organ-section">
+                        <summary class="section-toggle"><h3><i class="fas fa-arrow-left"></i> Left Kidney / Thận Trái</h3></summary>
+                        <div class="section-content organ-details-grid">
+                             <div class="form-group">
+                                <label for="leftKidneyLength">Size (Length) / KT (Trục dọc):</label>
+                                <input type="number" step="0.1" id="leftKidneyLength" name="leftKidneyLength" placeholder="cm">
+                            </div>
+                            <div class="form-group">
+                                <label for="leftKidneyParenchymaThickness">Parenchymal Thickness / Bề dày chủ mô:</label>
+                                <input type="number" step="1" id="leftKidneyParenchymaThickness" name="leftKidneyParenchymaThickness" placeholder="mm">
+                            </div>
+                             <div class="form-group">
+                                <label for="leftKidneyParenchymaEchogenicity">Parenchymal Echogenicity / Hồi âm chủ mô:</label>
+                                <input type="text" id="leftKidneyParenchymaEchogenicity" name="leftKidneyParenchymaEchogenicity" list="kidney-echo-suggestions" placeholder="Normal, Increased...">
+                            </div>
+                            <div class="form-group">
+                                <label for="leftKidneyCMD">Corticomedullary Differentiation / Phân biệt vỏ tủy:</label>
+                                <select id="leftKidneyCMD" name="leftKidneyCMD">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="Preserved / Còn">Preserved / Còn</option>
+                                    <option value="Lost / Mất">Lost / Mất</option>
+                                    <option value="Indistinct / Không rõ">Indistinct / Không rõ</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="leftKidneyStones">Stones / Sỏi:</label>
+                                 <select id="leftKidneyStones" name="leftKidneyStones">
+                                     <option value="">-- Select / Chọn --</option>
+                                     <option value="None / Không có">None / Không có</option>
+                                     <option value="Yes / Có">Yes / Có</option>
+                                </select>
+                            </div>
+                             <div class="form-group">
+                                <label for="leftKidneyStoneSize">Stone Size (Max) / KT Sỏi (Lớn nhất):</label>
+                                <input type="number" step="1" id="leftKidneyStoneSize" name="leftKidneyStoneSize" placeholder="mm">
+                            </div>
+                             <div class="form-group">
+                                <label for="leftKidneyStoneLocation">Stone Location / Vị trí sỏi:</label>
+                                <input type="text" id="leftKidneyStoneLocation" list="stone-location-suggestions" placeholder="e.g., Calyx, Pelvis / Vd: Đài, Bể">
+                            </div>
+                            <div class="form-group">
+                                <label for="leftKidneyHydro">Hydronephrosis / Ứ nước:</label>
+                                <select id="leftKidneyHydro" name="leftKidneyHydro">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="None / Không">None / Không</option>
+                                    <option value="Mild / Nhẹ">Mild / Nhẹ</option>
+                                    <option value="Moderate / Vừa">Moderate / Vừa</option>
+                                    <option value="Severe / Nặng">Severe / Nặng</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="leftKidneyLesionsDesc">Cysts / Masses Description / Mô tả Nang / Khối u:</label>
+                                <textarea id="leftKidneyLesionsDesc" name="leftKidneyLesionsDesc" class="lesion-description-area" rows="2" placeholder="Describe size, location, characteristics (simple, complex)... / Mô tả KT, vị trí, đặc điểm (đơn giản, phức tạp)..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="No renal cysts or masses identified. / Không thấy nang hay khối u thận.">No Lesions / Không TT</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Simple cortical cyst measuring [X] mm in the [upper/mid/lower] pole. / Nang đơn giản ở vỏ thận kích thước [X] mm tại cực [trên/giữa/dưới].">Simple Cyst / Nang đơn giản</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Complex cyst (Bosniak [II/IIF/III/IV]). Recommend further evaluation. / Nang phức tạp (Bosniak [II/IIF/III/IV]). Đề nghị khảo sát thêm.">Complex Cyst / Nang phức tạp</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Hyperechoic lesion measuring [X] mm, likely angiomyolipoma (AML). / Tổn thương hồi âm dày kích thước [X] mm, nghĩ u cơ mỡ mạch (AML).">Angiomyolipoma? / U cơ mỡ mạch?</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Solid renal mass measuring [X] mm. Recommend CT/MRI. / Khối u đặc ở thận kích thước [X] mm. Đề nghị CT/MRI.">Solid Mass / Khối u đặc</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Renal stone measuring [X] mm in the [location] causing posterior acoustic shadowing. / Sỏi thận kích thước [X] mm tại [vị trí] gây bóng lưng sau.">Stone w/ Shadowing / Sỏi có bóng lưng</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Multiple small non-shadowing echogenic foci, likely small calculi or papillary calcifications. / Nhiều nốt hồi âm dày nhỏ không bóng lưng, nghĩ sỏi nhỏ hoặc vôi hóa nhú thận.">Echogenic Foci / Nốt hồi âm dày</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="section organ-section">
+                        <summary class="section-toggle"><h3><i class="fas fa-toilet"></i> Bladder / Bàng quang</h3></summary>
+                        <div class="section-content organ-details-grid">
+                             <div class="form-group">
+                                <label for="bladderVolume">Volume (Pre/Post-void) / Thể tích (Trước/Sau tiểu):</label>
+                                <input type="text" id="bladderVolume" name="bladderVolume" placeholder="e.g., 150ml / 20ml">
+                            </div>
+                            <div class="form-group">
+                                <label for="bladderWallThickness">Wall Thickness / Bề dày thành:</label>
+                                <input type="number" step="0.1" id="bladderWallThickness" name="bladderWallThickness" placeholder="mm">
+                            </div>
+                             <div class="form-group">
+                                <label for="bladderLumen">Lumen / Lòng bàng quang:</label>
+                                <input type="text" id="bladderLumen" name="bladderLumen" list="lumen-suggestions" placeholder="Clear, Debris...">
+                                <datalist id="lumen-suggestions">
+                                    <option value="Clear / Trong"></option>
+                                    <option value="Contains debris / Có cặn lắng"></option>
+                                    <option value="Contains blood clot / Có cục máu đông"></option>
+                                </datalist>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="bladderLesionsDesc">Intraluminal Lesions / Masses / Tổn thương / Khối u trong lòng:</label>
+                                <textarea id="bladderLesionsDesc" name="bladderLesionsDesc" class="lesion-description-area" rows="2" placeholder="Describe stones, masses, polyps... / Mô tả sỏi, khối u, polyp..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="No intraluminal lesions identified. / Không thấy tổn thương trong lòng.">No Lesions / Không TT</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Small calculus measuring [X] mm. / Sỏi nhỏ kích thước [X] mm.">Calculus / Sỏi</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Polypoid mass arising from the [location] wall measuring [X] mm. / Khối dạng polyp xuất phát từ thành [vị trí] kích thước [X] mm.">Polypoid Mass / Khối polyp</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Wall thickening noted at the [location]. / Ghi nhận dày thành tại [vị trí].">Wall Thickening / Dày thành</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Trabeculated bladder wall. / Thành bàng quang cột cơ.">Trabeculation / Cột cơ</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Ureteral jet seen bilaterally. / Thấy tia nước tiểu phụt hai bên.">Ureteral Jets / Tia nước tiểu</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="section organ-section">
+                        <summary class="section-toggle"><h3><i class="fas fa-venus"></i> Uterus / Tử cung</h3></summary>
+                        <div class="section-content organ-details-grid">
+                            <div class="form-group">
+                                <label for="uterusPresent">Status / Hiện diện:</label>
+                                <select id="uterusPresent" name="uterusPresent">
+                                    <option value="Present / Có">Present / Có</option>
+                                    <option value="Absent (Post-hysterectomy) / Không (Sau cắt TC)">Absent (Post-hysterectomy) / Không (Sau cắt TC)</option>
+                                    <option value="Not Assessed / Không đánh giá">Not Assessed / Không đánh giá</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="uterusPosition">Position / Tư thế:</label>
+                                <input type="text" id="uterusPosition" name="uterusPosition" list="uterus-position-suggestions" placeholder="Anteverted...">
+                                <datalist id="uterus-position-suggestions">
+                                    <option value="Anteverted / Ngả trước"></option>
+                                    <option value="Retroverted / Ngả sau"></option>
+                                    <option value="Midline / Trung gian"></option>
+                                </datalist>
+                            </div>
+                            <div class="form-group">
+                                <label for="uterusLength">Length / Dài:</label>
+                                <input type="number" step="1" id="uterusLength" name="uterusLength" placeholder="mm">
+                            </div>
+                            <div class="form-group">
+                                <label for="uterusWidth">Width / Rộng:</label>
+                                <input type="number" step="1" id="uterusWidth" name="uterusWidth" placeholder="mm">
+                            </div>
+                            <div class="form-group">
+                                <label for="uterusAP">AP Diameter / ĐK Trước-Sau:</label>
+                                <input type="number" step="1" id="uterusAP" name="uterusAP" placeholder="mm">
+                            </div>
+                             <div class="form-group">
+                                <label for="endometrialThickness">Endometrial Thickness / Bề dày nội mạc:</label>
+                                <input type="number" step="0.1" id="endometrialThickness" name="endometrialThickness" placeholder="mm">
+                            </div>
+                             <div class="form-group">
+                                <label for="myometriumEchotexture">Myometrium Echotexture / Hồi âm cơ tử cung:</label>
+                                <input type="text" id="myometriumEchotexture" name="myometriumEchotexture" list="myometrium-suggestions" placeholder="Homogeneous...">
+                                <datalist id="myometrium-suggestions">
+                                    <option value="Homogeneous / Đồng nhất"></option>
+                                    <option value="Heterogeneous / Không đồng nhất"></option>
+                                    <option value="Fibroids noted / Ghi nhận u xơ"></option>
+                                    <option value="Adenomyosis changes / Thay đổi dạng lạc nội mạc trong cơ"></option>
+                                </datalist>
+                            </div>
+                             <div class="form-group">
+                                <label for="cervixAppearance">Cervix Appearance / Hình ảnh cổ tử cung:</label>
+                                <input type="text" id="cervixAppearance" name="cervixAppearance" list="cervix-suggestions" placeholder="Normal...">
+                                 <datalist id="cervix-suggestions">
+                                    <option value="Normal / Bình thường"></option>
+                                    <option value="Nabothian cysts noted / Ghi nhận nang Naboth"></option>
+                                </datalist>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="uterusLesionsDesc">Other Uterine Findings / Phát hiện khác ở tử cung:</label>
+                                <textarea id="uterusLesionsDesc" name="uterusLesionsDesc" class="lesion-description-area" rows="2" placeholder="Describe fibroids, polyps, fluid... / Mô tả u xơ, polyp, dịch..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="Normal uterine appearance for age. / Hình ảnh tử cung bình thường theo tuổi.">Normal / Bình thường</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Multiple small intramural fibroids, largest measuring [X] mm. / Nhiều u xơ nhỏ trong cơ, lớn nhất [X] mm.">Fibroids / U xơ</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Thin, regular endometrium. / Nội mạc tử cung mỏng, đều.">Thin Endometrium / NMTC mỏng</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Thickened, irregular endometrium. Suggest further evaluation. / Nội mạc tử cung dày, không đều. Đề nghị khảo sát thêm.">Thickened Endometrium / NMTC dày</button>
+                                    <button type="button" class="suggestion-btn" data-insert="IUD seen in normal position. / Thấy vòng tránh thai đúng vị trí.">IUD in situ / Có vòng</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Small amount of fluid in the endometrial cavity. / Ít dịch trong lòng tử cung.">Endometrial Fluid / Dịch lòng TC</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Endometrial polyp suspected. Recommend hysteroscopy. / Nghi ngờ polyp nội mạc tử cung. Đề nghị nội soi buồng tử cung.">Endometrial Polyp? / Polyp NMTC?</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="section organ-section">
+                        <summary class="section-toggle"><h3><i class="fas fa-egg"></i> Adnexa / Phần phụ (Ovaries / Buồng trứng)</h3></summary>
+                        <div class="section-content">
+                             <div class="form-group">
+                                <label for="rightOvaryDesc">Right Ovary / Buồng trứng phải:</label>
+                                <textarea id="rightOvaryDesc" name="rightOvaryDesc" rows="3" placeholder="Describe size, appearance, follicles, cysts, masses... / Mô tả kích thước, hình dạng, nang noãn, nang, khối u..."></textarea>
+                                <div class="suggestion-button-container">
+                                     <button type="button" class="suggestion-btn" data-insert="Normal size and appearance with follicles noted. / Kích thước và hình dạng bình thường, có nang noãn.">Normal Right Ovary / BT Phải BT</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Simple cyst measuring [X] mm. / Nang đơn giản kích thước [X] mm.">Simple Cyst (R) / Nang (P)</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Complex cyst/mass measuring [X] mm. Suggest follow-up/MRI. / Nang/khối u phức tạp kích thước [X] mm. Đề nghị theo dõi/MRI.">Complex Lesion (R) / TT Phức tạp (P)</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Hemorrhagic cyst appearance measuring [X] mm. / Hình ảnh nang xuất huyết kích thước [X] mm.">Hemorrhagic Cyst (R) / Nang xuất huyết (P)</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Lesion consistent with dermoid cyst (echogenic focus +/- shadowing). / Tổn thương phù hợp nang bì (nốt hồi âm dày +/- bóng lưng).">Dermoid? (R) / Nang bì? (P)</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Not visualized. / Không thấy.">Not Viz (R) / Không thấy (P)</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="leftOvaryDesc">Left Ovary / Buồng trứng trái:</label>
+                                <textarea id="leftOvaryDesc" name="leftOvaryDesc" rows="3" placeholder="Describe size, appearance, follicles, cysts, masses... / Mô tả kích thước, hình dạng, nang noãn, nang, khối u..."></textarea>
+                                 <div class="suggestion-button-container">
+                                     <button type="button" class="suggestion-btn" data-insert="Normal size and appearance with follicles noted. / Kích thước và hình dạng bình thường, có nang noãn.">Normal Left Ovary / BT Trái BT</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Simple cyst measuring [X] mm. / Nang đơn giản kích thước [X] mm.">Simple Cyst (L) / Nang (T)</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Complex cyst/mass measuring [X] mm. Suggest follow-up/MRI. / Nang/khối u phức tạp kích thước [X] mm. Đề nghị theo dõi/MRI.">Complex Lesion (L) / TT Phức tạp (T)</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Hemorrhagic cyst appearance measuring [X] mm. / Hình ảnh nang xuất huyết kích thước [X] mm.">Hemorrhagic Cyst (L) / Nang xuất huyết (T)</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Lesion consistent with dermoid cyst (echogenic focus +/- shadowing). / Tổn thương phù hợp nang bì (nốt hồi âm dày +/- bóng lưng).">Dermoid? (L) / Nang bì? (T)</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Not visualized. / Không thấy.">Not Viz (L) / Không thấy (T)</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="pelvicFreeFluid">Free Fluid in Pelvis / Dịch tự do hố chậu:</label>
+                                <select id="pelvicFreeFluid" name="pelvicFreeFluid">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="None / Không">None / Không</option>
+                                    <option value="Physiologic / Sinh lý">Physiologic / Sinh lý</option>
+                                    <option value="Minimal / Tối thiểu">Minimal / Tối thiểu</option>
+                                    <option value="Mild / Ít">Mild / Ít</option>
+                                    <option value="Moderate / Vừa">Moderate / Vừa</option>
+                                    <option value="Large / Nhiều">Large / Nhiều</option>
+                                </select>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="section organ-section">
+                        <summary class="section-toggle"><h3><i class="fas fa-tint"></i> Ascites / Dịch ổ bụng</h3></summary>
+                        <div class="section-content">
+                            <div class="form-group">
+                                <label for="ascitesAmount">Amount / Lượng:</label>
+                                 <select id="ascitesAmount" name="ascitesAmount">
+                                     <option value="None / Không">None / Không</option>
+                                     <option value="Minimal / Tối thiểu">Minimal / Tối thiểu</option>
+                                     <option value="Mild / Ít">Mild / Ít</option>
+                                     <option value="Moderate / Vừa">Moderate / Vừa</option>
+                                     <option value="Severe (Large) / Nhiều">Severe (Large) / Nhiều</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                 <label for="ascitesLocation">Location / Vị trí:</label>
+                                <input type="text" id="ascitesLocation" name="ascitesLocation" placeholder="e.g., Pelvis, Morison's pouch / Vd: Hố chậu, Túi Morison">
+                             </div>
+                        </div>
+                    </details>
+
+                     <details class="section organ-section">
+                        <summary class="section-toggle"><h3><i class="fas fa-search-plus"></i> Other Findings / Khảo sát khác</h3></summary>
+                        <div class="section-content">
+                            <div class="form-group">
+                                <label for="otherFindings">Other Significant Findings / Các phát hiện khác:</label>
+                                <textarea id="otherFindings" name="otherFindings" rows="3" placeholder="Describe any other relevant findings... / Mô tả các phát hiện liên quan khác..."></textarea>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="section" open>
+                        <summary class="section-toggle"><h3><i class="fas fa-file-medical-alt"></i> Impression & Recommendation / Kết luận & Đề nghị</h3></summary>
+                         <div class="section-content">
+                            <div class="form-group">
+                                <label for="abdominal-impression">Impression / Kết luận:</label>
+                                <textarea id="abdominal-impression" name="impression" rows="5" placeholder="Summarize key findings... / Tóm tắt các kết quả chính..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="Normal abdominal ultrasound examination. / Siêu âm bụng tổng quát bình thường.">Normal / Bình thường</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Mild diffuse hepatic steatosis (Grade I). / Gan nhiễm mỡ lan tỏa độ I.">Fatty Liver Gr I / Gan nhiễm mỡ I</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Cholelithiasis without evidence of acute cholecystitis. / Sỏi túi mật không có bằng chứng viêm túi mật cấp.">Gallstones / Sỏi túi mật</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Findings suggestive of acute cholecystitis (thickened wall, pericholecystic fluid, positive Murphy's sign). / Hình ảnh gợi ý viêm túi mật cấp (thành dày, dịch quanh túi mật, Murphy dương tính).">Cholecystitis Signs / DH Viêm túi mật</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Simple renal cyst in the [Right/Left] kidney. / Nang thận đơn giản ở thận [Phải/Trái].">Renal Cyst / Nang thận</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Non-obstructing renal calculus in the [Right/Left] kidney. / Sỏi thận không gây tắc nghẽn ở thận [Phải/Trái].">Renal Stone / Sỏi thận</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Mild hydronephrosis of the [Right/Left] kidney. / Ứ nước thận [Phải/Trái] độ nhẹ.">Mild Hydro / Ứ nước nhẹ</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Splenomegaly. / Lách to.">Splenomegaly / Lách to</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Small volume ascites noted in the pelvis. / Ghi nhận dịch ổ bụng lượng ít ở hố chậu.">Ascites / Dịch ổ bụng</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Pancreas is partially obscured by bowel gas. / Tụy bị che khuất một phần bởi hơi trong lòng ruột.">Limited Pancreas / Tụy hạn chế</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Normal pelvic ultrasound (uterus and adnexa). / Siêu âm phần phụ bình thường (tử cung và phần phụ).">Normal Pelvis / Phần phụ BT</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Uterine fibroids noted. / Ghi nhận u xơ tử cung.">Fibroids / U xơ TC</button>
+                                      <button type="button" class="suggestion-btn" data-insert="Simple ovarian cyst on the [Right/Left]. / Nang buồng trứng đơn giản bên [Phải/Trái].">Ovarian Cyst / Nang BT</button>
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <label for="abdominal-recommendation">Recommendation / Đề nghị:</label>
+                                <textarea id="abdominal-recommendation" name="recommendation" rows="3" placeholder="e.g., Clinical correlation, Follow-up study... / Ví dụ: Tương quan lâm sàng, Theo dõi..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="Clinical correlation recommended. / Đề nghị tương quan lâm sàng.">Clinical Correlation / Tương quan LS</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Follow-up ultrasound in [3/6] months. / Siêu âm kiểm tra sau [3/6] tháng.">Follow-up US / SA kiểm tra</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Consider CT scan for further evaluation. / Cân nhắc chụp CT để đánh giá thêm.">Consider CT / Cân nhắc CT</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Consider MRI/MRCP for further evaluation. / Cân nhắc chụp MRI/MRCP để đánh giá thêm.">Consider MRI/MRCP</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Laboratory correlation (LFTs, etc.). / Tương quan xét nghiệm (CN gan,...).">Lab Correlation / Tương quan XN</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Surgical consultation recommended. / Đề nghị hội chẩn ngoại khoa.">Surgical Consult / HC Ngoại</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Gynecological consultation recommended. / Đề nghị hội chẩn phụ khoa.">Gyn Consult / HC Phụ khoa</button>
+                                </div>
+                            </div>
+                         </div>
+                    </details>
+
+                </form>
+            </div>
+
+            <div class="tab-content" id="images">
+                 <h2>Ultrasound Images / Hình ảnh Siêu âm</h2>
+                <div class="form-group">
+                    <label for="image-upload">Upload Images / Tải ảnh lên:</label>
+                    <input type="file" id="image-upload" multiple accept="image/*" style="display: block; margin-top: 5px;">
+                </div>
+                <div id="image-preview-container" style="margin-top: 15px;">
+                    </div>
+            </div>
+
+            <div class="tab-content" id="templates">
+                 <h2>Template Management / Quản lý Mẫu</h2>
+                <div class="form-group">
+                    <label for="template-name">Template Name / Tên Mẫu:</label>
+                    <input type="text" id="template-name" placeholder="Enter name to save / Nhập tên để lưu">
+                    <button type="button" id="save-template-btn"><i class="fas fa-save"></i> Save Current as Template / Lưu thành Mẫu</button>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="load-template-select">Select Template to Load / Chọn Mẫu để tải:</label>
+                    <select id="load-template-select">
+                        <option value="">-- Select Template / Chọn Mẫu --</option>
+                        <optgroup label="Preset Templates / Mẫu có sẵn" id="preset-templates-group"></optgroup>
+                        <optgroup label="Saved Templates / Mẫu đã lưu" id="user-templates-group"></optgroup>
+                    </select>
+                    <button type="button" id="load-template-btn"><i class="fas fa-download"></i> Load Template / Tải Mẫu</button>
+                    <button type="button" id="delete-template-btn" class="danger-btn"><i class="fas fa-trash-alt"></i> Delete Selected Template / Xóa Mẫu</button>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="import-template-file">Import Template (JSON) / Nhập Mẫu (JSON):</label>
+                    <input type="file" id="import-template-file" accept=".json">
+                    <button type="button" id="import-template-btn"><i class="fas fa-file-import"></i> Import / Nhập</button>
+                </div>
+                <div class="form-group">
+                    <label>Export Current State / Xuất trạng thái hiện tại:</label>
+                    <button type="button" id="export-template-btn"><i class="fas fa-file-export"></i> Export Current State (JSON) / Xuất (JSON)</button>
+                </div>
+            </div>
+
+            <div class="tab-content" id="report">
+                 <h2>Report Preview & Actions / Xem trước & Thao tác Báo cáo</h2>
+
+                <div id="report-preview" class="report-output-area">
+                    <p class="placeholder-text"><i>Report preview (EN) will appear here after generation. / Bản xem trước (EN) sẽ hiện ở đây sau khi tạo.</i></p>
+                </div>
+
+                <div class="report-section-container" id="translation-section" style="margin-top: 20px; display: none;">
+                    <div class="report-header">
+                        <h3><i class="fas fa-language"></i> Vietnamese Translation / Bản dịch Tiếng Việt (VI)</h3>
+                        <button type="button" id="edit-translation-btn" class="edit-toggle-btn" style="display: none;"><i class="fas fa-edit"></i> Sửa bản dịch</button>
+                    </div>
+                    <div id="translation-content" class="report-output-area" style="border-top: 1px solid #ddd; border-radius: 0 0 5px 5px; min-height: 100px;">
+                        <p class="placeholder-text"><i>Translation (VI) will appear here. / Bản dịch (VI) sẽ hiện ở đây.</i></p>
+                    </div>
+                    <textarea id="translation-edit-area" class="report-textarea" rows="15" style="display: none; border-radius: 0 0 5px 5px; border-top: 1px solid #ddd; margin-top: -1px;" placeholder="Edit the Markdown translation here... / Chỉnh sửa bản dịch dạng Markdown tại đây..."></textarea>
+                </div>
+
+                <div id="translation-loading" style="text-align: center; margin-top: 15px; display: none;">
+                    <span class="loading-spinner"></span> Translating report... / Đang dịch báo cáo...
+                </div>
+
+                <div class="report-actions">
+                    <button type="button" id="generate-report-btn"><i class="fas fa-cogs"></i> Generate Report / Tạo Báo cáo</button>
+                    <button type="button" id="translate-report-btn" style="display: none;" class="action-btn-translate"><i class="fas fa-language"></i> Dịch (VI)</button>
+                    <button type="button" id="print-report-btn" style="display: none;"><i class="fas fa-print"></i> Print / In (EN)</button>
+                    <button type="button" id="print-translation-btn" style="display: none;" class="action-btn-print-vi"><i class="fas fa-print"></i> Print / In (VI)</button>
+                    <button type="button" id="export-report-html-btn" style="display: none;"><i class="fas fa-file-export"></i> Export / Xuất (HTML)</button>
+                </div>
+            </div>
+
+        </div> <div id="notifications"></div>
+
+    </div> <script type="module" src="js/main.js"></script>
+
+</body>
+</html>

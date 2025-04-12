@@ -1,0 +1,26 @@
+{
+    "thyroid": {
+      "overallSize": "Normal",
+      "echotexture": "Heterogeneous, micronodulation pattern",
+      "vascularity": "Normal",
+      "rightLobeD1": "",
+      "rightLobeD2": "",
+      "rightLobeD3": "",
+      "rightLobeVolume": "",
+      "rightLobeFindings": "Heterogeneous echotexture with fibrous septations.",
+      "leftLobeD1": "",
+      "leftLobeD2": "",
+      "leftLobeD3": "",
+      "leftLobeVolume": "",
+      "leftLobeFindings": "Heterogeneous echotexture with fibrous septations.",
+      "isthmusThickness": "",
+      "isthmusFindings": "Heterogeneous.",
+      "lesions": [],
+      "lymphNodes": "May show reactive-appearing lymph nodes.",
+      "impression": "Findings consistent with Hashimoto's thyroiditis."
+    },
+    "metadata": {
+      "name": "Hashimoto Example",
+      "source": "File Template"
+    }
+  }

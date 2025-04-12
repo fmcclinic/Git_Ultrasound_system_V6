@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carotid Ultrasound Report / Báo cáo Siêu âm Động mạch Cảnh</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Carotid Ultrasound Reporting System / Hệ thống tạo báo cáo Siêu âm Động mạch Cảnh</h1>
+
+        <div class="tab-container">
+            <div class="tab-nav">
+                <button class="tab-button active" data-tab="patient-info">Patient Info / Thông tin BN</button>
+                <button class="tab-button" data-tab="carotid-assessment">Carotid Assessment / Đánh giá ĐM Cảnh</button>
+                <button class="tab-button" data-tab="images">Images / Hình ảnh</button>
+                <button class="tab-button" data-tab="templates">Templates / Mẫu</button>
+                <button class="tab-button" data-tab="report">Report / Báo cáo</button>
+            </div>
+
+            <div class="tab-content active" id="patient-info">
+                 <h2>Patient Information / Thông tin Bệnh nhân</h2>
+                 <form id="patient-info-form">
+                    <div class="form-group">
+                        <label for="patient-name">Họ và Tên / Full Name:</label>
+                        <input type="text" id="patient-name" name="patientName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-id">Mã BN / Patient ID:</label>
+                        <input type="text" id="patient-id" name="patientId" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="patient-dob">Ngày sinh / Date of Birth:</label>
+                        <input type="date" id="patient-dob" name="patientDob">
+                    </div>
+                    <div class="form-group">
+                        <label for="requesting-physician">Bác sĩ chỉ định / Requesting Physician:</label>
+                        <input type="text" id="requesting-physician" name="requestingPhysician">
+                    </div>
+                    <div class="form-group">
+                        <label for="exam-date">Ngày siêu âm / Exam Date:</label>
+                        <input type="date" id="exam-date" name="examDate" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="reason">Reason for Exam / Clinical Info / Lý do khám / LS:</label>
+                        <input type="text" id="reason" name="reason" list="reason-suggestions-carotid" placeholder="Enter reason or select from list... / Nhập lý do hoặc chọn từ danh sách...">
+                        <datalist id="reason-suggestions-carotid">
+                            <option value="Transient Ischemic Attack (TIA) / Cơn thiếu máu não thoáng qua"></option>
+                            <option value="Stroke / Cerebrovascular Accident (CVA) / Đột quỵ / Tai biến mạch máu não"></option>
+                            <option value="Carotid bruit / Tiếng thổi động mạch cảnh"></option>
+                            <option value="Vertigo / Dizziness / Chóng mặt"></option>
+                            <option value="Syncope / Presyncope / Ngất / Tiền ngất"></option>
+                            <option value="Amaurosis fugax / Mù thoáng qua"></option>
+                            <option value="Pre-operative evaluation (e.g., CABG) / Đánh giá trước phẫu thuật (vd: CABG)"></option>
+                            <option value="Follow-up of known stenosis / Theo dõi hẹp đã biết"></option>
+                            <option value="Post-endarterectomy/stenting follow-up / Theo dõi sau cắt bỏ nội mạc/đặt stent"></option>
+                            <option value="Cardiovascular risk assessment / Đánh giá nguy cơ tim mạch"></option>
+                            <option value="Pulsatile neck mass / Khối vùng cổ đập theo mạch"></option>
+                            <option value="Screening for atherosclerosis / Tầm soát xơ vữa động mạch"></option>
+                        </datalist>
+                    </div>
+                     <div class="form-group">
+                        <label for="reporting-doctor">Reporting Doctor / Bác sĩ siêu âm:</label>
+                        <input type="text" id="reporting-doctor" name="reportingDoctor" placeholder="Enter reporting doctor's name / Nhập tên BS đọc KQ">
+                    </div>
+                </form>
+            </div>
+
+            <div class="tab-content" id="carotid-assessment">
+                <h2>Carotid Assessment / Đánh giá Động mạch Cảnh</h2>
+                <form id="carotid-assessment-form">
+
+                    <details class="section">
+                        <summary class="section-toggle"><h3><i class="fas fa-arrow-left"></i> Left Side / Bên Trái</h3></summary>
+                        <div class="section-content">
+                            <details class="vessel-section">
+                                <summary class="vessel-toggle"><h4>Common Carotid Artery (CCA) / ĐM Cảnh Chung (T)</h4></summary>
+                                <div class="vessel-details">
+                                    <div class="form-group">
+                                        <label for="left-cca-psv">PSV (cm/s):</label>
+                                        <input type="number" step="1" id="left-cca-psv" name="leftCcaPsv" placeholder="Peak Systolic">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="left-cca-edv">EDV (cm/s):</label>
+                                        <input type="number" step="1" id="left-cca-edv" name="leftCcaEdv" placeholder="End Diastolic">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="left-cca-imt-mean">IMT Mean (mm):</label>
+                                        <input type="number" step="0.1" id="left-cca-imt-mean" name="leftCcaImtMean" placeholder="Trung bình">
+                                    </div>
+                                     <div class="form-group">
+                                        <label for="left-cca-imt-max">IMT Max (mm):</label>
+                                        <input type="number" step="0.1" id="left-cca-imt-max" name="leftCcaImtMax" placeholder="Dày nhất">
+                                    </div>
+                                     <div class="form-group full-width">
+                                        <label for="left-cca-waveform">Waveform / Dạng sóng:</label>
+                                        <input type="text" id="left-cca-waveform" name="leftCcaWaveform" list="cca-waveform-suggestions" placeholder="e.g., Normal, High Resistance...">
+                                        <datalist id="cca-waveform-suggestions">
+                                            <option value="Normal low-resistance waveform / Dạng sóng trở kháng thấp bình thường"></option>
+                                            <option value="High resistance waveform / Dạng sóng trở kháng cao"></option>
+                                            <option value="Dampened waveform (Tardus Parvus) / Dạng sóng yếu và đến muộn (Tardus Parvus)"></option>
+                                            <option value="Turbulent flow / Dòng chảy rối"></option>
+                                        </datalist>
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label for="left-cca-plaque">Plaque / Atheroma Description / Mô tả mảng xơ vữa:</label>
+                                        <textarea id="left-cca-plaque" name="leftCcaPlaque" rows="3" placeholder="Location, echogenicity, surface, calcification... / Vị trí, hồi âm, bề mặt, vôi hóa..."></textarea>
+                                        <div class="suggestion-button-container">
+                                            <button type="button" class="suggestion-btn" data-insert="No significant plaque identified. / Không thấy mảng xơ vữa đáng kể.">Không MXV / No Plaque</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Mild intimal thickening noted without discrete plaque. / Dày nhẹ lớp nội mạc, không có mảng xơ vữa rời rạc.">Dày NM / Thickening</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Small hypoechoic plaque at the distal CCA, smooth surface, non-stenotic (<30%). / Mảng xơ vữa nhỏ, hồi âm kém tại đoạn xa CCA, bề mặt trơn láng, không gây hẹp (<30%).">MXV nhỏ, <30% / Small Plaque</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Calcified plaque along the posterior wall of the mid CCA causing acoustic shadowing, appears non-stenotic. / Mảng xơ vữa vôi hóa dọc thành sau đoạn giữa CCA gây bóng lưng, không thấy gây hẹp.">MXV vôi hóa / Calc Plaque</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Heterogeneous plaque in the carotid bulb extending from the distal CCA, irregular surface, causing mild (<50%) stenosis. / Mảng xơ vữa không đồng nhất tại hành cảnh lan từ đoạn xa CCA, bề mặt không đều, gây hẹp nhẹ (<50%).">MXV không đồng nhất, <50% / Heterog Plaque</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Echolucent (lipid-rich) plaque with possibly thin fibrous cap at bifurcation. / Mảng xơ vữa hồi âm trống (giàu lipid) có thể có vỏ sợi mỏng tại chỗ chia đôi.">MXV giàu lipid / Lipid Plaque</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+
+                            <details class="vessel-section">
+                                <summary class="vessel-toggle"><h4>Internal Carotid Artery (ICA) / ĐM Cảnh Trong (T)</h4></summary>
+                                <div class="vessel-details">
+                                    <div class="form-group">
+                                        <label for="left-ica-psv">PSV (cm/s):</label>
+                                        <input type="number" step="1" id="left-ica-psv" name="leftIcaPsv" placeholder="Peak Systolic">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="left-ica-edv">EDV (cm/s):</label>
+                                        <input type="number" step="1" id="left-ica-edv" name="leftIcaEdv" placeholder="End Diastolic">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="left-ica-ratio">ICA/CCA PSV Ratio:</label>
+                                        <input type="number" step="0.1" id="left-ica-ratio" name="leftIcaRatio" placeholder="Tỷ lệ">
+                                    </div>
+                                     <div class="form-group">
+                                        <label for="left-ica-stenosis">Stenosis % (NASCET):</label>
+                                        <input type="number" step="1" min="0" max="100" id="left-ica-stenosis" name="leftIcaStenosisPct" placeholder="%">
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label for="left-ica-waveform">Waveform / Dạng sóng:</label>
+                                        <input type="text" id="left-ica-waveform" name="leftIcaWaveform" list="ica-waveform-suggestions" placeholder="e.g., Normal, Post-stenotic...">
+                                        <datalist id="ica-waveform-suggestions">
+                                            <option value="Normal low-resistance waveform / Dạng sóng trở kháng thấp bình thường"></option>
+                                            <option value="Post-stenotic turbulence / Dòng chảy rối sau hẹp"></option>
+                                            <option value="Dampened waveform (Tardus Parvus) / Dạng sóng yếu và đến muộn (Tardus Parvus)"></option>
+                                            <option value="High resistance waveform (suggests distal occlusion) / Dạng sóng trở kháng cao (gợi ý tắc đoạn xa)"></option>
+                                             <option value="String sign flow / Dấu hiệu dòng chảy dạng sợi"></option>
+                                            <option value="No flow detected (Occlusion) / Không phát hiện dòng chảy (Tắc nghẽn)"></option>
+                                        </datalist>
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label for="left-ica-plaque">Plaque / Atheroma Description / Mô tả mảng xơ vữa:</label>
+                                        <textarea id="left-ica-plaque" name="leftIcaPlaque" rows="3" placeholder="Location (origin, bulb, distal), echogenicity, surface, calcification, estimated stenosis... / Vị trí (nguyên ủy, phình cảnh, đoạn xa), hồi âm, bề mặt, vôi hóa, ước lượng độ hẹp..."></textarea>
+                                         <div class="suggestion-button-container">
+                                            <button type="button" class="suggestion-btn" data-insert="No significant plaque identified. / Không thấy mảng xơ vữa đáng kể.">Không MXV / No Plaque</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Homogeneous hypoechoic plaque at origin causing mild (<50%) stenosis. / Mảng xơ vữa hồi âm kém đồng nhất tại nguyên ủy gây hẹp nhẹ (<50%).">MXV giảm âm, <50% / Hypo Plaque <50%</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Calcified plaque with acoustic shadowing limiting stenosis assessment. / Mảng xơ vữa vôi hóa có bóng lưng làm hạn chế đánh giá độ hẹp.">MXV vôi hóa / Calc Plaque</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Heterogeneous plaque with irregular surface, potentially ulcerated, causing moderate (50-69%) stenosis. / Mảng xơ vữa không đồng nhất, bề mặt không đều, nghi ngờ loét, gây hẹp vừa (50-69%).">MXV không đồng nhất, 50-69% / Heterog Plaque 50-69%</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Severe stenosis (>70%) caused by large complex plaque. / Hẹp nặng (>70%) do mảng xơ vữa lớn, phức tạp.">MXV phức tạp, >70% / Complex Plaque >70%</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+
+                             <details class="vessel-section">
+                                <summary class="vessel-toggle"><h4>External Carotid Artery (ECA) / ĐM Cảnh Ngoài (T)</h4></summary>
+                                <div class="vessel-details">
+                                    <div class="form-group">
+                                        <label for="left-eca-psv">PSV (cm/s):</label>
+                                        <input type="number" step="1" id="left-eca-psv" name="leftEcaPsv">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="left-eca-edv">EDV (cm/s):</label>
+                                        <input type="number" step="1" id="left-eca-edv" name="leftEcaEdv">
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label for="left-eca-waveform">Waveform / Dạng sóng:</label>
+                                        <input type="text" id="left-eca-waveform" name="leftEcaWaveform" list="eca-waveform-suggestions" placeholder="e.g., High Resistance...">
+                                        <datalist id="eca-waveform-suggestions">
+                                            <option value="Normal high-resistance waveform with dicrotic notch / Dạng sóng trở kháng cao bình thường có khuyết tiền tâm trương"></option>
+                                            <option value="Low resistance (suggests ECA stenosis or externalization) / Trở kháng thấp (gợi ý hẹp ECA hoặc ngoại cảnh hóa)"></option>
+                                             <option value="Post-stenotic turbulence / Dòng chảy rối sau hẹp"></option>
+                                        </datalist>
+                                    </div>
+                                     <div class="form-group full-width">
+                                        <label for="left-eca-plaque">Plaque / Atheroma Description / Mô tả mảng xơ vữa:</label>
+                                        <textarea id="left-eca-plaque" name="leftEcaPlaque" rows="2" placeholder="Less common, but describe if present... / Ít gặp hơn, nhưng mô tả nếu có..."></textarea>
+                                         <div class="suggestion-button-container">
+                                            <button type="button" class="suggestion-btn" data-insert="No significant plaque identified. / Không thấy mảng xơ vữa đáng kể.">Không MXV / No Plaque</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Minor plaque noted at the origin, non-stenotic. / Ghi nhận mảng xơ vữa nhỏ tại nguyên ủy, không gây hẹp.">MXV nhỏ / Minor Plaque</button>
+                                         </div>
+                                    </div>
+                                </div>
+                            </details>
+
+                            <details class="vessel-section">
+                                <summary class="vessel-toggle"><h4>Vertebral Artery (VA) / ĐM Đốt Sống (T)</h4></summary>
+                                <div class="vessel-details">
+                                    <div class="form-group">
+                                        <label for="left-va-psv">PSV (cm/s):</label>
+                                        <input type="number" step="1" id="left-va-psv" name="leftVaPsv">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="left-va-edv">EDV (cm/s):</label>
+                                        <input type="number" step="1" id="left-va-edv" name="leftVaEdv">
+                                    </div>
+                                    <div class="form-group">
+                                         <label for="left-va-direction">Flow Direction / Hướng dòng:</label>
+                                         <select id="left-va-direction" name="leftVaFlowDirection">
+                                             <option value="">-- Select --</option>
+                                             <option value="Antegrade / Thuận dòng">Antegrade / Thuận dòng</option>
+                                             <option value="Retrograde / Ngược dòng">Retrograde / Ngược dòng</option>
+                                             <option value="Bidirectional / Hai chiều">Bidirectional / Hai chiều</option>
+                                             <option value="Not visualized / Không quan sát thấy">Not visualized / Không thấy</option>
+                                         </select>
+                                     </div>
+                                     <div class="form-group">
+                                         <label for="left-va-waveform">Waveform / Dạng sóng:</label>
+                                         <input type="text" id="left-va-waveform" name="leftVaWaveform" list="va-waveform-suggestions" placeholder="e.g., Normal, Tardus Parvus...">
+                                         <datalist id="va-waveform-suggestions">
+                                             <option value="Normal low-resistance waveform / Dạng sóng trở kháng thấp bình thường"></option>
+                                             <option value="High resistance (suggests distal stenosis/occlusion) / Trở kháng cao (gợi ý hẹp/tắc đoạn xa)"></option>
+                                             <option value="Dampened (Tardus Parvus - suggests proximal stenosis) / Yếu và đến muộn (Tardus Parvus - gợi ý hẹp đoạn gần)"></option>
+                                             <option value="To-and-fro (bidirectional - consistent with subclavian steal) / Hai chiều (qua lại - phù hợp hội chứng cướp máu dưới đòn)"></option>
+                                              <option value="Retrograde flow (consistent with subclavian steal or occlusion) / Dòng chảy ngược (phù hợp hội chứng cướp máu hoặc tắc ĐM dưới đòn)"></option>
+                                         </datalist>
+                                     </div>
+                                </div>
+                            </details>
+
+                            <details class="vessel-section">
+                                <summary class="vessel-toggle"><h4>Subclavian Artery (SCA) / ĐM Dưới Đòn (T) (Optional)</h4></summary>
+                                <div class="vessel-details">
+                                    <div class="form-group">
+                                        <label for="left-sca-psv">PSV (cm/s):</label>
+                                        <input type="number" step="1" id="left-sca-psv" name="leftScaPsv">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="left-sca-edv">EDV (cm/s):</label>
+                                        <input type="number" step="1" id="left-sca-edv" name="leftScaEdv">
+                                    </div>
+                                     <div class="form-group full-width">
+                                         <label for="left-sca-waveform">Waveform / Dạng sóng:</label>
+                                         <input type="text" id="left-sca-waveform" name="leftScaWaveform" list="sca-waveform-suggestions" placeholder="e.g., Normal triphasic, Monophasic...">
+                                         <datalist id="sca-waveform-suggestions">
+                                             <option value="Normal high-resistance triphasic waveform / Dạng sóng 3 pha trở kháng cao bình thường"></option>
+                                             <option value="Biphasic waveform / Dạng sóng 2 pha"></option>
+                                             <option value="Monophasic waveform (dampened - suggests proximal stenosis) / Dạng sóng 1 pha (yếu - gợi ý hẹp đoạn gần)"></option>
+                                              <option value="Post-stenotic turbulence / Dòng chảy rối sau hẹp"></option>
+                                         </datalist>
+                                     </div>
+                                </div>
+                            </details>
+                        </div> </details> <details class="section">
+                        <summary class="section-toggle"><h3><i class="fas fa-arrow-right"></i> Right Side / Bên Phải</h3></summary>
+                         <div class="section-content">
+                            <details class="vessel-section">
+                                <summary class="vessel-toggle"><h4>Common Carotid Artery (CCA) / ĐM Cảnh Chung (P)</h4></summary>
+                                <div class="vessel-details">
+                                    <div class="form-group">
+                                        <label for="right-cca-psv">PSV (cm/s):</label>
+                                        <input type="number" step="1" id="right-cca-psv" name="rightCcaPsv" placeholder="Peak Systolic">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="right-cca-edv">EDV (cm/s):</label>
+                                        <input type="number" step="1" id="right-cca-edv" name="rightCcaEdv" placeholder="End Diastolic">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="right-cca-imt-mean">IMT Mean (mm):</label>
+                                        <input type="number" step="0.1" id="right-cca-imt-mean" name="rightCcaImtMean" placeholder="Trung bình">
+                                    </div>
+                                     <div class="form-group">
+                                        <label for="right-cca-imt-max">IMT Max (mm):</label>
+                                        <input type="number" step="0.1" id="right-cca-imt-max" name="rightCcaImtMax" placeholder="Dày nhất">
+                                    </div>
+                                     <div class="form-group full-width">
+                                        <label for="right-cca-waveform">Waveform / Dạng sóng:</label>
+                                        <input type="text" id="right-cca-waveform" name="rightCcaWaveform" list="cca-waveform-suggestions" placeholder="e.g., Normal, High Resistance...">
+                                        </div>
+                                    <div class="form-group full-width">
+                                        <label for="right-cca-plaque">Plaque / Atheroma Description / Mô tả mảng xơ vữa:</label>
+                                        <textarea id="right-cca-plaque" name="rightCcaPlaque" rows="3" placeholder="Location, echogenicity, surface, calcification... / Vị trí, hồi âm, bề mặt, vôi hóa..."></textarea>
+                                         <div class="suggestion-button-container">
+                                            <button type="button" class="suggestion-btn" data-insert="No significant plaque identified. / Không thấy mảng xơ vữa đáng kể.">Không MXV / No Plaque</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Mild intimal thickening noted without discrete plaque. / Dày nhẹ lớp nội mạc, không có mảng xơ vữa rời rạc.">Dày NM / Thickening</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Small hypoechoic plaque at the distal CCA, smooth surface, non-stenotic (<30%). / Mảng xơ vữa nhỏ, hồi âm kém tại đoạn xa CCA, bề mặt trơn láng, không gây hẹp (<30%).">MXV nhỏ, <30% / Small Plaque</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Calcified plaque along the posterior wall of the mid CCA causing acoustic shadowing, appears non-stenotic. / Mảng xơ vữa vôi hóa dọc thành sau đoạn giữa CCA gây bóng lưng, không thấy gây hẹp.">MXV vôi hóa / Calc Plaque</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Heterogeneous plaque in the carotid bulb extending from the distal CCA, irregular surface, causing mild (<50%) stenosis. / Mảng xơ vữa không đồng nhất tại hành cảnh lan từ đoạn xa CCA, bề mặt không đều, gây hẹp nhẹ (<50%).">MXV không đồng nhất, <50% / Heterog Plaque</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Echolucent (lipid-rich) plaque with possibly thin fibrous cap at bifurcation. / Mảng xơ vữa hồi âm trống (giàu lipid) có thể có vỏ sợi mỏng tại chỗ chia đôi.">MXV giàu lipid / Lipid Plaque</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+
+                             <details class="vessel-section">
+                                <summary class="vessel-toggle"><h4>Internal Carotid Artery (ICA) / ĐM Cảnh Trong (P)</h4></summary>
+                                <div class="vessel-details">
+                                    <div class="form-group">
+                                        <label for="right-ica-psv">PSV (cm/s):</label>
+                                        <input type="number" step="1" id="right-ica-psv" name="rightIcaPsv" placeholder="Peak Systolic">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="right-ica-edv">EDV (cm/s):</label>
+                                        <input type="number" step="1" id="right-ica-edv" name="rightIcaEdv" placeholder="End Diastolic">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="right-ica-ratio">ICA/CCA PSV Ratio:</label>
+                                        <input type="number" step="0.1" id="right-ica-ratio" name="rightIcaRatio" placeholder="Tỷ lệ">
+                                    </div>
+                                     <div class="form-group">
+                                        <label for="right-ica-stenosis">Stenosis % (NASCET):</label>
+                                        <input type="number" step="1" min="0" max="100" id="right-ica-stenosis" name="rightIcaStenosisPct" placeholder="%">
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label for="right-ica-waveform">Waveform / Dạng sóng:</label>
+                                        <input type="text" id="right-ica-waveform" name="rightIcaWaveform" list="ica-waveform-suggestions" placeholder="e.g., Normal, Post-stenotic...">
+                                        </div>
+                                    <div class="form-group full-width">
+                                        <label for="right-ica-plaque">Plaque / Atheroma Description / Mô tả mảng xơ vữa:</label>
+                                        <textarea id="right-ica-plaque" name="rightIcaPlaque" rows="3" placeholder="Location (origin, bulb, distal), echogenicity, surface, calcification, estimated stenosis... / Vị trí (nguyên ủy, phình cảnh, đoạn xa), hồi âm, bề mặt, vôi hóa, ước lượng độ hẹp..."></textarea>
+                                         <div class="suggestion-button-container"> <button type="button" class="suggestion-btn" data-insert="No significant plaque identified. / Không thấy mảng xơ vữa đáng kể.">Không MXV / No Plaque</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Homogeneous hypoechoic plaque at origin causing mild (<50%) stenosis. / Mảng xơ vữa hồi âm kém đồng nhất tại nguyên ủy gây hẹp nhẹ (<50%).">MXV giảm âm, <50% / Hypo Plaque <50%</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Calcified plaque with acoustic shadowing limiting stenosis assessment. / Mảng xơ vữa vôi hóa có bóng lưng làm hạn chế đánh giá độ hẹp.">MXV vôi hóa / Calc Plaque</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Heterogeneous plaque with irregular surface, potentially ulcerated, causing moderate (50-69%) stenosis. / Mảng xơ vữa không đồng nhất, bề mặt không đều, nghi ngờ loét, gây hẹp vừa (50-69%).">MXV không đồng nhất, 50-69% / Heterog Plaque 50-69%</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Severe stenosis (>70%) caused by large complex plaque. / Hẹp nặng (>70%) do mảng xơ vữa lớn, phức tạp.">MXV phức tạp, >70% / Complex Plaque >70%</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+
+                             <details class="vessel-section">
+                                <summary class="vessel-toggle"><h4>External Carotid Artery (ECA) / ĐM Cảnh Ngoài (P)</h4></summary>
+                                <div class="vessel-details">
+                                    <div class="form-group">
+                                        <label for="right-eca-psv">PSV (cm/s):</label>
+                                        <input type="number" step="1" id="right-eca-psv" name="rightEcaPsv">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="right-eca-edv">EDV (cm/s):</label>
+                                        <input type="number" step="1" id="right-eca-edv" name="rightEcaEdv">
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label for="right-eca-waveform">Waveform / Dạng sóng:</label>
+                                        <input type="text" id="right-eca-waveform" name="rightEcaWaveform" list="eca-waveform-suggestions" placeholder="e.g., High Resistance...">
+                                        </div>
+                                     <div class="form-group full-width">
+                                        <label for="right-eca-plaque">Plaque / Atheroma Description / Mô tả mảng xơ vữa:</label>
+                                        <textarea id="right-eca-plaque" name="rightEcaPlaque" rows="2" placeholder="Less common, but describe if present... / Ít gặp hơn, nhưng mô tả nếu có..."></textarea>
+                                         <div class="suggestion-button-container">
+                                            <button type="button" class="suggestion-btn" data-insert="No significant plaque identified. / Không thấy mảng xơ vữa đáng kể.">Không MXV / No Plaque</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Minor plaque noted at the origin, non-stenotic. / Ghi nhận mảng xơ vữa nhỏ tại nguyên ủy, không gây hẹp.">MXV nhỏ / Minor Plaque</button>
+                                         </div>
+                                    </div>
+                                </div>
+                            </details>
+
+                             <details class="vessel-section">
+                                <summary class="vessel-toggle"><h4>Vertebral Artery (VA) / ĐM Đốt Sống (P)</h4></summary>
+                                <div class="vessel-details">
+                                    <div class="form-group">
+                                        <label for="right-va-psv">PSV (cm/s):</label>
+                                        <input type="number" step="1" id="right-va-psv" name="rightVaPsv">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="right-va-edv">EDV (cm/s):</label>
+                                        <input type="number" step="1" id="right-va-edv" name="rightVaEdv">
+                                    </div>
+                                    <div class="form-group">
+                                         <label for="right-va-direction">Flow Direction / Hướng dòng:</label>
+                                         <select id="right-va-direction" name="rightVaFlowDirection">
+                                             <option value="">-- Select --</option>
+                                             <option value="Antegrade / Thuận dòng">Antegrade / Thuận dòng</option>
+                                             <option value="Retrograde / Ngược dòng">Retrograde / Ngược dòng</option>
+                                             <option value="Bidirectional / Hai chiều">Bidirectional / Hai chiều</option>
+                                             <option value="Not visualized / Không quan sát thấy">Not visualized / Không thấy</option>
+                                         </select>
+                                     </div>
+                                     <div class="form-group">
+                                         <label for="right-va-waveform">Waveform / Dạng sóng:</label>
+                                         <input type="text" id="right-va-waveform" name="rightVaWaveform" list="va-waveform-suggestions" placeholder="e.g., Normal, Tardus Parvus...">
+                                         </div>
+                                </div>
+                            </details>
+
+                            <details class="vessel-section">
+                                <summary class="vessel-toggle"><h4>Subclavian Artery (SCA) / ĐM Dưới Đòn (P) (Optional)</h4></summary>
+                                <div class="vessel-details">
+                                    <div class="form-group">
+                                        <label for="right-sca-psv">PSV (cm/s):</label>
+                                        <input type="number" step="1" id="right-sca-psv" name="rightScaPsv">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="right-sca-edv">EDV (cm/s):</label>
+                                        <input type="number" step="1" id="right-sca-edv" name="rightScaEdv">
+                                    </div>
+                                     <div class="form-group full-width">
+                                         <label for="right-sca-waveform">Waveform / Dạng sóng:</label>
+                                         <input type="text" id="right-sca-waveform" name="rightScaWaveform" list="sca-waveform-suggestions" placeholder="e.g., Normal triphasic, Monophasic...">
+                                         </div>
+                                </div>
+                            </details>
+                        </div> </details> <details class="section" open> <summary class="section-toggle"><h3><i class="fas fa-file-medical-alt"></i> Impression & Recommendation / Kết luận & Đề nghị</h3></summary>
+                         <div class="section-content">
+                            <div class="form-group">
+                                <label for="carotid-impression">Impression / Kết luận:</label>
+                                <textarea id="carotid-impression" name="impression" rows="5" placeholder="Summarize findings, stenosis grades, plaque significance... / Tóm tắt kết quả, mức độ hẹp, ý nghĩa mảng xơ vữa..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="Normal carotid ultrasound examination. No hemodynamically significant stenosis or flow abnormalities. / Siêu âm động mạch cảnh hai bên bình thường. Không thấy hẹp có ý nghĩa huyết động hay bất thường dòng chảy.">Bình thường / Normal</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Mild diffuse intimal-medial thickening bilaterally. / Dày lan tỏa lớp nội trung mạc hai bên mức độ nhẹ.">Dày IMT / IMT Thick</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Non-stenotic atherosclerotic plaque noted in the [Left/Right] [CCA/ICA/Bulb]. / Ghi nhận mảng xơ vữa không gây hẹp tại [Trái/Phải] [CCA/ICA/Phình cảnh].">MXV <50% / Plaque <50%</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Hemodynamically significant stenosis (50-69% NASCET) of the [Left/Right] internal carotid artery origin. / Hẹp có ý nghĩa huyết động (50-69% NASCET) tại nguyên ủy động mạch cảnh trong [Trái/Phải].">Hẹp ICA 50-69% / ICA Sten 50-69%</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Severe stenosis (70-99% NASCET) of the [Left/Right] internal carotid artery. / Hẹp nặng (70-99% NASCET) động mạch cảnh trong [Trái/Phải].">Hẹp ICA >70% / ICA Sten >70%</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Occlusion of the [Left/Right] internal carotid artery. / Tắc động mạch cảnh trong [Trái/Phải].">Tắc ICA / ICA Occlusion</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Findings consistent with [Left/Right] subclavian steal phenomenon (e.g., retrograde flow in VA). / Hình ảnh phù hợp hội chứng cướp máu dưới đòn [Trái/Phải] (ví dụ: dòng chảy ngược trong ĐM đốt sống).">HC Cướp máu / Steal</button>
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <label for="carotid-recommendation">Recommendation / Đề nghị:</label>
+                                <textarea id="carotid-recommendation" name="recommendation" rows="3" placeholder="e.g., Clinical correlation, Follow-up study, Consider CTA/MRA... / Ví dụ: Tương quan lâm sàng, Theo dõi, Cân nhắc CTA/MRA..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="Clinical correlation recommended. / Đề nghị tương quan lâm sàng.">Tương quan LS / Clinical Corr</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Medical management of atherosclerosis risk factors. / Điều trị nội khoa các yếu tố nguy cơ xơ vữa động mạch.">Quản lý YTNC / Risk Factors Rx</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Follow-up carotid ultrasound in [6/12] months recommended. / Đề nghị siêu âm động mạch cảnh kiểm tra sau [6/12] tháng.">Theo dõi SA [6/12] tháng / F/U US</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Consider further evaluation with CTA or MRA if clinically indicated. / Cân nhắc khảo sát thêm bằng CTA hoặc MRA nếu có chỉ định lâm sàng.">Cân nhắc CTA/MRA / Consider CTA/MRA</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Referral for vascular surgery consultation recommended. / Đề nghị hội chẩn chuyên khoa ngoại mạch máu.">HC Ngoại MM / Vasc Consult</button>
+                                </div>
+                            </div>
+                         </div>
+                    </details>
+
+                </form>
+            </div> <div class="tab-content" id="images">
+                 <h2>Ultrasound Images / Hình ảnh Siêu âm</h2>
+                <div class="form-group">
+                    <label for="image-upload">Upload Images / Tải ảnh lên:</label>
+                    <input type="file" id="image-upload" multiple accept="image/*" style="display: block; margin-top: 5px;">
+                </div>
+                <div id="image-preview-container" style="margin-top: 15px;">
+                    </div>
+            </div>
+
+             <div class="tab-content" id="templates">
+                 <h2>Template Management / Quản lý Mẫu</h2>
+                <div class="form-group">
+                    <label for="template-name">Template Name / Tên Mẫu:</label>
+                    <input type="text" id="template-name" placeholder="Enter name to save / Nhập tên để lưu">
+                    <button type="button" id="save-template-btn"><i class="fas fa-save"></i> Save Current as Template / Lưu thành Mẫu</button>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="load-template-select">Select Template to Load / Chọn Mẫu để tải:</label>
+                    <select id="load-template-select">
+                        <option value="">-- Select Template / Chọn Mẫu --</option>
+                        <optgroup label="Preset Templates / Mẫu có sẵn" id="preset-templates-group"></optgroup>
+                        <optgroup label="Saved Templates / Mẫu đã lưu" id="user-templates-group"></optgroup>
+                    </select>
+                    <button type="button" id="load-template-btn"><i class="fas fa-download"></i> Load Template / Tải Mẫu</button>
+                    <button type="button" id="delete-template-btn" class="danger-btn"><i class="fas fa-trash-alt"></i> Delete Selected Template / Xóa Mẫu</button>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="import-template-file">Import Template (JSON) / Nhập Mẫu (JSON):</label>
+                    <input type="file" id="import-template-file" accept=".json">
+                    <button type="button" id="import-template-btn"><i class="fas fa-file-import"></i> Import / Nhập</button>
+                </div>
+                <div class="form-group">
+                    <label>Export Current State / Xuất trạng thái hiện tại:</label>
+                    <button type="button" id="export-template-btn"><i class="fas fa-file-export"></i> Export Current State (JSON) / Xuất (JSON)</button>
+                </div>
+            </div>
+
+            <div class="tab-content" id="report">
+                 <h2>Report Preview & Actions / Xem trước & Thao tác Báo cáo</h2>
+                <div id="report-preview" class="report-output-area">
+                    <p class="placeholder-text"><i>Report preview (EN) will appear here after generation. / Bản xem trước (EN) sẽ hiện ở đây sau khi tạo.</i></p>
+                </div>
+                <div class="report-section-container" id="translation-section" style="margin-top: 20px; display: none;">
+                    <div class="report-header">
+                        <h3><i class="fas fa-language"></i> Vietnamese Translation / Bản dịch Tiếng Việt (VI)</h3>
+                        <button type="button" id="edit-translation-btn" class="edit-toggle-btn" style="display: none;"><i class="fas fa-edit"></i> Sửa bản dịch</button>
+                    </div>
+                    <div id="translation-content" class="report-output-area" style="border-top: 1px solid #ddd; border-radius: 0 0 5px 5px; min-height: 100px;">
+                        <p class="placeholder-text"><i>Translation (VI) will appear here. / Bản dịch (VI) sẽ hiện ở đây.</i></p>
+                    </div>
+                    <textarea id="translation-edit-area" class="report-textarea" rows="15" style="display: none; border-radius: 0 0 5px 5px; border-top: 1px solid #ddd; margin-top: -1px;" placeholder="Edit the Markdown translation here... / Chỉnh sửa bản dịch dạng Markdown tại đây..."></textarea>
+                </div>
+                <div id="translation-loading" style="text-align: center; margin-top: 15px; display: none;">
+                    <span class="loading-spinner"></span> Translating report... / Đang dịch báo cáo...
+                </div>
+                <div class="report-actions">
+                    <button type="button" id="generate-report-btn"><i class="fas fa-cogs"></i> Generate Report / Tạo Báo cáo</button>
+                    <button type="button" id="translate-report-btn" style="display: none;" class="action-btn-translate"><i class="fas fa-language"></i> Dịch (VI)</button>
+                    <button type="button" id="print-report-btn" style="display: none;"><i class="fas fa-print"></i> Print / In (EN)</button>
+                    <button type="button" id="print-translation-btn" style="display: none;" class="action-btn-print-vi"><i class="fas fa-print"></i> Print / In (VI)</button>
+                    <button type="button" id="export-report-html-btn" style="display: none;"><i class="fas fa-file-export"></i> Export / Xuất (HTML)</button>
+                </div>
+            </div>
+
+        </div> <div id="notifications"></div>
+    </div> <script type="module" src="js/main.js"></script>
+</body>
+</html>

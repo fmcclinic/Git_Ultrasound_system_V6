@@ -1,0 +1,26 @@
+{
+  "thyroid": {
+    "overallSize": "Diffusely enlarged / To lan tỏa",
+    "echotexture": "Diffusely hypoechoic and relatively homogeneous / Giảm âm lan tỏa và tương đối đồng nhất",
+    "vascularity": "Increased",
+    "rightLobeD1": "19",
+    "rightLobeD2": "19",
+    "rightLobeD3": "65",
+    "rightLobeVolume": "12.27",
+    "rightLobeFindings": "Enlarged, diffusely hypoechoic parenchyma. / Thùy phải to, chủ mô giảm âm lan tỏa.",
+    "leftLobeD1": "20",
+    "leftLobeD2": "21",
+    "leftLobeD3": "63",
+    "leftLobeVolume": "13.84",
+    "leftLobeFindings": "Enlarged, diffusely hypoechoic parenchyma. / Thùy trái to, chủ mô giảm âm lan tỏa.",
+    "isthmusThickness": "7",
+    "isthmusFindings": "enlarged and hypoechoic. / phì đại và giảm âm.",
+    "lymphNodes": "no suspicious lymphadenopathy. / không thấy hạch cổ bệnh lý.",
+    "impression": "Findings highly suggestive of Graves' disease (diffuse enlargement, hypoechogenicity, marked hypervascularity). Correlate clinically. / Hình ảnh gợi ý nhiều bệnh Graves (tuyến giáp to lan tỏa, giảm âm, tăng tưới máu rất nhiều). Kết hợp lâm sàng.",
+    "lesions": []
+  },
+  "metadata": {
+    "exportedAt": "2025-03-31T16:22:13.276Z",
+    "source": "Ultrasound Reporting System Export"
+  }
+}

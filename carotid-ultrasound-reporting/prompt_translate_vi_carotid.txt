@@ -1,0 +1,83 @@
+You are a medical translator specializing in radiology reports. Translate the following English Carotid Ultrasound report findings, impression, and recommendation into VIETNAMESE.
+
+**IMPORTANT INSTRUCTIONS:**
+1.  **Format:** Maintain the structure of the original text. Use Markdown for formatting (bolding, lists, etc.) exactly as provided in the English text. If the English text uses **bolding**, use **bolding** in Vietnamese. If it uses bullet points (`-` or `*`), use the same in Vietnamese. Preserve paragraphs.
+2.  **Terminology:** Use standard Vietnamese medical terminology for carotid ultrasound. Key terms to pay attention to:
+    * Vessels:
+        * Common Carotid Artery (CCA): Động mạch (ĐM) Cảnh Chung
+        * Internal Carotid Artery (ICA): ĐM Cảnh Trong
+        * External Carotid Artery (ECA): ĐM Cảnh Ngoài
+        * Vertebral Artery (VA): ĐM Đốt Sống
+        * Subclavian Artery (SCA): ĐM Dưới Đòn
+        * Bulb: Phình cảnh
+        * Origin: Chỗ xuất phát / Gốc
+        * Left: Trái (T)
+        * Right: Phải (P)
+        * Bilateral: Hai bên
+    * Parameters:
+        * Peak Systolic Velocity (PSV): Vận tốc đỉnh tâm thu
+        * End Diastolic Velocity (EDV): Vận tốc cuối tâm trương
+        * Intima-Media Thickness (IMT): Bề dày lớp Nội Trung mạc
+        * ICA/CCA PSV Ratio: Tỷ lệ PSV ĐM Cảnh Trong / ĐM Cảnh Chung
+        * Mean Velocity (MFV): Vận tốc trung bình
+        * Pulsatility Index (PI): Chỉ số đập
+        * Resistive Index (RI): Chỉ số kháng trở
+    * Plaque Characteristics:
+        * Plaque: Mảng xơ vữa
+        * Echogenicity: Hồi âm (e.g., Hypoechoic: Hồi âm kém, Hyperechoic: Hồi âm dày, Isoechoic: Đồng hồi âm, Anechoic: Trống hồi âm)
+        * Surface: Bề mặt (e.g., Smooth: Trơn láng, Irregular: Không đều, Ulcerated: Loét)
+        * Calcification: Vôi hóa (e.g., Calcified plaque: Mảng xơ vữa vôi hóa)
+        * Location: Vị trí (e.g., anterior wall: thành trước, posterior wall: thành sau, circumferential: chu vi)
+        * Length: Chiều dài
+        * Thickness: Bề dày
+    * Stenosis:
+        * Stenosis: Hẹp
+        * Percent Stenosis (%): Mức độ hẹp (%)
+        * NASCET criteria: Tiêu chuẩn NASCET
+        * ECST criteria: Tiêu chuẩn ECST (Specify if used)
+        * Mild: Nhẹ (<50%)
+        * Moderate: Vừa (50-69%)
+        * Severe: Nặng (≥70%)
+        * Near Occlusion / Pre-occlusive: Gần tắc / Hẹp khít
+        * Occlusion: Tắc hoàn toàn / Tắc nghẽn
+    * Flow Patterns / Waveforms:
+        * Waveform: Dạng sóng / Phổ Doppler
+        * Antegrade: Xuôi dòng
+        * Retrograde: Ngược dòng
+        * Bidirectional: Hai chiều
+        * Low Resistance: Kháng lực thấp
+        * High Resistance: Kháng lực cao
+        * Tardus Parvus: Sóng Tardus Parvus / Phổ Tardus Parvus (lên chậm, đỉnh tù)
+        * Turbulence / Turbulent Flow: Dòng chảy rối / Phổ rối
+        * Monophasic: Một pha
+        * Biphasic: Hai pha
+        * Triphasic: Ba pha
+        * Post-stenotic: Sau hẹp
+        * Dampened: Giảm âm độ / Phổ tù
+    * Findings/Conclusions:
+        * Normal: Bình thường
+        * Thickening: Dày
+        * Atherosclerosis / Atherosclerotic disease: Bệnh lý xơ vữa động mạch
+        * Subclavian Steal Syndrome/Phenomenon: Hội chứng / Hiện tượng cướp máu động mạch dưới đòn
+        * Dissection: Bóc tách
+        * Aneurysm: Phình mạch
+        * Fibromuscular Dysplasia (FMD): Loạn sản sợi cơ
+        * Carotid Body Tumor: U cuộn cảnh
+        * Technically limited: Khảo sát hạn chế về mặt kỹ thuật
+    * Recommendations:
+        * Follow-up: Tái khám / Theo dõi
+        * Clinical correlation: Tương quan lâm sàng
+        * Consider CTA/MRA: Cân nhắc chụp CT mạch máu / MRI mạch máu
+        * Medical management: Điều trị nội khoa
+        * Vascular surgery consultation: Hội chẩn Ngoại khoa Mạch máu
+3.  **Accuracy:** Ensure the translation is medically accurate and natural-sounding in Vietnamese.
+4.  **Placeholders:** If the English text contains placeholders like "[Left/Right]" or "[value]", keep them as placeholders in the Vietnamese translation or adapt them appropriately (e.g., "[Trái/Phải]").
+5.  **Units:** Keep units like cm/s, mm, % as they are.
+
+**Translate the following report:**
+
+--- START ENGLISH REPORT ---
+{report_content}
+--- END ENGLISH REPORT ---
+
+--- START VIETNAMESE TRANSLATION ---

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thyroid Ultrasound Report / Báo cáo Siêu âm Tuyến Giáp</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Ultrasound Reporting System / Hệ thống tạo báo cáo Siêu âm</h1>
+
+        <div class="tab-container">
+            <div class="tab-nav">
+                <button class="tab-button active" data-tab="patient-info">Patient Info / Thông tin BN</button>
+                <button class="tab-button" data-tab="thyroid-assessment">Thyroid Assessment / Đánh giá Tuyến Giáp</button>
+                <button class="tab-button" data-tab="images">Images / Hình ảnh</button>
+                <button class="tab-button" data-tab="templates">Templates / Mẫu</button>
+                <button class="tab-button" data-tab="report">Report / Báo cáo</button>
+            </div>
+
+            <div class="tab-content active" id="patient-info">
+                <h2>Patient Information / Thông tin Bệnh nhân</h2>
+                <form id="patient-info-form">
+                    <div class="form-group">
+                        <label for="patient-name">Full Name / Họ và tên:</label>
+                        <input type="text" id="patient-name" name="patientName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-id">Patient ID / Mã BN:</label>
+                        <input type="text" id="patient-id" name="patientId" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-dob">Date of Birth / Ngày sinh:</label>
+                        <input type="date" id="patient-dob" name="patientDob">
+                    </div>
+                    <div class="form-group">
+                        <label for="requesting-physician">Requesting Physician / BS chỉ định:</label>
+                        <input type="text" id="requesting-physician" name="requestingPhysician">
+                    </div>
+                    <div class="form-group">
+                        <label for="exam-date">Exam Date / Ngày khám:</label>
+                        <input type="date" id="exam-date" name="examDate" value=""> </div>
+                    <div class="form-group">
+                        <label for="reason">Reason for Exam / Clinical Info / Lý do khám / LS:</label>
+                        <input type="text" id="reason" name="reason" list="reason-suggestions" placeholder="Enter reason or select from list... / Nhập lý do hoặc chọn từ danh sách...">
+                        <datalist id="reason-suggestions">
+                            <option value="Thyroid nodule evaluation / Đánh giá nhân giáp"></option>
+                            <option value="Goiter evaluation / Đánh giá bướu giáp"></option>
+                            <option value="Abnormal thyroid function tests / Xét nghiệm chức năng tuyến giáp bất thường"></option>
+                            <option value="Neck swelling / Sưng vùng cổ"></option>
+                            <option value="Neck pain / Đau vùng cổ"></option>
+                            <option value="Follow-up of known nodule(s) / Theo dõi nhân giáp đã biết"></option>
+                            <option value="Follow-up of known goiter / Theo dõi bướu giáp đã biết"></option>
+                            <option value="Screening (e.g., family history) / Tầm soát (ví dụ: tiền sử gia đình)"></option>
+                            <option value="Symptoms of hyperthyroidism / Triệu chứng cường giáp"></option>
+                            <option value="Symptoms of hypothyroidism / Triệu chứng suy giáp"></option>
+                            <option value="Difficulty swallowing (Dysphagia) / Khó nuốt"></option>
+                            <option value="Difficulty breathing (Dyspnea) / Khó thở"></option>
+                            <option value="Voice change (Dysphonia) / Khàn tiếng"></option>
+                            <option value="Palpable neck mass / Sờ thấy khối vùng cổ"></option>
+                            <option value="Post-thyroidectomy follow-up / Theo dõi sau phẫu thuật tuyến giáp"></option>
+                            <option value="Pre-operative evaluation / Đánh giá trước phẫu thuật"></option>
+                        </datalist>
+                         </div>
+                </form>
+            </div>
+
+            <div class="tab-content" id="thyroid-assessment">
+                <h2>Thyroid Assessment / Đánh giá Tuyến Giáp</h2>
+                <form id="thyroid-form">
+                    <div class="section">
+                        <h3 class="section-toggle">General Findings / Tổng quát</h3>
+                        <div class="section-content">
+                            <div class="form-group">
+                                <label for="thyroid-size">Overall Size / Kích thước chung:</label>
+                                <input type="text" id="thyroid-size" name="overallSize" list="size-suggestions" placeholder="e.g., Normal / Bình thường, Enlarged / To...">
+                                <datalist id="size-suggestions">
+                                    <option value="Normal size / Kích thước bình thường"></option>
+                                    <option value="Mildly enlarged / To nhẹ"></option>
+                                    <option value="Moderately enlarged / To vừa"></option>
+                                    <option value="Markedly enlarged / Rất to"></option>
+                                    <option value="Diffusely enlarged / To lan tỏa"></option>
+                                    <option value="Atrophic / Teo nhỏ"></option>
+                                    <option value="Not visualized / Không quan sát thấy"></option>
+                                </datalist>
+                            </div>
+                            <div class="form-group">
+                                <label for="thyroid-echotexture">Echotexture / Cấu trúc hồi âm:</label>
+                                <input type="text" id="thyroid-echotexture" name="echotexture" list="echotexture-suggestions" placeholder="e.g., Homogeneous / Đồng nhất, Heterogeneous / Không đồng nhất...">
+                                <datalist id="echotexture-suggestions">
+                                    <option value="Homogeneous / Đồng nhất"></option>
+                                    <option value="Mildly heterogeneous / Không đồng nhất nhẹ"></option>
+                                    <option value="Moderately heterogeneous / Không đồng nhất vừa"></option>
+                                    <option value="Markedly heterogeneous / Không đồng nhất rõ rệt"></option>
+                                    <option value="Diffusely heterogeneous / Không đồng nhất lan tỏa"></option>
+                                    <option value="Coarse / Thô"></option>
+                                    <option value="Micronodulation / Vi hạt (Hashimoto)"></option>
+                                    <option value="Fibrous septations / Có vách xơ"></option>
+                                </datalist>
+                            </div>
+                            <div class="form-group">
+                                <label for="thyroid-vascularity">Vascularity (Doppler) / Tưới máu:</label>
+                                <input type="text" id="thyroid-vascularity" name="vascularity" list="vascularity-suggestions" placeholder="e.g., Normal / Bình thường...">
+                                <datalist id="vascularity-suggestions">
+                                    <option value="Normal / Bình thường"></option>
+                                    <option value="Increased / Tăng"></option>
+                                    <option value="Markedly Increased (Thyroid Inferno) / Rất tăng (Thyroid Inferno)"></option>
+                                    <option value="Decreased / Giảm"></option>
+                                    <option value="Not assessed / Không đánh giá"></option>
+                                </datalist>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-toggle">Right Lobe / Thùy Phải</h3>
+                        <div class="section-content">
+                            <div class="form-group dimension-group">
+                                <label>Dimensions (mm) / Kích thước (mm):</label>
+                                <input type="number" step="0.1" class="dimension" id="right-lobe-d1" name="rightLobeD1" placeholder="Width / Ngang" data-lobe="right"> <span class="normal-range-text">(N: 13-18)</span> x
+                                <input type="number" step="0.1" class="dimension" id="right-lobe-d2" name="rightLobeD2" placeholder="AP / Trước-Sau" data-lobe="right"> <span class="normal-range-text">(N: 13-18)</span> x
+                                <input type="number" step="0.1" class="dimension" id="right-lobe-d3" name="rightLobeD3" placeholder="Length / Dọc" data-lobe="right"> <span class="normal-range-text">(N: 40-60)</span>
+                                <br>
+                                <span class="volume-display">Volume / Thể tích: <span id="right-lobe-volume">0</span> mL</span> <span class="normal-range-text">(N: &lt; 11mL)</span>
+                                <input type="hidden" name="rightLobeVolume" id="right-lobe-volume-hidden">
+                            </div>
+                             <div class="form-group">
+                                <label for="right-lobe-findings">Findings / Parenchyma / Mô tả / Chủ mô:</label>
+                                <textarea id="right-lobe-findings" name="rightLobeFindings" rows="3" placeholder="Describe parenchyma... / Mô tả chủ mô..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="Normal parenchyma. / Chủ mô bình thường.">Chủ mô BT</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Heterogeneous. / Không đồng nhất.">Không ĐN</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Coarse echotexture. / Cấu trúc âm thô.">Cấu trúc thô</button>
+                                    <button type="button" class="suggestion-btn" data-insert="No focal lesion identified. / Không thấy tổn thương khu trú.">Không TTKT</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Cystic degeneration noted. / Ghi nhận thoái hóa nang.">Thoái hóa nang</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Fibrous septations present. / Có vách xơ.">Có vách xơ</button>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                         <h3 class="section-toggle">Left Lobe / Thùy Trái</h3>
+                         <div class="section-content">
+                             <div class="form-group dimension-group">
+                                 <label>Dimensions (mm) / Kích thước (mm):</label>
+                                 <input type="number" step="0.1" class="dimension" id="left-lobe-d1" name="leftLobeD1" placeholder="Width / Ngang" data-lobe="left"> <span class="normal-range-text">(N: 13-18)</span> x
+                                 <input type="number" step="0.1" class="dimension" id="left-lobe-d2" name="leftLobeD2" placeholder="AP / Trước-Sau" data-lobe="left"> <span class="normal-range-text">(N: 13-18)</span> x
+                                 <input type="number" step="0.1" class="dimension" id="left-lobe-d3" name="leftLobeD3" placeholder="Length / Dọc" data-lobe="left"> <span class="normal-range-text">(N: 40-60)</span>
+                                 <br>
+                                 <span class="volume-display">Volume / Thể tích: <span id="left-lobe-volume">0</span> mL</span> <span class="normal-range-text">(N: &lt; 11mL)</span>
+                                 <input type="hidden" name="leftLobeVolume" id="left-lobe-volume-hidden">
+                             </div>
+                              <div class="form-group">
+                                 <label for="left-lobe-findings">Findings / Parenchyma / Mô tả / Chủ mô:</label>
+                                 <textarea id="left-lobe-findings" name="leftLobeFindings" rows="3" placeholder="Describe parenchyma... / Mô tả chủ mô..."></textarea>
+                                  <div class="suggestion-button-container">
+                                     <button type="button" class="suggestion-btn" data-insert="Normal parenchyma. / Chủ mô bình thường.">Chủ mô BT</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Heterogeneous. / Không đồng nhất.">Không ĐN</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Coarse echotexture. / Cấu trúc âm thô.">Cấu trúc thô</button>
+                                     <button type="button" class="suggestion-btn" data-insert="No focal lesion identified. / Không thấy tổn thương khu trú.">Không TTKT</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Cystic degeneration noted. / Ghi nhận thoái hóa nang.">Thoái hóa nang</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Fibrous septations present. / Có vách xơ.">Có vách xơ</button>
+                                 </div>
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="section">
+                         <h3 class="section-toggle">Isthmus / Eo giáp</h3>
+                         <div class="section-content">
+                             <div class="form-group">
+                                 <label for="isthmus-thickness">AP Thickness (mm) / Bề dày Trước-Sau (mm):</label>
+                                 <input type="number" step="0.1" id="isthmus-thickness" name="isthmusThickness">
+                                 <span class="normal-range-text" id="isthmus-range">(Normal / BT: 2-6 mm)</span>
+                             </div>
+                             <div class="form-group">
+                                 <label for="isthmus-findings">Findings / Mô tả:</label>
+                                 <textarea id="isthmus-findings" name="isthmusFindings" rows="2" placeholder="Describe isthmus... / Mô tả eo giáp..."></textarea>
+                                  <div class="suggestion-button-container">
+                                     <button type="button" class="suggestion-btn" data-insert="Normal appearance. / Hình thái bình thường.">Bình thường</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Heterogeneous. / Không đồng nhất.">Không ĐN</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Contains nodules/cysts. / Chứa nhân/nang.">Có TT</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Thickened. / Dày.">Dày</button>
+                                  </div>
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="section">
+                         <h3 class="section-toggle">Focal Lesions (Nodules) / Tổn thương khu trú (Nhân giáp)</h3>
+                         <div class="section-content">
+                             <div id="lesions-container"></div>
+                             <button type="button" id="add-lesion-btn"><i class="fas fa-plus"></i> Add Lesion / Thêm tổn thương</button>
+                         </div>
+                    </div>
+
+                    <div class="section">
+                         <h3 class="section-toggle">Regional Lymph Nodes / Hạch vùng cổ</h3>
+                         <div class="section-content">
+                              <div class="form-group">
+                                 <label for="lymph-nodes">Findings / Mô tả:</label>
+                                 <textarea id="lymph-nodes" name="lymphNodes" rows="3" placeholder="Describe nodes... / Mô tả hạch..."></textarea>
+                                  <div class="suggestion-button-container">
+                                     <button type="button" class="suggestion-btn" data-insert="No suspicious cervical lymphadenopathy identified. / Không thấy hạch cổ bệnh lý nghi ngờ.">Không hạch nghi ngờ</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Reactive-appearing cervical nodes noted. / Ghi nhận vài hạch cổ dạng phản ứng.">Hạch phản ứng</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Suspicious lymph node(s) present (describe location, size, features). / Có hạch nghi ngờ (mô tả).">Hạch nghi ngờ</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Nodes show cystic changes. / Hạch có thoái hóa nang.">Hạch dạng nang</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Nodes show calcifications. / Hạch có vôi hóa.">Hạch vôi hóa</button>
+                                  </div>
+                              </div>
+                         </div>
+                    </div>
+
+                    <div class="section">
+                          <h3 class="section-toggle">Impression / Conclusion / Kết luận</h3>
+                          <div class="section-content">
+                               <div class="form-group">
+                                     <label for="impression">Impression / Conclusion / Kết luận:</label>
+                                    <textarea id="impression" name="impression" rows="4" placeholder="Summarize findings and provide conclusion... / Tóm tắt kết quả và đưa ra kết luận..."></textarea>
+                                     <div class="suggestion-button-container">
+                                         <button type="button" class="suggestion-btn" data-insert="Normal thyroid ultrasound. / Siêu âm tuyến giáp bình thường.">TG Bình thường</button>
+                                         <button type="button" class="suggestion-btn" data-insert="Multinodular goiter. / Bướu giáp đa nhân.">Bướu đa nhân</button>
+                                         <button type="button" class="suggestion-btn" data-insert="Findings consistent with Hashimoto's thyroiditis. / Hình ảnh phù hợp Viêm giáp Hashimoto.">Hashimoto</button>
+                                         <button type="button" class="suggestion-btn" data-insert="Findings suggestive of Graves' disease. / Hình ảnh gợi ý bệnh Graves.">Graves</button>
+                                         <button type="button" class="suggestion-btn" data-insert="Suspicious nodule(s) identified (TI-RADS [X]). Recommend FNA. / Ghi nhận nhân giáp nghi ngờ (TI-RADS [X]). Đề nghị FNA.">Nhân nghi ngờ</button>
+                                         <button type="button" class="suggestion-btn" data-insert="Benign-appearing nodule(s) (TI-RADS [X]). / Nhân giáp dạng lành tính (TI-RADS [X]).">Nhân lành tính</button>
+                                     </div>
+                               </div>
+                          </div>
+                    </div>
+
+                    </form>
+            </div>
+
+            <div class="tab-content" id="images">
+                 <h2>Ultrasound Images / Hình ảnh Siêu âm</h2>
+                 <div class="form-group">
+                     <label for="image-upload">Upload Images / Tải ảnh lên:</label>
+                     <input type="file" id="image-upload" multiple accept="image/*">
+                 </div>
+                 <div id="image-preview-container"></div>
+             </div>
+
+             <div class="tab-content" id="templates">
+                 <h2>Template Management / Quản lý Mẫu</h2>
+                  <div class="form-group">
+                       <label for="template-name">Template Name / Tên Mẫu:</label>
+                       <input type="text" id="template-name" placeholder="Enter name to save / Nhập tên để lưu">
+                       <button type="button" id="save-template-btn"><i class="fas fa-save"></i> Save Current as Template / Lưu thành Mẫu</button>
+                  </div>
+                  <hr>
+                  <div class="form-group">
+                       <label for="load-template-select">Select Template to Load / Chọn Mẫu để tải:</label>
+                       <select id="load-template-select">
+                           <option value="">-- Select Template / Chọn Mẫu --</option>
+                           <optgroup label="Preset Templates / Mẫu có sẵn" id="preset-templates-group"></optgroup>
+                           <optgroup label="Saved Templates / Mẫu đã lưu" id="user-templates-group"></optgroup>
+                       </select>
+                       <button type="button" id="load-template-btn"><i class="fas fa-download"></i> Load Template / Tải Mẫu</button>
+                       <button type="button" id="delete-template-btn" class="danger-btn"><i class="fas fa-trash-alt"></i> Delete Selected Template / Xóa Mẫu</button>
+                  </div>
+                  <hr>
+                  <div class="form-group">
+                     <label for="import-template-file">Import Template (JSON) / Nhập Mẫu (JSON):</label>
+                     <input type="file" id="import-template-file" accept=".json" style="display: inline-block; width: auto;">
+                     <button type="button" id="import-template-btn"><i class="fas fa-file-import"></i> Import / Nhập</button>
+                  </div>
+                  <div class="form-group">
+                       <label>Export Current State / Xuất trạng thái hiện tại:</label>
+                       <button type="button" id="export-template-btn"><i class="fas fa-file-export"></i> Export Current State (JSON) / Xuất (JSON)</button>
+                  </div>
+             </div>
+
+             <div class="tab-content" id="report">
+                 <h2>Report Preview & Actions / Xem trước & Thao tác Báo cáo</h2>
+                 <div id="report-preview" class="report-output-area">
+                     <p class="placeholder-text"><i>Report preview (EN) will appear here after generation. / Bản xem trước (EN) sẽ hiện ở đây sau khi tạo.</i></p>
+                 </div>
+
+                 <div class="report-section-container" id="translation-section" style="margin-top: 20px; display: none;">
+                     <div class="report-header">
+                         <h3><i class="fas fa-language"></i> Vietnamese Translation / Bản dịch Tiếng Việt (VI)</h3>
+                         <button type="button" id="edit-translation-btn" class="edit-toggle-btn" style="display: none;"><i class="fas fa-edit"></i> Sửa bản dịch</button>
+                     </div>
+                     <div id="translation-content" class="report-output-area" style="border-top: 1px solid #ddd; border-radius: 0 0 5px 5px; min-height: 50px;">
+                         </div>
+                     <textarea id="translation-edit-area" class="report-textarea" rows="20" style="display: none; border-radius: 0 0 5px 5px; border-top: 1px solid #ddd; margin-top: -1px;" placeholder="Edit the translation Markdown here... / Chỉnh sửa bản dịch dạng Markdown tại đây..."></textarea>
+                 </div>
+
+                 <div id="translation-loading" style="text-align: center; margin-top: 15px; display: none;">
+                      <span class="loading-spinner"></span> Đang dịch báo cáo / Translating report...
+                 </div>
+
+                 <div class="report-actions">
+                     <button type="button" id="generate-report-btn"><i class="fas fa-cogs"></i> Generate Report / Tạo Báo cáo</button>
+                     <button type="button" id="translate-report-btn" style="display: none; background-color: #ff9800;"><i class="fas fa-language"></i> Dịch (VI)</button>
+                     <button type="button" id="print-report-btn" style="display: none;"><i class="fas fa-print"></i> Print / In (EN)</button>
+                     <button type="button" id="print-translation-btn" style="display: none; background-color: #673ab7;"><i class="fas fa-print"></i> Print / In (VI)</button>
+                     <button type="button" id="export-report-html-btn" style="display: none;"><i class="fas fa-file-export"></i> Export / Xuất (HTML)</button>
+                 </div>
+             </div>
+
+        </div> <div id="notifications"></div>
+
+    </div> <template id="lesion-template">
+        <div class="lesion-item" data-lesion-id=""> <h4>Lesion <span class="lesion-number"></span> / Tổn thương <span class="lesion-number"></span>
+                <button type="button" class="remove-lesion-btn danger-btn" title="Remove this lesion / Xóa tổn thương này"><i class="fas fa-times"></i> Remove / Xóa</button>
+            </h4>
+            <div class="lesion-grid"> <div class="form-group">
+                     <label>Location / Vị trí:</label>
+                     <select name="lesionLocation" class="lesion-field">
+                         <option value="">-- Select / Chọn --</option>
+                         <optgroup label="Right Lobe / Thùy Phải">
+                             <option value="Right Lobe - Upper / Thùy Phải - Cực trên">Upper Pole / Cực trên</option>
+                             <option value="Right Lobe - Mid / Thùy Phải - Phần giữa">Mid Portion / Phần giữa</option>
+                             <option value="Right Lobe - Lower / Thùy Phải - Cực dưới">Lower Pole / Cực dưới</option>
+                             <option value="Right Lobe - Anterior / Thùy Phải - Trước">Anterior / Trước</option>
+                             <option value="Right Lobe - Posterior / Thùy Phải - Sau">Posterior / Sau</option>
+                         </optgroup>
+                          <optgroup label="Left Lobe / Thùy Trái">
+                             <option value="Left Lobe - Upper / Thùy Trái - Cực trên">Upper Pole / Cực trên</option>
+                             <option value="Left Lobe - Mid / Thùy Trái - Phần giữa">Mid Portion / Phần giữa</option>
+                             <option value="Left Lobe - Lower / Thùy Trái - Cực dưới">Lower Pole / Cực dưới</option>
+                             <option value="Left Lobe - Anterior / Thùy Trái - Trước">Anterior / Trước</option>
+                             <option value="Left Lobe - Posterior / Thùy Trái - Sau">Posterior / Sau</option>
+                         </optgroup>
+                         <optgroup label="Isthmus / Eo giáp">
+                             <option value="Isthmus / Eo giáp">Isthmus / Eo giáp</option>
+                         </optgroup>
+                     </select>
+                 </div>
+                  <div class="form-group dimension-group">
+                     <label>Dimensions (mm) / Kích thước (mm):</label>
+                     <div class="dimension-inputs">
+                         <input type="number" step="0.1" class="dimension lesion-field" name="lesionD1" placeholder="Width/Ngang" title="Width / Ngang"> x
+                         <input type="number" step="0.1" class="dimension lesion-field" name="lesionD2" placeholder="AP/TS" title="Anterior-Posterior / Trước-Sau"> x
+                         <input type="number" step="0.1" class="dimension lesion-field" name="lesionD3" placeholder="Length/Dọc" title="Length / Dọc">
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label>Composition / Thành phần:</label>
+                     <select name="lesionComposition" class="lesion-field tirads-field">
+                         <option value="" selected>-- Select / Chọn --</option>
+                         <option value="0">Cystic or Spongiform / Nang hoặc Bọt biển (0đ)</option>
+                         <option value="1">Mixed cystic and solid / Hỗn hợp nang và đặc (1đ)</option>
+                         <option value="2">Solid or almost completely solid / Đặc hoặc gần đặc (2đ)</option>
+                         <option value="unspecified">Cannot be determined / Không xác định</option>
+                     </select>
+                 </div>
+                  <div class="form-group">
+                     <label>Echogenicity / Độ hồi âm:</label>
+                      <select name="lesionEchogenicity" class="lesion-field tirads-field">
+                          <option value="" selected>-- Select / Chọn --</option>
+                          <option value="0">Anechoic / Trống âm (0đ)</option>
+                          <option value="1">Hyperechoic or Isoechoic / Tăng hoặc Đồng âm (1đ)</option>
+                          <option value="2">Hypoechoic / Giảm âm (2đ)</option>
+                          <option value="3">Very hypoechoic / Rất giảm âm (3đ)</option>
+                          <option value="unspecified">Cannot be determined / Không xác định</option>
+                      </select>
+                 </div>
+                  <div class="form-group">
+                     <label>Shape / Hình dạng:</label>
+                      <select name="lesionShape" class="lesion-field tirads-field">
+                          <option value="" selected>-- Select / Chọn --</option>
+                          <option value="0">Wider-than-tall / Rộng hơn cao (0đ)</option>
+                          <option value="3">Taller-than-wide / Cao hơn rộng (3đ)</option>
+                      </select>
+                 </div>
+                  <div class="form-group">
+                     <label>Margin / Đường bờ:</label>
+                      <select name="lesionMargin" class="lesion-field tirads-field">
+                          <option value="" selected>-- Select / Chọn --</option>
+                          <option value="0">Smooth or Ill-defined / Trơn láng hoặc Không rõ (0đ)</option>
+                          <option value="2">Lobulated or Irregular / Bờ thùy hoặc Không đều (2đ)</option>
+                          <option value="3">Extra-thyroidal extension / Xâm lấn vỏ bao (3đ)</option>
+                      </select>
+                  </div>
+                   <div class="form-group foci-group"> <label>Echogenic Foci / Đốm hồi âm dày:</label>
+                      <select name="lesionEchogenicFoci" multiple size="5" class="lesion-field tirads-field">
+                          <option value="0">None or Large comet-tail artifacts / Không hoặc Có vôi hóa lớn dạng đuôi sao chổi (0đ)</option>
+                          <option value="1">Macrocalcifications / Vôi hóa thô (1đ)</option>
+                          <option value="1">Peripheral (rim) calcifications / Vôi hóa viền (1đ)</option>
+                          <option value="2">Punctate echogenic foci (PEF) without shadowing / Vi vôi hóa (PEF) không bóng lưng (2đ)</option> <option value="3">Punctate echogenic foci (PEF) WITH shadowing / Vi vôi hóa (PEF) CÓ bóng lưng (3đ)</option> </select>
+                      <span class="instruction-text">(Hold Ctrl/Cmd to select multiple / Giữ Ctrl/Cmd để chọn nhiều)</span>
+                  </div>
+                  <div class="form-group tirads-summary">
+                     <label>ACR TI-RADS:</label>
+                     <div class="summary-details">
+                         <span>Score / Điểm: <strong class="tirads-score">0</strong> pts</span>
+                         <span style="margin-left: 15px;">Category / Phân loại: <strong class="tirads-category">TR?</strong></span>
+                     </div>
+                     <p class="tirads-recommendation">Recommendation / Khuyến nghị: <span>Select features to calculate / Chọn đặc điểm để tính</span></p>
+                     <input type="hidden" name="tiradsScore">
+                     <input type="hidden" name="tiradsCategory">
+                     <input type="hidden" name="tiradsRecommendation">
+                  </div>
+                   <div class="form-group description-group"> <label>Additional Description / Mô tả thêm:</label>
+                     <textarea name="lesionDescription" rows="3" class="lesion-field lesion-description-textarea" placeholder="Other relevant features, vascularity... / Đặc điểm liên quan khác, tưới máu..."></textarea>
+                     <div class="suggestion-button-container">
+                          <button type="button" class="suggestion-btn" data-insert="Likely benign. / Khả năng lành tính.">Lành tính?</button>
+                          <button type="button" class="suggestion-btn" data-insert="Suspicious features. / Có đặc điểm nghi ngờ.">Nghi ngờ?</button>
+                          <button type="button" class="suggestion-btn" data-insert="No internal vascularity. / Không có tưới máu bên trong.">Không tưới máu</button>
+                          <button type="button" class="suggestion-btn" data-insert="Internal vascularity noted. / Ghi nhận tưới máu bên trong.">Có tưới máu</button>
+                          <button type="button" class="suggestion-btn" data-insert="Peripheral vascularity noted. / Ghi nhận tưới máu ngoại vi.">Tưới máu viền</button>
+                     </div>
+                  </div>
+            </div> </div> </template>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

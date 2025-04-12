@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Ultrasound Report / Báo cáo Siêu âm Tuyến Vú</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Breast Ultrasound Reporting System / Hệ thống tạo báo cáo Siêu âm Tuyến Vú</h1>
+
+        <div class="tab-container">
+            <div class="tab-nav">
+                <button class="tab-button active" data-tab="patient-info">Patient Info / Thông tin BN</button>
+                <button class="tab-button" data-tab="breast-assessment">Breast Assessment / Đánh giá Tuyến Vú</button>
+                <button class="tab-button" data-tab="images">Images / Hình ảnh</button>
+                <button class="tab-button" data-tab="templates">Templates / Mẫu</button>
+                <button class="tab-button" data-tab="report">Report / Báo cáo</button>
+            </div>
+
+            <div class="tab-content active" id="patient-info">
+                <h2>Patient Information / Thông tin Bệnh nhân</h2>
+                <form id="patient-info-form">
+                    <div class="form-group">
+                        <label for="patient-name">Họ và Tên / Full Name:</label>
+                        <input type="text" id="patient-name" name="patientName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-id">Mã BN / Patient ID:</label>
+                        <input type="text" id="patient-id" name="patientId" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="patient-dob">Ngày sinh / Date of Birth:</label>
+                        <input type="date" id="patient-dob" name="patientDob">
+                    </div>
+                    <div class="form-group">
+                        <label for="requesting-physician">Bác sĩ chỉ định / Requesting Physician:</label>
+                        <input type="text" id="requesting-physician" name="requestingPhysician">
+                    </div>
+                    <div class="form-group">
+                        <label for="exam-date">Ngày siêu âm / Exam Date:</label>
+                        <input type="date" id="exam-date" name="examDate" value=""> </div>
+                    <div class="form-group">
+                        <label for="reason">Reason for Exam / Clinical Info / Lý do khám / LS:</label>
+                        <input type="text" id="reason" name="reason" list="reason-suggestions-breast" placeholder="Enter reason or select from list... / Nhập lý do hoặc chọn từ danh sách...">
+                        <datalist id="reason-suggestions-breast">
+                            <option value="Screening ultrasound / Siêu âm tầm soát"></option>
+                            <option value="Evaluation of palpable lump / Đánh giá khối sờ thấy"></option>
+                            <option value="Evaluation of mammographic finding / Đánh giá tổn thương trên nhũ ảnh"></option>
+                            <option value="Breast pain (Mastalgia) / Đau vú"></option>
+                            <option value="Nipple discharge / Tiết dịch núm vú"></option>
+                            <option value="Follow-up of known lesion / Theo dõi tổn thương đã biết"></option>
+                            <option value="Breast implant evaluation / Đánh giá túi ngực"></option>
+                            <option value="Guidance for intervention / Hướng dẫn can thiệp"></option>
+                            <option value="Axillary lymph node evaluation / Đánh giá hạch nách"></option>
+                            <option value="Family history of breast cancer / Tiền sử gia đình ung thư vú"></option>
+                            <option value="Personal history of breast cancer / Tiền sử bản thân ung thư vú"></option>
+                            <option value="Abnormal MRI finding / Bất thường trên MRI"></option>
+                        </datalist>
+                    </div>
+                     <div class="form-group">
+                        <label for="reporting-doctor">Reporting Doctor / Bác sĩ siêu âm:</label>
+                        <input type="text" id="reporting-doctor" name="reportingDoctor" placeholder="Enter reporting doctor's name / Nhập tên BS đọc KQ">
+                    </div>
+                </form>
+            </div>
+
+            <div class="tab-content" id="breast-assessment">
+                <h2>Breast Assessment / Đánh giá Tuyến Vú</h2>
+                <form id="breast-assessment-form">
+
+                    <div class="section">
+                        <h3 class="section-toggle active">Parenchyma / Mô Tuyến Vú</h3> <div class="section-content active">
+                            <div class="form-group">
+                                <label for="breast-echotexture">Background Echotexture / Cấu trúc nền:</label>
+                                <input type="text" id="breast-echotexture" name="breastEchotexture" list="breast-echo-suggestions" placeholder="e.g., Homogeneous, Heterogeneous...">
+                                <datalist id="breast-echo-suggestions">
+                                    <option value="Homogeneous background echotexture, predominantly fatty / Cấu trúc nền đồng nhất, chủ yếu mô mỡ"></option>
+                                    <option value="Homogeneous background echotexture, fibroglandular / Cấu trúc nền đồng nhất, mô sợi tuyến"></option>
+                                    <option value="Heterogeneous background echotexture / Cấu trúc nền không đồng nhất"></option>
+                                </datalist>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="Homogeneous background echotexture, predominantly fatty / Cấu trúc nền đồng nhất, chủ yếu mô mỡ">Đồng nhất, Mỡ</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Homogeneous background echotexture, fibroglandular / Cấu trúc nền đồng nhất, mô sợi tuyến">Đồng nhất, Sợi tuyến</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Heterogeneous background echotexture / Cấu trúc nền không đồng nhất">Không đồng nhất</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="breast-density">Fibroglandular Tissue Density (ACR) / Mật độ mô sợi tuyến (ACR):</label>
+                                <select id="breast-density" name="breastDensity">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="ACR Density A (Almost entirely fatty) / Mật độ ACR A (Hầu hết là mô mỡ)">ACR A</option>
+                                    <option value="ACR Density B (Scattered fibroglandular densities) / Mật độ ACR B (Mô sợi tuyến rải rác)">ACR B</option>
+                                    <option value="ACR Density C (Heterogeneously dense) / Mật độ ACR C (Không đồng nhất)">ACR C</option>
+                                    <option value="ACR Density D (Extremely dense) / Mật độ ACR D (Rất dày)">ACR D</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="parenchyma-description">Other Parenchymal Findings / Mô tả khác về mô tuyến:</label>
+                                <textarea id="parenchyma-description" name="parenchymaDescription" rows="2" placeholder="Ductal ectasia, Cooper's ligaments... / Giãn ống tuyến, dây chằng Cooper..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="No significant ductal ectasia. / Không giãn ống tuyến đáng kể.">Không giãn ống</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Mild ductal ectasia noted bilaterally. / Giãn ống tuyến nhẹ hai bên.">Giãn ống nhẹ</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Cooper's ligaments appear normal. / Dây chằng Cooper bình thường.">DC Cooper BT</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-toggle">Focal Lesions / Tổn thương khu trú</h3>
+                        <div class="section-content">
+                            <div id="breast-lesions-container">
+                                </div>
+                            <button type="button" id="add-breast-lesion-btn"><i class="fas fa-plus"></i> Add Lesion / Thêm tổn thương</button>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3 class="section-toggle">Axilla / Hố Nách</h3>
+                        <div class="section-content">
+                            <div class="form-group">
+                                <label for="axilla-right">Right Axilla / Nách Phải:</label>
+                                <textarea id="axilla-right" name="axillaRight" rows="2" placeholder="Describe right axillary nodes... / Mô tả hạch nách phải..."></textarea>
+                                <div class="suggestion-button-container">
+                                     <button type="button" class="suggestion-btn" data-insert="No abnormal lymph nodes seen. Normal cortical thickness. / Không thấy hạch bất thường. Vỏ hạch dày bình thường.">Nách (P) BT</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Few small nodes with normal morphology. / Vài hạch nhỏ hình thái bình thường.">Vài hạch nhỏ BT</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Suspicious node(s) noted (describe: rounded, thickened cortex, loss of hilum). / Ghi nhận (các) hạch nghi ngờ (mô tả: tròn, vỏ dày, mất rốn).">Hạch nghi ngờ</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="axilla-left">Left Axilla / Nách Trái:</label>
+                                <textarea id="axilla-left" name="axillaLeft" rows="2" placeholder="Describe left axillary nodes... / Mô tả hạch nách trái..."></textarea>
+                                 <div class="suggestion-button-container">
+                                      <button type="button" class="suggestion-btn" data-insert="No abnormal lymph nodes seen. Normal cortical thickness. / Không thấy hạch bất thường. Vỏ hạch dày bình thường.">Nách (T) BT</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Few small nodes with normal morphology. / Vài hạch nhỏ hình thái bình thường.">Vài hạch nhỏ BT</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Suspicious node(s) noted (describe: rounded, thickened cortex, loss of hilum). / Ghi nhận (các) hạch nghi ngờ (mô tả: tròn, vỏ dày, mất rốn).">Hạch nghi ngờ</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                         <h3 class="section-toggle">Impression & Recommendation / Kết luận & Đề nghị</h3>
+                         <div class="section-content">
+                            <div class="form-group">
+                                <label for="breast-impression">Impression / Kết luận:</label>
+                                <textarea id="breast-impression" name="impression" rows="4" placeholder="Summarize findings... / Tóm tắt kết quả..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="Normal bilateral breast ultrasound (BI-RADS 1). / Siêu âm hai vú bình thường (BI-RADS 1).">Vú BT (BIRADS 1)</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Benign findings (simple cysts, stable fibroadenoma) (BI-RADS 2). / Hình ảnh lành tính (nang đơn thuần, bướu sợi tuyến ổn định) (BI-RADS 2).">Lành tính (BIRADS 2)</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Probably benign finding(s) (e.g., presumed fibroadenoma) requiring follow-up (BI-RADS 3). / (Các) tổn thương nhiều khả năng lành tính (ví dụ: nghĩ nhiều bướu sợi tuyến) cần theo dõi (BI-RADS 3).">Khả năng lành (BIRADS 3)</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Suspicious finding(s) requiring biopsy (BI-RADS 4). / (Các) tổn thương nghi ngờ cần sinh thiết (BI-RADS 4).">Nghi ngờ (BIRADS 4)</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Highly suggestive of malignancy, requiring biopsy (BI-RADS 5). / Rất nghi ngờ ác tính, cần sinh thiết (BI-RADS 5).">Rất nghi ngờ (BIRADS 5)</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Known biopsy-proven malignancy (BI-RADS 6). / Ác tính đã biết qua sinh thiết (BI-RADS 6).">Ác tính đã biết (BIRADS 6)</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Incomplete assessment, needs further evaluation (BI-RADS 0). / Đánh giá chưa hoàn chỉnh, cần khảo sát thêm (BI-RADS 0).">Chưa hoàn chỉnh (BIRADS 0)</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="overall-birads">Overall BI-RADS Assessment / Đánh giá BI-RADS tổng thể:</label>
+                                <select id="overall-birads" name="overallBirads">
+                                     <option value="">-- Select / Chọn --</option>
+                                     <option value="BI-RADS 0: Incomplete / BI-RADS 0: Chưa hoàn chỉnh">BI-RADS 0</option>
+                                     <option value="BI-RADS 1: Negative / BI-RADS 1: Âm tính">BI-RADS 1</option>
+                                     <option value="BI-RADS 2: Benign / BI-RADS 2: Lành tính">BI-RADS 2</option>
+                                     <option value="BI-RADS 3: Probably Benign / BI-RADS 3: Nhiều khả năng lành tính">BI-RADS 3</option>
+                                     <option value="BI-RADS 4A: Low suspicion / BI-RADS 4A: Nghi ngờ thấp">BI-RADS 4A</option>
+                                     <option value="BI-RADS 4B: Moderate suspicion / BI-RADS 4B: Nghi ngờ vừa">BI-RADS 4B</option>
+                                     <option value="BI-RADS 4C: High suspicion / BI-RADS 4C: Nghi ngờ cao">BI-RADS 4C</option>
+                                     <option value="BI-RADS 5: Highly Suggestive of Malignancy / BI-RADS 5: Rất nghi ngờ ác tính">BI-RADS 5</option>
+                                     <option value="BI-RADS 6: Known Biopsy-Proven Malignancy / BI-RADS 6: Ác tính đã biết (qua sinh thiết)">BI-RADS 6</option>
+                                </select>
+                            </div>
+                             <div class="form-group">
+                                <label for="breast-recommendation">Recommendation / Đề nghị:</label>
+                                <textarea id="breast-recommendation" name="recommendation" rows="3" placeholder="Enter recommendations... / Nhập đề nghị..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="Routine screening interval. / Khoảng thời gian tầm soát định kỳ.">Tầm soát định kỳ</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Short-interval follow-up ultrasound in 6 months. / Siêu âm theo dõi sau 6 tháng.">Theo dõi 6 tháng</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Biopsy recommended for [lesion description]. / Đề nghị sinh thiết cho [mô tả tổn thương].">Đề nghị sinh thiết</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Correlation with mammography recommended. / Đề nghị đối chiếu với nhũ ảnh.">Đối chiếu nhũ ảnh</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Further evaluation with diagnostic mammogram/MRI indicated. / Chỉ định đánh giá thêm bằng nhũ ảnh chẩn đoán/MRI.">Khảo sát thêm</button>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="tab-content" id="images">
+                <h2>Ultrasound Images / Hình ảnh Siêu âm</h2>
+                <div class="form-group">
+                    <label for="image-upload">Upload Images / Tải ảnh lên:</label>
+                    <input type="file" id="image-upload" multiple accept="image/*" style="display: block; margin-top: 5px;">
+                </div>
+                <div id="image-preview-container" style="margin-top: 15px;">
+                    </div>
+            </div>
+
+            <div class="tab-content" id="templates">
+                <h2>Template Management / Quản lý Mẫu</h2>
+                <div class="form-group">
+                    <label for="template-name">Template Name / Tên Mẫu:</label>
+                    <input type="text" id="template-name" placeholder="Enter name to save / Nhập tên để lưu">
+                    <button type="button" id="save-template-btn"><i class="fas fa-save"></i> Save Current as Template / Lưu thành Mẫu</button>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="load-template-select">Select Template to Load / Chọn Mẫu để tải:</label>
+                    <select id="load-template-select">
+                        <option value="">-- Select Template / Chọn Mẫu --</option>
+                        <optgroup label="Preset Templates / Mẫu có sẵn" id="preset-templates-group"></optgroup>
+                        <optgroup label="Saved Templates / Mẫu đã lưu" id="user-templates-group"></optgroup>
+                    </select>
+                    <button type="button" id="load-template-btn"><i class="fas fa-download"></i> Load Template / Tải Mẫu</button>
+                    <button type="button" id="delete-template-btn" class="danger-btn"><i class="fas fa-trash-alt"></i> Delete Selected Template / Xóa Mẫu</button>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="import-template-file">Import Template (JSON) / Nhập Mẫu (JSON):</label>
+                    <input type="file" id="import-template-file" accept=".json">
+                    <button type="button" id="import-template-btn"><i class="fas fa-file-import"></i> Import / Nhập</button>
+                </div>
+                <div class="form-group">
+                    <label>Export Current State / Xuất trạng thái hiện tại:</label>
+                    <button type="button" id="export-template-btn"><i class="fas fa-file-export"></i> Export Current State (JSON) / Xuất (JSON)</button>
+                </div>
+            </div>
+
+            <div class="tab-content" id="report">
+                <h2>Report Preview & Actions / Xem trước & Thao tác Báo cáo</h2>
+
+                <div id="report-preview" class="report-output-area">
+                    <p class="placeholder-text"><i>Report preview (EN) will appear here after generation. / Bản xem trước (EN) sẽ hiện ở đây sau khi tạo.</i></p>
+                </div>
+
+                <div class="report-section-container" id="translation-section" style="margin-top: 20px; display: none;">
+                    <div class="report-header">
+                        <h3><i class="fas fa-language"></i> Vietnamese Translation / Bản dịch Tiếng Việt (VI)</h3>
+                        <button type="button" id="edit-translation-btn" class="edit-toggle-btn" style="display: none;"><i class="fas fa-edit"></i> Sửa bản dịch</button>
+                    </div>
+                    <div id="translation-content" class="report-output-area" style="border-top: 1px solid #ddd; border-radius: 0 0 5px 5px; min-height: 100px;">
+                        <p class="placeholder-text"><i>Translation (VI) will appear here. / Bản dịch (VI) sẽ hiện ở đây.</i></p>
+                    </div>
+                    <textarea id="translation-edit-area" class="report-textarea" rows="15" style="display: none; border-radius: 0 0 5px 5px; border-top: 1px solid #ddd; margin-top: -1px;" placeholder="Edit the Markdown translation here... / Chỉnh sửa bản dịch dạng Markdown tại đây..."></textarea>
+                </div>
+
+                <div id="translation-loading" style="text-align: center; margin-top: 15px; display: none;">
+                    <span class="loading-spinner"></span> Translating report... / Đang dịch báo cáo...
+                </div>
+
+                <div class="report-actions">
+                    <button type="button" id="generate-report-btn"><i class="fas fa-cogs"></i> Generate Report / Tạo Báo cáo</button>
+                    <button type="button" id="translate-report-btn" style="display: none;" class="action-btn-translate"><i class="fas fa-language"></i> Dịch (VI)</button>
+                    <button type="button" id="print-report-btn" style="display: none;"><i class="fas fa-print"></i> Print / In (EN)</button>
+                    <button type="button" id="print-translation-btn" style="display: none;" class="action-btn-print-vi"><i class="fas fa-print"></i> Print / In (VI)</button>
+                    <button type="button" id="export-report-html-btn" style="display: none;"><i class="fas fa-file-export"></i> Export / Xuất (HTML)</button>
+                </div>
+            </div>
+
+        </div> <div id="notifications"></div>
+
+    </div> <template id="breast-lesion-template">
+        <div class="lesion-item breast-lesion-item" data-lesion-id=""> <h4>Lesion <span class="lesion-number"></span> / Tổn thương <span class="lesion-number"></span>
+                <button type="button" class="remove-breast-lesion-btn danger-btn" title="Remove this lesion / Xóa tổn thương này"><i class="fas fa-trash-alt"></i> Remove / Xóa</button>
+            </h4>
+            <div class="lesion-grid" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 15px;">
+                 <div class="form-group" style="grid-column: span 3;">
+                     <label>Location / Vị trí:</label>
+                     <input type="text" name="lesionLocation" class="lesion-field" placeholder="e.g., Right, 2:00, 3cm FN / Phải, 2h, 3cm FN">
+                 </div>
+                 <div class="form-group dimension-group" style="grid-column: span 3;">
+                     <label>Size (mm) / Kích thước (mm):</label>
+                     <input type="number" step="0.1" class="dimension lesion-field" name="lesionD1" placeholder="W" title="Width / Ngang"> x
+                     <input type="number" step="0.1" class="dimension lesion-field" name="lesionD2" placeholder="AP" title="Antero-Posterior / Trước-Sau"> x
+                     <input type="number" step="0.1" class="dimension lesion-field" name="lesionD3" placeholder="L" title="Length / Dọc">
+                 </div>
+
+                <div class="form-group" style="grid-column: span 2;">
+                     <label>Shape / Hình dạng:</label>
+                     <select name="lesionShape" class="lesion-field birads-field"> <option value="">-- Select --</option>
+                         <option value="Oval / Bầu dục">Oval / Bầu dục</option>
+                         <option value="Round / Tròn">Round / Tròn</option>
+                         <option value="Irregular / Không đều">Irregular / Không đều</option>
+                     </select>
+                 </div>
+                 <div class="form-group" style="grid-column: span 2;">
+                     <label>Orientation / Hướng:</label>
+                     <select name="lesionOrientation" class="lesion-field birads-field">
+                         <option value="">-- Select --</option>
+                         <option value="Parallel / Song song">Parallel / Song song</option>
+                         <option value="Not Parallel (Vertical) / Không song song (Dọc)">Not Parallel / Không song song</option>
+                     </select>
+                 </div>
+                 <div class="form-group" style="grid-column: span 2;">
+                     <label>Margin / Đường bờ:</label>
+                     <select name="lesionMargin" class="lesion-field birads-field">
+                          <option value="">-- Select --</option>
+                          <option value="Circumscribed / Giới hạn rõ">Circumscribed / Giới hạn rõ</option>
+                          <option value="Obscured / Bị che khuất">Obscured / Bị che khuất</option>
+                          <option value="Indistinct / Không rõ">Indistinct / Không rõ</option>
+                          <option value="Microlobulated / Đa cung nhỏ">Microlobulated / Đa cung nhỏ</option>
+                          <option value="Spiculated / Tua gai">Spiculated / Tua gai</option>
+                     </select>
+                 </div>
+                 <div class="form-group" style="grid-column: span 2;">
+                     <label>Echo Pattern / Cấu trúc hồi âm:</label>
+                      <select name="lesionEchoPattern" class="lesion-field birads-field">
+                          <option value="">-- Select --</option>
+                          <option value="Anechoic / Trống âm">Anechoic / Trống âm</option>
+                          <option value="Hyperechoic / Tăng âm">Hyperechoic / Tăng âm</option>
+                          <option value="Complex cystic and solid / Nang phức tạp và đặc">Complex cystic and solid</option>
+                          <option value="Hypoechoic / Giảm âm">Hypoechoic / Giảm âm</option>
+                          <option value="Isoechoic / Đồng âm">Isoechoic / Đồng âm</option>
+                          <option value="Heterogeneous / Không đồng nhất">Heterogeneous / Không đồng nhất</option>
+                      </select>
+                 </div>
+                 <div class="form-group" style="grid-column: span 2;">
+                      <label>Posterior Features / Đặc điểm âm sau:</label>
+                      <select name="lesionPosterior" class="lesion-field birads-field">
+                          <option value="">-- Select --</option>
+                          <option value="No posterior features / Không có">No posterior features</option>
+                          <option value="Enhancement / Tăng âm">Enhancement / Tăng âm</option>
+                          <option value="Shadowing / Bóng lưng">Shadowing / Bóng lưng</option>
+                          <option value="Combined pattern / Kiểu kết hợp">Combined pattern</option>
+                      </select>
+                 </div>
+                  <div class="form-group" style="grid-column: span 2;">
+                     <label>Calcifications / Vôi hóa:</label>
+                     <input type="text" name="lesionCalcifications" class="lesion-field birads-field" placeholder="e.g., None, Macro, Micro...">
+                  </div>
+
+                <div class="form-group birads-summary" style="grid-column: span 6;"> <label style="display: block; margin-bottom: 5px;">BI-RADS Assessment:</label>
+                     <span style="margin-right: 15px;">Category: <strong class="birads-category" style="background-color: #eee; padding: 2px 5px; border-radius: 3px;">?</strong></span> <p class="birads-recommendation" style="margin-top: 5px; font-style: italic; color: #c0392b;">Recommendation:</p> <input type="hidden" name="biradsCategory">
+                     <input type="hidden" name="biradsRecommendation">
+                 </div>
+
+                 <div class="form-group" style="grid-column: span 6;">
+                    <label>Additional Description / Mô tả thêm:</label>
+                    <textarea name="lesionDescription" rows="2" class="lesion-field" placeholder="Vascularity, associated features... / Tưới máu, đặc điểm đi kèm..."></textarea>
+                     <div class="suggestion-button-container">
+                        <button type="button" class="suggestion-btn" data-insert="No internal vascularity. / Không có tưới máu bên trong.">Vô mạch</button>
+                        <button type="button" class="suggestion-btn" data-insert="Internal vascularity present. / Có tưới máu bên trong.">Có tưới máu</button>
+                        <button type="button" class="suggestion-btn" data-insert="Associated duct changes. / Thay đổi ống tuyến đi kèm.">Thay đổi ống tuyến</button>
+                         <button type="button" class="suggestion-btn" data-insert="Stable compared to previous exam dated [YYYY-MM-DD]. / Ổn định so với lần khám trước ngày [YYYY-MM-DD].">Ổn định</button>
+                     </div>
+                </div>
+            </div> </div>
+    </template>
+
+    <script type="module" src="js/main.js"></script>
+
+</body>
+</html>

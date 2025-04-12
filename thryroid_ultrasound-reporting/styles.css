@@ -1,0 +1,401 @@
+/* styles.css */
+/* Main stylesheet for the Ultrasound Reporting System - CLEANED VERSION */
+
+/* === General Styles === */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 20px auto;
+    background: #ffffff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+h1, h2, h3, h4 {
+    color: #2c3e50;
+    margin-top: 0.5em;
+    margin-bottom: 0.8em;
+}
+h1 {
+    text-align: center;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+}
+h2 {
+    font-size: 1.5em;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+}
+h3 { /* General H3 style */
+    font-size: 1.25em;
+    color: #16a085; /* Teal color */
+}
+h4 { /* General H4 style */
+    font-size: 1.1em;
+    color: #34495e;
+    margin-bottom: 0.5em;
+}
+
+hr.report-hr {
+     border: none; border-top: 1px solid #eee; margin: 1.2em 0;
+}
+
+/* === Tab System === */
+.tab-container {
+    margin-top: 25px;
+}
+.tab-nav {
+    display: flex;
+    border-bottom: 2px solid #bdc3c7;
+    margin-bottom: 0;
+}
+.tab-button {
+    padding: 12px 20px;
+    cursor: pointer;
+    border: none;
+    background-color: #f8f9fa;
+    border-bottom: 3px solid transparent;
+    margin-right: 5px;
+    margin-bottom: -2px;
+    font-size: 1.05em;
+    color: #7f8c8d;
+    transition: all 0.3s ease;
+    border-radius: 5px 5px 0 0;
+}
+.tab-button:hover {
+    color: #34495e;
+    background-color: #e9ecef;
+}
+.tab-button.active {
+    border-bottom-color: #3498db;
+    background-color: #ffffff;
+    font-weight: bold;
+    color: #2980b9;
+}
+.tab-content {
+    display: none;
+    padding: 25px;
+    border: 1px solid #bdc3c7;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    background-color: #ffffff;
+    min-height: 400px;
+}
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === Form Styles === */
+.form-group {
+    margin-bottom: 18px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #555;
+    font-size: 0.95em;
+}
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group input[type="file"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    outline: none;
+}
+.form-group select[multiple] { height: 120px; }
+.form-group select[multiple] option { padding: 5px; }
+.form-group textarea { min-height: 70px; resize: vertical; }
+
+/* Dimension group specific styles */
+.form-group.dimension-group { line-height: 1.8; }
+.form-group.dimension-group input[type="number"] { width: 85px; margin-right: 3px; text-align: center; }
+.form-group.dimension-group span { font-style: italic; color: #666; font-size: 0.95em; }
+.form-group.dimension-group .normal-range-text { font-size: 0.85em; color: #6c757d; margin-left: 2px; margin-right: 5px; }
+.form-group.dimension-group .volume-display { margin-left: 10px; font-style: normal; color: #333; }
+.form-group.dimension-group .volume-display span[id$="-volume"] { font-weight: bold; color: #111; }
+
+/* TI-RADS Display Specific Styles */
+.form-group span.tirads-score,
+.form-group span.tirads-category { font-weight: bold; background-color: #e9ecef; padding: 4px 8px; border-radius: 4px; margin: 0 5px; display: inline-block; }
+.form-group p.tirads-recommendation { margin-top: 6px; font-size: 0.9em; color: #c0392b; font-style: italic; }
+
+/* Validation Feedback (Example) */
+.form-group input:invalid,
+.form-group select:invalid,
+.form-group textarea:invalid { border-color: #e74c3c; }
+
+/* === Section Toggles === */
+.section { margin-bottom: 25px; border: 1px solid #e0e0e0; border-radius: 6px; overflow: hidden; }
+.section h3.section-toggle { background-color: #f8f9fa; padding: 12px 18px; cursor: pointer; margin: 0; border-bottom: 1px solid #e0e0e0; position: relative; color: #34495e; border-radius: 5px 5px 0 0; font-size: 1.15em; transition: background-color 0.2s ease; }
+.section h3.section-toggle:hover { background-color: #e9ecef; }
+.section h3.section-toggle::after { content: '▼'; position: absolute; right: 18px; top: 50%; transform: translateY(-50%); transition: transform 0.3s ease; font-size: 0.8em; color: #7f8c8d; }
+.section h3.section-toggle.active::after { transform: translateY(-50%) rotate(180deg); }
+.section .section-content { padding: 18px; display: none; border-top: none; background-color: #fff; }
+.section .section-content.active { display: block; }
+
+/* === Lesion Item Styles === */
+.lesion-item { border: 1px dashed #bdc3c7; padding: 20px; margin-bottom: 20px; border-radius: 5px; background-color: #fafafa; position: relative; }
+.lesion-item h4 { margin-top: 0; margin-bottom: 18px; color: #2980b9; border-bottom: 1px solid #eee; padding-bottom: 10px; font-size: 1.1em; }
+.lesion-item .remove-lesion-btn { position: absolute; top: 15px; right: 15px; background-color: #e74c3c; color: white; border: none; padding: 6px 10px; cursor: pointer; border-radius: 4px; font-size: 0.85em; line-height: 1; transition: background-color 0.2s ease; }
+.lesion-item .remove-lesion-btn:hover { background-color: #c0392b; }
+
+/* === Button Styles === */
+button { padding: 10px 18px; background-color: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 1em; transition: background-color 0.3s ease, box-shadow 0.3s ease; margin-right: 8px; vertical-align: middle; }
+button:hover { background-color: #2980b9; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+button:active { background-color: #2471a3; }
+button:disabled { background-color: #bdc3c7; cursor: not-allowed; box-shadow: none; }
+button i { margin-right: 6px; }
+
+/* Specific button colors */
+button#add-lesion-btn { background-color: #2ecc71; }
+button#add-lesion-btn:hover { background-color: #27ae60; }
+button#delete-template-btn { background-color: #e74c3c; }
+button#delete-template-btn:hover { background-color: #c0392b; }
+button#translate-report-btn { background-color: #ff9800; margin-left: 10px; } /* Added margin */
+button#translate-report-btn:hover { background-color: #f57c00; }
+button#print-translation-btn { background-color: #673ab7; }
+button#print-translation-btn:hover { background-color: #512da8; }
+button#export-report-html-btn { background-color: #78909c; }
+button#export-report-html-btn:hover { background-color: #546e7a; }
+
+
+/* === Suggestion Buttons Styling === */
+.suggestion-button-container {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    display: none; /* HIDDEN BY DEFAULT */
+}
+.suggestion-btn {
+    padding: 4px 10px;
+    font-size: 0.85em;
+    background-color: #e9ecef;
+    color: #495057;
+    border: 1px solid #ced4da;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap;
+    margin: 0;
+}
+.suggestion-btn:hover { background-color: #dee2e6; border-color: #adb5bd; }
+.suggestion-btn:active { background-color: #ced4da; }
+
+
+/* === Image Preview in Upload Tab === */
+#image-preview-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; padding: 10px; background-color: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 4px; min-height: 100px; }
+.image-preview-wrapper { position: relative; display: inline-block; border: 1px solid #ccc; padding: 3px; background-color: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.image-preview-wrapper img { max-width: 150px; max-height: 150px; display: block; }
+.image-preview-wrapper .remove-image-btn { position: absolute; top: 2px; right: 2px; padding: 1px 5px; font-size: 0.75em; line-height: 1; border-radius: 3px; z-index: 1; background-color: #e74c3c; color: white; } /* Merged style */
+.image-preview-wrapper .remove-image-btn:hover { background-color: #c0392b; }
+
+
+/* === Report Tab Styling === */
+/* --- English Report Preview Area --- */
+#report-preview.report-output-area { /* Added common class */
+    border: 1px solid #ccc;
+    padding: 20mm;
+    margin: 30px auto 0 auto;
+    max-width: 210mm; /* A4 width simulation */
+    box-sizing: border-box;
+    background: #ffffff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 11pt;
+    line-height: 1.5;
+    min-height: 100px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.report-output-area .placeholder-text {
+    color: #888; text-align: center; padding: 20px 0; font-style: italic;
+}
+
+/* Styles for content *inside* #report-preview (English Report) */
+#report-preview .report-container { width: 100%; box-sizing: border-box; }
+#report-preview .report-title { text-align: center; font-size: 1.4em; margin-bottom: 1em; color: #111; font-weight: bold; }
+#report-preview .report-section { margin-bottom: 1.2em; }
+#report-preview .report-section-title { font-size: 1.15em; font-weight: bold; color: #222; border-bottom: 1px solid #bbb; margin-bottom: 0.6em; padding-bottom: 0.2em; font-family: Arial, sans-serif;}
+#report-preview p { margin: 0.4em 0; }
+#report-preview strong { font-weight: bold; color: #000; }
+#report-preview hr.report-hr { border: none; border-top: 1px solid #ccc; margin: 1.2em 0; }
+#report-preview .report-lesion-item { margin-bottom: 0.8em; padding-left: 1em; }
+#report-preview .report-footer { margin-top: 2em; font-size: 0.9em; color: #444; text-align: center; border-top: 1px solid #ccc; padding-top: 0.8em; }
+#report-preview .end-of-report { font-weight: bold; }
+/* Images inside English report preview */
+#report-preview .report-images-section .image-flex-container { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 10mm; margin-top: 10px; }
+#report-preview .report-image-item { flex: 0 1 calc(50% - 5mm); box-sizing: border-box; text-align: center; margin-bottom: 10mm; }
+#report-preview .report-image-item img { max-width: 100%; height: auto; border: 1px solid #aaa; display: block; margin: 0 auto 5px auto; }
+#report-preview .report-image-item .caption { font-size: 9pt; color: #555; margin-top: 0; word-wrap: break-word; }
+
+/* --- Translation Section Styling --- */
+#report .report-section-container#translation-section {
+    margin-top: 25px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fdfdfd;
+    /* display: none; /* Controlled by JS */
+}
+#report .report-section-container#translation-section .report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #f0f8ff; /* Light blue header for translation */
+    border-bottom: 1px solid #cce5ff;
+    border-radius: 5px 5px 0 0;
+}
+#report .report-section-container#translation-section .report-header h3 {
+    margin: 0;
+    font-size: 1.1em; /* Adjusted size */
+    color: #0056b3;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+#report .report-section-container#translation-section .edit-toggle-btn {
+    padding: 5px 10px;
+    font-size: 0.9em;
+    background-color: #e0e0e0;
+    color: #333;
+    /* No specific editing class needed here as it's handled by JS text change */
+}
+#report .report-section-container#translation-section .edit-toggle-btn:hover {
+    background-color: #d5d5d5;
+}
+#report .report-section-container#translation-section .edit-toggle-btn.editing {
+    background-color: #c8e6c9; /* Light green when in save mode */
+    color: #2e7d32;
+}
+
+/* Div showing formatted translation */
+#translation-content {
+    padding: 15px 20mm; /* Match preview padding if needed, or adjust */
+    border-top: none; /* Header has bottom border */
+    background-color:#fff;
+    border-radius: 0 0 5px 5px;
+    font-family: 'Times New Roman', Times, serif; font-size: 11pt; line-height: 1.5; color: #333; white-space: normal; /* Let HTML handle wrapping */
+    min-height: 50px; /* Ensure it has some height even when empty */
+}
+/* Styles for elements generated by marked.js INSIDE #translation-content */
+#translation-content h3 { font-size: 1.15em; font-weight: bold; color: #222; border-bottom: 1px solid #bbb; margin-top: 1.2em; margin-bottom: 0.6em; padding-bottom: 0.2em; font-family: Arial, sans-serif; }
+#translation-content h4 { font-size: 1.1em; font-weight: bold; color: #333; margin-top: 1em; margin-bottom: 0.5em; font-family: Arial, sans-serif;}
+#translation-content p { margin: 0.4em 0 1em 0; }
+#translation-content strong { font-weight: bold; color: #000; }
+#translation-content ul, #translation-content ol { margin: 0.5em 0 1em 0; padding-left: 25px; }
+#translation-content li { margin-bottom: 0.3em; }
+#translation-content br { display: block; content: ""; margin-bottom: 0.6em; }
+
+/* Textarea for editing translation */
+#translation-edit-area {
+    width: 100%; box-sizing: border-box; padding: 15px 20mm; border: none;
+    font-family: Arial, sans-serif; /* Sans-serif for editing */
+    font-size: 11pt; line-height: 1.6; background-color: #fff; resize: vertical;
+    border-radius: 0 0 5px 5px; border-top: 1px solid #ddd; margin-top: -1px;
+    min-height: 400px; display: none; /* Initially hidden */
+}
+#translation-edit-area:focus { outline: none; box-shadow: inset 0 0 5px rgba(0,0,0,0.1); }
+
+/* Loading Indicator */
+#translation-loading { text-align: center; margin: 20px 0; color: #555; font-style: italic; display: none; padding: 15px; }
+#translation-loading .loading-spinner { vertical-align: middle; margin-right: 8px; border-color: rgba(0,0,0,0.1); border-top-color: #ff9800; display: inline-block; width: 18px; height: 18px; border-width: 3px; border-style: solid; border-radius: 50%; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+
+/* Action Buttons Area */
+#report .report-actions { margin-top: 25px; padding-top: 20px; border-top: 1px solid #eee; text-align: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+#report .report-actions button { min-width: 140px; }
+
+
+/* === Notifications === */
+#notifications { position: fixed; bottom: 20px; right: 20px; z-index: 1000; max-width: 300px; }
+.notification { background-color: #34495e; color: white; padding: 12px 18px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 3px 8px rgba(0,0,0,0.2); opacity: 0.95; transition: opacity 0.5s ease, transform 0.5s ease; font-size: 0.95em; }
+.notification.success { background-color: #27ae60; }
+.notification.error { background-color: #c0392b; }
+.notification.info { background-color: #2980b9; }
+
+
+/* === Print Styles === */
+@media print {
+    body { margin: 0; font-size: 10pt; background-color: #fff !important; color: #000 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    /* Hide UI */
+    .container > h1, .tab-container, button:not(.print-me), #notifications, .form-group label:not(.caption),
+    #templates, .image-preview-container, .lesion-item .remove-lesion-btn, .suggestion-button-container,
+    #report .report-header, /* Hide headers within report tab for print */
+    #translation-loading, #edit-translation-btn, #translation-edit-area,
+    #report .report-actions /* Hide action buttons */
+     { display: none !important; }
+
+    /* Ensure only the printed content's container is visible */
+    /* This is handled by the print helper function creating a new window/iframe */
+
+    /* Base styles for printed content (applied via print helper) */
+    .printable-content { /* Assume print helper adds this class */
+        font-family: 'Times New Roman', Times, serif !important;
+        font-size: 10pt !important;
+        line-height: 1.4 !important;
+        color: #000 !important;
+    }
+    .printable-content h2, .printable-content h3, .printable-content h4 {
+        font-family: Arial, sans-serif !important;
+        font-weight: bold !important;
+        page-break-after: avoid !important;
+        color: #000 !important;
+    }
+    .printable-content h2.report-title { text-align: center; font-size: 1.3em; }
+    .printable-content h3.report-section-title { font-size: 1.1em; border-bottom: 1px solid #999; margin-bottom: 0.5em; padding-bottom: 0.2em;}
+    .printable-content p { orphans: 3; widows: 3; margin: 0.4em 0; }
+    .printable-content strong { font-weight: bold !important; }
+    .printable-content hr.report-hr { border: none !important; border-top: 1px solid #ccc !important; margin: 1em 0 !important; }
+    .printable-content .report-section { page-break-inside: avoid !important; margin-bottom: 1em !important; }
+    .printable-content .report-lesion-item { page-break-inside: avoid !important; margin-bottom: 0.7em !important; padding-left: 1em !important; }
+    /* Image layout in print */
+    .printable-content .report-images-section .image-flex-container { display: flex !important; flex-wrap: wrap !important; justify-content: space-between !important; gap: 8mm !important; }
+    .printable-content .report-image-item { flex: 0 1 calc(50% - 4mm) !important; box-sizing: border-box !important; text-align: center !important; page-break-inside: avoid !important; margin-bottom: 8mm !important; }
+    .printable-content .report-image-item img { max-width: 100% !important; border: 1px solid #999 !important; }
+    .printable-content .report-image-item .caption { font-size: 8pt !important; color: #222 !important; }
+    /* Footer */
+    .printable-content .report-footer { margin-top: 1.5em !important; font-size: 9pt !important; color: #222 !important; text-align: center !important; border-top: 1px solid #999 !important; padding-top: 0.8em !important; }
+    .printable-content .end-of-report { font-weight: bold !important; }
+    /* Markdown lists/breaks */
+     ul, ol { margin: 0.5em 0 1em 0; padding-left: 25px; }
+     li { margin-bottom: 0.3em; page-break-inside: avoid; }
+     br { display: block !important; content: "" !important; margin-bottom: 0.6em !important; }
+     pre { white-space: pre-wrap !important; word-wrap: break-word !important; font-family: 'Courier New', monospace !important; font-size: 10pt !important; }
+    /* Page Setup */
+    @page { size: A4; margin: 15mm; }
+
+    a[href]:after { content: none !important; } /* Don't print URLs */
+}

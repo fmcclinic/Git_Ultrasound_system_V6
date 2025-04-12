@@ -1,0 +1,504 @@
+/* styles.css - For the Carotid Ultrasound Reporting Project */
+/* Based on previous project styles, adapted for Carotid UI elements */
+
+/* === General Styles === */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* Modern font stack */
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f7f9; /* Slightly lighter background */
+    color: #333;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 20px auto;
+    background: #ffffff;
+    padding: 25px 35px; /* Slightly more padding */
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Softer shadow */
+}
+
+h1, h2, h3, h4 {
+    color: #2c3e50; /* Dark blue-grey */
+    margin-top: 0.5em;
+    margin-bottom: 0.8em;
+    font-weight: 600; /* Slightly bolder headings */
+}
+h1 {
+    text-align: center;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    font-size: 1.9em; /* Larger main title */
+    color: #34495e; /* Slightly different color */
+}
+h2 { /* Tab titles */
+    font-size: 1.6em;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+    color: #16a085; /* Teal color for main section titles */
+}
+/* Use h3 styling for main <summary> elements */
+details.section > summary h3 {
+    font-size: 1.25em;
+    color: #2980b9; /* Blue for section toggles */
+    margin: 0; /* Remove default margin for h3 inside summary */
+    display: inline; /* Allow icon to be beside it */
+}
+/* Use h4 styling for vessel <summary> elements */
+details.vessel-section > summary h4 {
+    font-size: 1.1em; /* Slightly smaller than main section */
+    color: #8e44ad; /* Purple for vessel titles */
+    margin: 0;
+    display: inline;
+    font-weight: 500; /* Less bold */
+}
+
+hr.report-hr { /* Used inside generated report HTML */
+     border: none; border-top: 1px solid #ccc; margin: 1.2em 0;
+}
+
+
+/* === Tab System (Unchanged) === */
+.tab-container {
+    margin-top: 25px;
+}
+.tab-nav {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    border-bottom: 2px solid #bdc3c7;
+    margin-bottom: 0;
+}
+.tab-button {
+    padding: 12px 20px;
+    cursor: pointer;
+    border: none;
+    background-color: #f8f9fa;
+    border-bottom: 3px solid transparent;
+    margin-right: 5px;
+    margin-bottom: -2px; /* Overlap border */
+    font-size: 1.05em;
+    color: #7f8c8d; /* Grey text */
+    transition: all 0.3s ease;
+    border-radius: 6px 6px 0 0; /* Slightly more rounded */
+    font-weight: 500;
+}
+.tab-button:hover {
+    color: #34495e;
+    background-color: #e9ecef;
+}
+.tab-button.active {
+    border-bottom-color: #3498db; /* Blue active border */
+    background-color: #ffffff;
+    font-weight: 600; /* Bold active tab */
+    color: #2980b9; /* Darker blue text */
+}
+.tab-content {
+    display: none;
+    padding: 30px; /* More padding */
+    border: 1px solid #bdc3c7;
+    border-top: none;
+    border-radius: 0 0 8px 8px; /* Match container radius */
+    background-color: #ffffff;
+    min-height: 450px; /* Slightly taller */
+}
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.4s ease-in-out;
+}
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === Form Styles (Mostly Unchanged) === */
+.form-group {
+    margin-bottom: 15px; /* Standard space */
+}
+.form-group label {
+    display: block;
+    margin-bottom: 6px; /* Standard space */
+    font-weight: 600;
+    color: #555;
+    font-size: 0.95em; /* Slightly smaller labels */
+}
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group input[type="file"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 9px 12px; /* Standard padding */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fdfdfd;
+}
+/* Remove spinners from number inputs (optional) */
+.form-group input[type=number]::-webkit-inner-spin-button,
+.form-group input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.form-group input[type=number] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+    outline: none;
+    background-color: #fff;
+}
+.form-group select[multiple] { height: auto; min-height: 100px; }
+.form-group textarea { min-height: 70px; resize: vertical; }
+
+/* Validation Feedback (Example) */
+.form-group input:required:invalid,
+.form-group select:required:invalid,
+.form-group textarea:required:invalid {
+    border-color: #e74c3c !important; /* Red border for invalid required fields */
+}
+
+/* === Collapsible Section Styles (<details> / <summary>) === */
+details.section {
+    margin-bottom: 20px;
+    border: 1px solid #d3dce6; /* Lighter blue border */
+    border-radius: 6px;
+    overflow: hidden; /* Prevent content bleed */
+    background-color: #ffffff;
+}
+details.section > summary,
+details.vessel-section > summary {
+    padding: 12px 18px;
+    cursor: pointer;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #d3dce6;
+    list-style: none; /* Remove default marker */
+    position: relative; /* For custom marker positioning */
+    transition: background-color 0.2s ease;
+    user-select: none;
+}
+details.section > summary:hover,
+details.vessel-section > summary:hover {
+    background-color: #eef2f7; /* Light hover effect */
+}
+/* Custom Marker (Triangle) */
+details.section > summary::before,
+details.vessel-section > summary::before {
+    content: '►'; /* Collapsed state marker */
+    position: absolute;
+    left: 10px; /* Adjust position as needed */
+    top: 50%;
+    transform: translateY(-50%) rotate(0deg);
+    transition: transform 0.3s ease;
+    font-size: 0.8em;
+    color: #7f8c8d;
+}
+details.section[open] > summary::before,
+details.vessel-section[open] > summary::before {
+    transform: translateY(-50%) rotate(90deg); /* Expanded state marker */
+}
+/* Adjust padding for summary text to make space for the marker */
+details.section > summary h3,
+details.vessel-section > summary h4 {
+    margin-left: 15px; /* Space between marker and text */
+}
+
+/* Content inside <details> */
+details.section > .section-content,
+details.vessel-section > .vessel-details {
+    padding: 20px;
+    border-top: none; /* Summary has bottom border */
+    background-color: #fff;
+}
+
+/* === Vessel Section Specific Styles === */
+details.vessel-section {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 1px dashed #ced4da; /* Lighter dashed border for sub-sections */
+    background-color: #fdfdff; /* Very light background */
+}
+details.vessel-section > summary { /* Vessel Toggle */
+    background-color: #fdfdff; /* Slightly different background */
+    padding: 10px 15px;
+    border-bottom: 1px dashed #ced4da;
+}
+details.vessel-section > summary:hover {
+    background-color: #f8f9fa;
+}
+
+/* === Grid Layout for Vessel Parameters === */
+.vessel-details {
+    display: grid;
+    /* Creates columns that are at least 180px wide, fitting as many as possible */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px 18px; /* Row gap, Column gap */
+    align-items: end; /* Align items to the bottom of their grid cell */
+}
+.vessel-details .form-group {
+    margin-bottom: 0; /* Remove bottom margin as grid gap handles spacing */
+}
+.vessel-details .form-group.full-width {
+    grid-column: 1 / -1; /* Makes the element span all columns */
+}
+
+/* Responsive adjustments for vessel grid (optional, auto-fit handles much of it) */
+@media (max-width: 600px) {
+    .vessel-details {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Allow smaller columns */
+    }
+}
+
+
+/* === Button Styles (Largely Unchanged) === */
+button {
+    padding: 10px 18px;
+    background-color: #3498db; /* Primary blue */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
+    margin-right: 8px;
+    vertical-align: middle;
+    line-height: 1.5; /* Ensure text vertical alignment */
+}
+button:hover {
+    background-color: #2980b9; /* Darker blue */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+button:active {
+    background-color: #2471a3; /* Even darker */
+    transform: translateY(1px); /* Slight press effect */
+    box-shadow: none;
+}
+button:disabled {
+    background-color: #bdc3c7; /* Grey disabled */
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+button i.fas, button i.fa-solid { /* Font Awesome icons */
+    margin-right: 7px;
+    font-size: 0.9em; /* Slightly smaller icon */
+}
+
+/* Specific button styling */
+button#delete-template-btn { background-color: #e74c3c; } /* Red delete */
+button#delete-template-btn:hover { background-color: #c0392b; }
+button#translate-report-btn { background-color: #f39c12; } /* Orange translate */
+button#translate-report-btn:hover { background-color: #e67e22; }
+button#print-translation-btn { background-color: #9b59b6; } /* Purple print VI */
+button#print-translation-btn:hover { background-color: #8e44ad; }
+button#export-report-html-btn { background-color: #7f8c8d; } /* Grey export */
+button#export-report-html-btn:hover { background-color: #6c7a89; }
+
+/* Edit/Save translation button */
+#edit-translation-btn { background-color: #ecf0f1; color: #34495e; border: 1px solid #bdc3c7; padding: 5px 10px; font-size: 0.9em; }
+#edit-translation-btn:hover { background-color: #dde4e6; }
+#edit-translation-btn.editing { background-color: #d4edda; color: #155724; border-color: #c3e6cb; } /* Green when in Save mode */
+
+/* === Suggestion Buttons Styling (Unchanged) === */
+.suggestion-button-container {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px; /* Gap between buttons */
+    display: none; /* Initially hidden, shown on focus by JS */
+    padding-top: 5px;
+    border-top: 1px dashed #eee; /* Separator */
+}
+.suggestion-btn {
+    padding: 4px 12px; /* Slightly more padding */
+    font-size: 0.88em;
+    background-color: #ecf0f1; /* Light grey */
+    color: #34495e; /* Dark blue-grey text */
+    border: 1px solid #bdc3c7; /* Grey border */
+    border-radius: 15px; /* Pill shape */
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+    white-space: nowrap;
+    margin: 0; /* Remove default button margin */
+}
+.suggestion-btn:hover { background-color: #dde4e6; border-color: #aab3b9; }
+.suggestion-btn:active { background-color: #cad3d6; transform: scale(0.98); }
+
+/* === Image Preview in Upload Tab (Unchanged) === */
+#image-preview-container {
+    display: flex; flex-wrap: wrap; gap: 15px; /* More gap */
+    margin-top: 20px; padding: 15px; background-color: #f8f9fa;
+    border: 1px solid #e0e0e0; border-radius: 5px; min-height: 120px;
+}
+.image-preview-wrapper {
+    position: relative; display: inline-block; border: 1px solid #ccc;
+    padding: 4px; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    border-radius: 4px;
+}
+.image-preview-wrapper img {
+    max-width: 160px; max-height: 160px; /* Slightly larger previews */
+    display: block; border-radius: 2px;
+}
+.image-preview-wrapper .remove-image-btn { /* Style the 'X' remove button */
+    position: absolute; top: 1px; right: 1px;
+    padding: 1px 6px; font-size: 0.8em; line-height: 1;
+    border-radius: 50%; /* Circular button */
+    z-index: 1;
+    background-color: rgba(231, 76, 60, 0.8); /* Semi-transparent red */
+    color: white; border: none; cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.image-preview-wrapper .remove-image-btn:hover { background-color: #c0392b; } /* Solid red on hover */
+
+/* === Report Tab Styling (Largely Unchanged - applies to preview area) === */
+/* --- Report Preview/Output Areas --- */
+.report-output-area { /* Common style for preview and translation display */
+    border: 1px solid #ccc;
+    padding: 20mm; /* Simulate A4 padding */
+    margin: 30px auto 0 auto;
+    max-width: 210mm; /* A4 width simulation */
+    box-sizing: border-box;
+    background: #ffffff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 11pt;
+    line-height: 1.5;
+    color: #222; /* Slightly darker text */
+    min-height: 100px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Allow scrolling if content overflows */
+}
+.report-output-area .placeholder-text {
+    color: #888; text-align: center; padding: 30px 0; font-style: italic; font-size: 1em;
+}
+
+/* Styles for content *inside* #report-preview (Generated Report HTML) */
+#report-preview .report-container { width: 100%; box-sizing: border-box; }
+#report-preview .report-title { text-align: center; font-size: 1.5em; margin-bottom: 1em; color: #111; font-weight: bold; }
+#report-preview .report-section { margin-bottom: 1.2em; }
+#report-preview .report-section-title { font-size: 1.2em; font-weight: bold; color: #111; border-bottom: 1px solid #aaa; margin-bottom: 0.6em; padding-bottom: 0.2em; font-family: Arial, sans-serif;}
+#report-preview p { margin: 0.4em 0; }
+#report-preview strong { font-weight: bold; color: #000; }
+/* Remove lesion item style if not used, or adapt if needed for plaque */
+/* #report-preview .report-lesion-item { margin-bottom: 0.8em; padding-left: 1.2em; border-left: 2px solid #f0f0f0;} */
+#report-preview .report-footer { margin-top: 2em; font-size: 0.95em; color: #444; text-align: center; border-top: 1px solid #ccc; padding-top: 0.8em; }
+#report-preview .signature-section {}
+#report-preview .signature-title {}
+#report-preview .signature-space {}
+#report-preview .signature-name {}
+/* Images inside report preview */
+#report-preview .report-images-section .image-flex-container { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 10mm; margin-top: 10px; }
+#report-preview .report-image-item { flex: 0 1 calc(50% - 5mm); box-sizing: border-box; text-align: center; margin-bottom: 10mm; }
+#report-preview .report-image-item img { max-width: 100%; height: auto; border: 1px solid #aaa; display: block; margin: 0 auto 5px auto; }
+#report-preview .report-image-item .caption { font-size: 9pt; color: #555; margin-top: 0; word-wrap: break-word; }
+
+/* --- Translation Section Styling (Unchanged) --- */
+#report .report-section-container#translation-section {
+    margin-top: 30px;
+    border: 1px solid #c3dae8; /* Blue border */
+    border-radius: 6px;
+    background-color: #fafdff; /* Very light blue background */
+}
+#report .report-section-container#translation-section .report-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 15px;
+    background-color: #eaf5ff; /* Lighter blue header */
+    border-bottom: 1px solid #c3dae8;
+    border-radius: 5px 5px 0 0;
+}
+#report .report-section-container#translation-section .report-header h3 {
+    margin: 0; font-size: 1.15em; color: #1a5276; /* Darker blue */
+    display: flex; align-items: center; gap: 8px;
+}
+/* Div showing formatted translation (uses .report-output-area styles) */
+#translation-content {
+     padding: 15px 20mm; /* Consistent padding */
+     border: none; box-shadow: none; margin: 0; background-color: transparent;
+     border-radius: 0 0 5px 5px; min-height: 80px;
+}
+/* Styles for elements generated by marked.js INSIDE #translation-content */
+#translation-content h3 { font-size: 1.2em; font-weight: bold; color: #111; border-bottom: 1px solid #aaa; margin-top: 1.2em; margin-bottom: 0.6em; padding-bottom: 0.2em; font-family: Arial, sans-serif; }
+#translation-content h4 { font-size: 1.15em; font-weight: bold; color: #222; margin-top: 1em; margin-bottom: 0.5em; font-family: Arial, sans-serif;}
+#translation-content p { margin: 0.4em 0 1em 0; }
+#translation-content strong { font-weight: bold; color: #000; }
+#translation-content ul, #translation-content ol { margin: 0.5em 0 1em 0; padding-left: 30px; }
+#translation-content li { margin-bottom: 0.4em; }
+#translation-content br { display: block; content: ""; margin-bottom: 0.6em; }
+
+/* Textarea for editing translation (Unchanged) */
+#translation-edit-area {
+    width: 100%; box-sizing: border-box; padding: 15px 20mm; border: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 10.5pt; line-height: 1.6; background-color: #fff; resize: vertical;
+    border-radius: 0 0 5px 5px; border-top: 1px solid #c3dae8; margin-top: -1px;
+    min-height: 400px; display: none; /* Initially hidden */
+}
+#translation-edit-area:focus { outline: none; box-shadow: inset 0 0 8px rgba(0, 86, 179, 0.1); }
+
+/* Loading Indicator (Unchanged) */
+#translation-loading {
+    text-align: center; margin: 25px 0; color: #555; font-style: italic;
+    display: none; /* Initially hidden */
+    padding: 20px; background-color: #f8f9fa; border-radius: 5px;
+}
+#translation-loading .loading-spinner {
+    vertical-align: middle; margin-right: 10px; border-color: rgba(0,0,0,0.1);
+    border-top-color: #f39c12; /* Orange spinner */
+    display: inline-block; width: 22px; height: 22px; border-width: 3px;
+    border-style: solid; border-radius: 50%; animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Action Buttons Area (Unchanged) */
+#report .report-actions {
+    margin-top: 30px; padding-top: 25px; border-top: 1px solid #eee;
+    text-align: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+}
+#report .report-actions button { min-width: 150px; /* Ensure buttons have decent width */ }
+
+/* === Notifications (Unchanged) === */
+#notifications {
+    position: fixed; bottom: 25px; right: 25px;
+    z-index: 1050; /* Ensure above most elements */
+    max-width: 320px;
+}
+.notification {
+    background-color: #34495e; color: white; padding: 14px 20px;
+    margin-bottom: 12px; border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    opacity: 0; /* Start hidden */
+    transform: translateX(20px); /* Start off-screen */
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    font-size: 0.98em;
+    /* Add animation */
+    animation: slideInNotification 0.4s ease forwards;
+}
+.notification.success { background-color: #27ae60; } /* Green */
+.notification.error { background-color: #c0392b; } /* Red */
+.notification.info { background-color: #2980b9; } /* Blue */
+
+@keyframes slideInNotification {
+  to { opacity: 0.95; transform: translateX(0); }
+}
+.notification.fade-out { opacity: 0; transform: translateX(20px); }
+
+/* === Print Styles (Unchanged - Hides UI elements) === */
+@media print {
+    body { background-color: #fff !important; }
+    .container > h1, .tab-container, #notifications, .report-actions,
+    #translation-loading, #translation-section .report-header, #translation-edit-area
+     { display: none !important; }
+     #patient-info, #carotid-assessment, #images, #templates { display: none !important; }
+}

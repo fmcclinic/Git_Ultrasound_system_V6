@@ -1,0 +1,60 @@
+{
+    "thyroid": {
+      "overallSize": "Enlarged / Tuyến giáp to",
+      "echotexture": "Heterogeneous with multiple nodules / Cấu trúc không đồng nhất với nhiều nhân",
+      "vascularity": "Variable / Tưới máu thay đổi",
+      "rightLobeD1": "25",
+      "rightLobeD2": "28",
+      "rightLobeD3": "70",
+      "rightLobeVolume": "25.7",
+      "rightLobeFindings": "Multiple nodules of varying sizes and appearances (solid, cystic, mixed). Some show cystic degeneration or calcification. / Nhiều nhân kích thước và hình thái khác nhau (đặc, nang, hỗn hợp). Một số có thoái hóa nang hoặc vôi hóa.",
+      "leftLobeD1": "24",
+      "leftLobeD2": "26",
+      "leftLobeD3": "68",
+      "leftLobeVolume": "22.2", 
+      "leftLobeFindings": "Similar appearance to the right lobe with multiple nodules. / Hình thái tương tự thùy phải với nhiều nhân.",
+      "isthmusThickness": "8",
+      "isthmusFindings": "Thickened, heterogeneous, may contain small nodules. / Dày, không đồng nhất, có thể chứa nhân nhỏ.",
+      "lymphNodes": "No suspicious cervical lymphadenopathy. / Không thấy hạch cổ bệnh lý nghi ngờ.",
+      "impression": "Multinodular goiter. Dominant or suspicious nodules should be evaluated according to ACR TI-RADS criteria. / Bướu giáp đa nhân. Các nhân trội hoặc nghi ngờ cần được đánh giá theo tiêu chuẩn ACR TI-RADS.",
+
+      "lesionLocation": "Right Lobe / Thùy Phải",
+      "lesionD1": "15",
+      "lesionD2": "14",
+      "lesionD3": "16",
+      "lesionComposition": "1", 
+      "lesionEchogenicity": "1",
+      "lesionShape": "0", 
+      "lesionMargin": "0", 
+      "lesionEchogenicFoci": ["0"],
+      "tiradsScore": "2", 
+      "tiradsCategory": "TR2",
+      "tiradsRecommendation": "No FNA or follow-up needed. / Không cần FNA hay theo dõi.",
+      "lesionDescription": "Mixed cystic and solid nodule, likely benign (colloid nodule). / Nhân hỗn hợp nang và đặc, khả năng lành tính (nhân keo).",
+      "lesions": [
+        {
+          "lesionLocation": "Right Lobe / Thùy Phải",
+          "lesionD1": "15",
+          "lesionD2": "14",
+          "lesionD3": "16",
+          "lesionComposition": "1",
+          "lesionEchogenicity": "1",
+          "lesionShape": "0",
+          "lesionMargin": "0",
+          "lesionEchogenicFoci": ["0"],
+          "tiradsScore": "2",
+          "tiradsCategory": "TR2",
+          "tiradsRecommendation": "No FNA or follow-up needed. / Không cần FNA hay theo dõi.",
+          "lesionDescription": "Mixed cystic and solid nodule, likely benign (colloid nodule). / Nhân hỗn hợp nang và đặc, khả năng lành tính (nhân keo).",
+          "id": "lesion_preset_mng_1", 
+          "number": 1 
+        }
+
+      ]
+    },
+    "metadata": {
+      "name": "Multinodular Goiter / Bướu Giáp Đa Nhân",
+      "source": "Generated JSON Template"
+
+    }
+  }

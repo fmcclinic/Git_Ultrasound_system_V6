@@ -1,0 +1,65 @@
+{
+  "thyroid": {
+    "overallSize": "Diffusely enlarged / To lan tỏa",
+    "echotexture": "Diffusely hypoechoic and relatively homogeneous / Giảm âm lan tỏa và tương đối đồng nhất",
+    "vascularity": "Normal",
+    "rightLobeD1": "",
+    "rightLobeD2": "",
+    "rightLobeD3": "",
+    "rightLobeVolume": "",
+    "rightLobeFindings": "Enlarged, diffusely hypoechoic parenchyma. / Thùy phải to, chủ mô giảm âm lan tỏa.",
+    "leftLobeD1": "",
+    "leftLobeD2": "",
+    "leftLobeD3": "",
+    "leftLobeVolume": "",
+    "leftLobeFindings": "Enlarged, diffusely hypoechoic parenchyma. / Thùy trái to, chủ mô giảm âm lan tỏa.",
+    "isthmusThickness": "5",
+    "isthmusFindings": "enlarged and hypoechoic. / to và giảm âm.",
+    "lesionLocation": "Right Lobe",
+    "lesionD1": "7",
+    "lesionD2": "6",
+    "lesionD3": "8",
+    "lesionComposition": "1",
+    "lesionEchogenicity": "0",
+    "lesionShape": "0",
+    "lesionMargin": "2",
+    "lesionEchogenicFoci": [
+      "0",
+      "1",
+      "2"
+    ],
+    "tiradsScore": "6",
+    "tiradsCategory": "TR4",
+    "tiradsRecommendation": "No FNA or follow-up needed.",
+    "lesionDescription": "No ",
+    "lymphNodes": "no suspicious lymphadenopathy. / không thấy hạch cổ bệnh lý.",
+    "impression": "Findings highly suggestive of Graves' disease (diffuse enlargement, hypoechogenicity, marked hypervascularity). Correlate clinically. / Hình ảnh gợi ý nhiều bệnh Graves (tuyến giáp to lan tỏa, giảm âm, tăng tưới máu rất nhiều). Kết hợp lâm sàng.",
+    "lesions": [
+      {
+        "lesionLocation": "Right Lobe",
+        "lesionD1": "7",
+        "lesionD2": "6",
+        "lesionD3": "8",
+        "lesionComposition": "1",
+        "lesionEchogenicity": "0",
+        "lesionShape": "0",
+        "lesionMargin": "2",
+        "lesionEchogenicFoci": [
+          "0",
+          "1",
+          "2"
+        ],
+        "tiradsScore": "6",
+        "tiradsCategory": "TR4",
+        "tiradsRecommendation": "No FNA or follow-up needed.",
+        "lesionDescription": "No ",
+        "id": "lesion_1",
+        "number": 1
+      }
+    ]
+  },
+  "metadata": {
+    "exportedAt": "2025-03-31T16:49:44.790Z",
+    "source": "Ultrasound Reporting System Export"
+  }
+}
