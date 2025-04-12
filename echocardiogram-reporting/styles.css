@@ -1,0 +1,561 @@
+/* styles.css - For the Echocardiogram Reporting Project */
+/* Based on previous project styles, adapted for Echo UI elements */
+
+/* === General Styles === */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* Modern font stack */
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f7f9; /* Slightly lighter background */
+    color: #333;
+    font-size: 14px; /* Base font size */
+}
+
+.container {
+    max-width: 1100px; /* Maintain width */
+    margin: 20px auto;
+    background: #ffffff;
+    padding: 25px 35px; /* Slightly more padding */
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Softer shadow */
+}
+
+h1, h2, h3, h4 {
+    color: #2c3e50; /* Dark blue-grey */
+    margin-top: 0.5em;
+    margin-bottom: 0.8em;
+    font-weight: 600; /* Slightly bolder headings */
+}
+h1 { /* Main application title */
+    text-align: center;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    font-size: 1.8em;
+    color: #34495e; /* Slightly different color */
+}
+h2 { /* Tab titles or main section titles */
+    font-size: 1.5em;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+    color: #16a085; /* Teal color for main section titles */
+}
+/* Use h3 styling for <summary> elements in the echo form */
+#echo-assessment-form details.section > summary h3 {
+    font-size: 1.2em; /* Adjusted size */
+    color: #2980b9; /* Blue for section toggles */
+    margin: 0; /* Remove default margin for h3 inside summary */
+    display: inline; /* Allow icon to be beside it */
+    vertical-align: middle;
+}
+/* Style for icons inside summary */
+#echo-assessment-form details.section > summary h3 i.fas,
+#echo-assessment-form details.section > summary h3 i.far {
+    margin-right: 8px;
+    font-size: 0.9em;
+    color: #5a8ebc; /* Slightly lighter icon color */
+}
+/* Style for general h4 within sections (e.g., Doppler subsections) */
+#echo-assessment-form h4 {
+    font-size: 1.1em;
+    color: #34495e;
+    margin-top: 1.5em; /* Add space before subsections */
+    margin-bottom: 0.6em;
+    padding-bottom: 3px;
+    border-bottom: 1px dashed #bdc3c7;
+}
+
+
+hr.report-hr { /* Used inside generated report HTML */
+     border: none; border-top: 1px solid #ccc; margin: 1.2em 0;
+}
+
+
+/* === Tab System (Unchanged from Abdominal) === */
+.tab-container {
+    margin-top: 25px;
+}
+.tab-nav {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    border-bottom: 2px solid #bdc3c7;
+    margin-bottom: 0;
+}
+.tab-button {
+    padding: 10px 18px;
+    cursor: pointer;
+    border: none;
+    background-color: #f8f9fa;
+    border-bottom: 3px solid transparent;
+    margin-right: 5px;
+    margin-bottom: -2px; /* Overlap border */
+    font-size: 1em;
+    color: #7f8c8d; /* Grey text */
+    transition: all 0.3s ease;
+    border-radius: 6px 6px 0 0;
+    font-weight: 500;
+}
+.tab-button:hover {
+    color: #34495e;
+    background-color: #e9ecef;
+}
+.tab-button.active {
+    border-bottom-color: #3498db; /* Blue active border */
+    background-color: #ffffff;
+    font-weight: 600;
+    color: #2980b9; /* Darker blue text */
+}
+.tab-content {
+    display: none;
+    padding: 25px;
+    border: 1px solid #bdc3c7;
+    border-top: none;
+    border-radius: 0 0 8px 8px; /* Match container radius */
+    background-color: #ffffff;
+    min-height: 400px;
+}
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.4s ease-in-out;
+}
+/* Fade-in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === Form Styles (Largely Unchanged) === */
+.form-group {
+    margin-bottom: 18px; /* Slightly more space */
+}
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #555;
+    font-size: 0.9em;
+    /* Reference values are now part of the label text in HTML */
+}
+/* Optional: Style for reference values if needed (e.g., make them grey) */
+/* .form-group label .reference-value { color: #777; font-size: 0.9em; margin-left: 5px; } */
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group input[type="file"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 9px 12px; /* Slightly larger padding */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 0.95em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fdfdfd;
+}
+/* Remove spinners from number inputs */
+.form-group input[type=number]::-webkit-inner-spin-button,
+.form-group input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.form-group input[type=number] {
+  -moz-appearance: textfield; /* Firefox */
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+    outline: none;
+    background-color: #fff;
+}
+/* Make readonly inputs look slightly different */
+.form-group input[readonly] {
+    background-color: #e9ecef; /* Light grey background */
+    color: #495057; /* Darker grey text */
+    cursor: not-allowed;
+}
+
+.form-group select[multiple] { height: auto; min-height: 100px; }
+.form-group textarea { min-height: 60px; resize: vertical; }
+textarea.lesion-description-area { /* Keep for consistency if used */
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+/* Validation Feedback (Example) */
+.form-group input:required:invalid,
+.form-group select:required:invalid,
+.form-group textarea:required:invalid {
+    border-color: #e74c3c !important; /* Red border for invalid required fields */
+}
+
+/* === Collapsible Section Styles (<details> / <summary>) for Echo Form === */
+/* Target details/summary specifically within the echo form */
+#echo-assessment-form details.section {
+    margin-bottom: 15px;
+    border: 1px solid #d3dce6; /* Lighter blue border */
+    border-radius: 6px;
+    overflow: hidden; /* Prevent content bleed */
+    background-color: #ffffff;
+}
+#echo-assessment-form details.section > summary { /* Style the summary toggle */
+    padding: 10px 15px;
+    padding-left: 35px; /* Make space for the custom marker */
+    cursor: pointer;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #d3dce6;
+    list-style: none; /* Remove default marker */
+    position: relative; /* For custom marker positioning */
+    transition: background-color 0.2s ease;
+    user-select: none;
+    font-weight: 600;
+}
+/* Remove default marker for Webkit browsers */
+#echo-assessment-form details.section > summary::-webkit-details-marker {
+    display: none;
+}
+/* Style summary when details is open */
+#echo-assessment-form details.section[open] > summary {
+    background-color: #eef2f7; /* Indicate open state */
+    border-bottom: 1px solid #c1d1e0; /* Darker border when open */
+}
+#echo-assessment-form details.section > summary:hover {
+    background-color: #eef2f7; /* Light hover effect */
+}
+/* Custom Marker (Triangle) */
+#echo-assessment-form details.section > summary::before {
+    content: '►'; /* Collapsed state marker */
+    font-family: sans-serif; /* Ensure consistent triangle */
+    position: absolute;
+    left: 15px; /* Position marker */
+    top: 50%;
+    transform: translateY(-50%) rotate(0deg);
+    transition: transform 0.3s ease;
+    font-size: 0.7em; /* Smaller marker */
+    color: #7f8c8d;
+}
+#echo-assessment-form details.section[open] > summary::before {
+    transform: translateY(-50%) rotate(90deg); /* Expanded state marker */
+}
+
+/* Content inside <details> */
+#echo-assessment-form details.section > .section-content {
+    padding: 15px 20px; /* Padding for content */
+    border-top: none; /* Summary has bottom border */
+    background-color: #fff;
+}
+/* Optional fade-in for content when opened */
+#echo-assessment-form details.section[open] > .section-content {
+     animation: fadeInContent 0.4s ease-out;
+}
+@keyframes fadeInContent {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+
+/* === Grid Layout for Form Parameters (Unchanged) === */
+/* Applied to .organ-details-grid within .section-content */
+.organ-details-grid {
+    display: grid;
+    /* Creates columns that are at least 160px wide, fitting as many as possible */
+    /* Allows overriding via inline style for wider columns if needed */
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px 20px; /* Row gap, Column gap */
+    align-items: end; /* Align items to the bottom of their grid cell */
+}
+.organ-details-grid .form-group {
+    margin-bottom: 0; /* Remove bottom margin as grid gap handles spacing */
+}
+.organ-details-grid .form-group.full-width {
+    grid-column: 1 / -1; /* Makes the element span all columns */
+}
+/* Responsive adjustments for grid (Unchanged) */
+@media (max-width: 600px) {
+    .organ-details-grid {
+        grid-template-columns: 1fr; /* Stack elements on small screens */
+        gap: 15px 0;
+    }
+}
+
+
+/* === Button Styles (Unchanged from Abdominal) === */
+button {
+    padding: 9px 16px;
+    background-color: #3498db; /* Primary blue */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: 500;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
+    margin-right: 8px;
+    vertical-align: middle;
+    line-height: 1.5; /* Ensure text vertical alignment */
+}
+button:hover {
+    background-color: #2980b9; /* Darker blue */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+button:active {
+    background-color: #2471a3; /* Even darker */
+    transform: translateY(1px); /* Slight press effect */
+    box-shadow: none;
+}
+button:disabled {
+    background-color: #bdc3c7; /* Grey disabled */
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+button i.fas, button i.fa-solid, button i.far { /* Font Awesome icons */
+    margin-right: 7px;
+    font-size: 0.9em;
+}
+/* Specific button styling */
+button.danger-btn { background-color: #e74c3c; } /* Red delete/clear */
+button.danger-btn:hover { background-color: #c0392b; }
+button#translate-report-btn { background-color: #f39c12; } /* Orange translate */
+button#translate-report-btn:hover { background-color: #e67e22; }
+button#print-translation-btn { background-color: #9b59b6; } /* Purple print VI */
+button#print-translation-btn:hover { background-color: #8e44ad; }
+button#export-report-html-btn { background-color: #7f8c8d; } /* Grey export */
+button#export-report-html-btn:hover { background-color: #6c7a89; }
+/* Edit/Save translation button */
+#edit-translation-btn { background-color: #ecf0f1; color: #34495e; border: 1px solid #bdc3c7; padding: 5px 10px; font-size: 0.9em; }
+#edit-translation-btn:hover { background-color: #dde4e6; }
+#edit-translation-btn.editing { background-color: #d4edda; color: #155724; border-color: #c3e6cb; } /* Green when in Save mode */
+
+/* === Suggestion Buttons Styling (Unchanged from Abdominal) === */
+.suggestion-button-container {
+    margin-top: 8px;
+    /* display: flex; */ /* Changed in JS to flex */
+    flex-wrap: wrap;
+    gap: 6px;
+    display: none; /* Initially hidden, shown on focus by JS */
+    padding-top: 6px;
+    border-top: 1px dashed #eee; /* Separator */
+}
+.suggestion-btn {
+    padding: 3px 10px;
+    font-size: 0.85em;
+    background-color: #ecf0f1; /* Light grey */
+    color: #34495e; /* Dark blue-grey text */
+    border: 1px solid #bdc3c7; /* Grey border */
+    border-radius: 15px; /* Pill shape */
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+    white-space: nowrap;
+    margin: 0; /* Remove default button margin */
+}
+.suggestion-btn:hover { background-color: #dde4e6; border-color: #aab3b9; }
+.suggestion-btn:active { background-color: #cad3d6; transform: scale(0.98); }
+
+/* === Image Preview in Upload Tab (Unchanged from Abdominal) === */
+#image-preview-container {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-top: 15px; padding: 10px; background-color: #f8f9fa;
+    border: 1px solid #e0e0e0; border-radius: 5px; min-height: 100px;
+}
+.image-preview-wrapper {
+    position: relative; display: inline-block; border: 1px solid #ccc;
+    padding: 4px; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    border-radius: 4px;
+}
+.image-preview-wrapper img {
+    max-width: 140px; max-height: 140px;
+    display: block; border-radius: 2px;
+}
+.image-preview-wrapper .remove-image-btn { /* Style the 'X' remove button */
+    position: absolute; top: 1px; right: 1px;
+    padding: 1px 6px; font-size: 0.8em; line-height: 1;
+    border-radius: 50%; /* Circular button */
+    z-index: 1;
+    background-color: rgba(231, 76, 60, 0.8); /* Semi-transparent red */
+    color: white; border: none; cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.image-preview-wrapper .remove-image-btn:hover { background-color: #c0392b; } /* Solid red on hover */
+
+/* === Report Tab Styling (Report Preview / Translation Display) === */
+/* Report output area common style (Unchanged) */
+.report-output-area {
+    border: 1px solid #ccc;
+    padding: 20mm; /* Simulate A4 padding */
+    margin: 25px auto 0 auto;
+    max-width: 210mm; /* A4 width simulation */
+    box-sizing: border-box;
+    background: #ffffff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 10.5pt;
+    line-height: 1.4;
+    color: #222;
+    min-height: 100px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.report-output-area .placeholder-text {
+    color: #888; text-align: center; padding: 30px 0; font-style: italic; font-size: 1em;
+}
+
+/* Styles for content *inside* the generated report (Adapt echo-findings-container if needed) */
+#report-preview .echo-findings-container,
+#translation-content .echo-findings-container { /* Target the wrapper div from echo-module */
+    padding: 0; /* Remove padding if wrapper exists */
+}
+/* General report element styling (used by formatters) */
+#report-preview h4, #translation-content h4 { /* Section names */
+    font-size: 1.1em; font-weight: bold; color: #333; margin-top: 1em;
+    margin-bottom: 0.4em; padding-bottom: 2px; border-bottom: 1px dotted #ddd;
+}
+#report-preview ul, #translation-content ul { /* Parameter lists */
+    list-style: none; padding-left: 10px; margin-top: 0.3em; margin-bottom: 1em;
+}
+#report-preview li, #translation-content li { /* Individual parameters */
+    margin-bottom: 0.4em; line-height: 1.5;
+}
+#report-preview p, #translation-content p { /* Paragraphs for descriptions, impression, etc. */
+    margin: 0.4em 0 1em 5px; /* Slightly indent paragraphs within findings */
+    line-height: 1.5;
+}
+#report-preview strong, #translation-content strong { /* Labels */
+    color: #111; margin-right: 5px;
+}
+/* Report header/footer elements (used by report-core.js) - Unchanged */
+.report-container { width: 100%; box-sizing: border-box; }
+.report-title { text-align: center; font-size: 1.4em; margin-bottom: 1em; color: #111; font-weight: bold; }
+.report-section { margin-bottom: 1.2em; }
+.report-section-title { font-size: 1.15em; font-weight: bold; color: #111; border-bottom: 1px solid #aaa; margin-bottom: 0.6em; padding-bottom: 0.2em; font-family: Arial, sans-serif;}
+/* Adjust patient info para spacing */
+#patient-info-form .form-group, .report-section p { margin: 0.4em 0; }
+.report-section strong { font-weight: bold; color: #000; }
+.report-footer { margin-top: 2em; font-size: 0.9em; color: #444; text-align: center; border-top: 1px solid #ccc; padding-top: 0.8em; }
+.signature-section {} .signature-title {} .signature-space {} .signature-name {}
+/* Images inside generated report preview (Unchanged) */
+.report-images-section .image-flex-container { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 8mm; margin-top: 10px; }
+.report-image-item { flex: 0 1 calc(50% - 4mm); box-sizing: border-box; text-align: center; margin-bottom: 8mm; }
+.report-image-item img { max-width: 100%; height: auto; border: 1px solid #aaa; display: block; margin: 0 auto 5px auto; object-fit: contain; max-height: 45mm; }
+.report-image-item .caption { font-size: 8pt; color: #555; margin-top: 0; word-wrap: break-word; line-height: 1.2; }
+
+
+/* --- Translation Section Styling (Unchanged from Abdominal) --- */
+#report .report-section-container#translation-section {
+    margin-top: 30px; border: 1px solid #c3dae8; border-radius: 6px; background-color: #fafdff;
+}
+#report .report-section-container#translation-section .report-header {
+    display: flex; justify-content: space-between; align-items: center; padding: 10px 15px;
+    background-color: #eaf5ff; border-bottom: 1px solid #c3dae8; border-radius: 5px 5px 0 0;
+}
+#report .report-section-container#translation-section .report-header h3 {
+    margin: 0; font-size: 1.1em; color: #1a5276; display: flex; align-items: center; gap: 8px;
+}
+#translation-content { /* Div showing formatted translation */
+     padding: 15px 20mm; border: none; box-shadow: none; margin: 0; background-color: transparent;
+     border-radius: 0 0 5px 5px; min-height: 80px;
+}
+#translation-edit-area { /* Textarea for editing translation */
+    width: 100%; box-sizing: border-box; padding: 15px 20mm; border: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 10pt; line-height: 1.6; background-color: #fff; resize: vertical;
+    border-radius: 0 0 5px 5px; border-top: 1px solid #c3dae8; margin-top: -1px;
+    min-height: 350px; display: none; /* Initially hidden */
+}
+#translation-edit-area:focus { outline: none; box-shadow: inset 0 0 8px rgba(0, 86, 179, 0.1); }
+#translation-loading { /* Loading Indicator */
+    text-align: center; margin: 25px 0; color: #555; font-style: italic;
+    display: none; padding: 20px; background-color: #f8f9fa; border-radius: 5px;
+}
+#translation-loading .loading-spinner { /* Spinner animation */
+    vertical-align: middle; margin-right: 10px; border-color: rgba(0,0,0,0.1);
+    border-top-color: #f39c12; display: inline-block; width: 20px; height: 20px;
+    border-width: 3px; border-style: solid; border-radius: 50%; animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Action Buttons Area (Unchanged) */
+#report .report-actions {
+    margin-top: 30px; padding-top: 25px; border-top: 1px solid #eee;
+    text-align: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+}
+#report .report-actions button { min-width: 140px; }
+
+/* === Notifications (Unchanged) === */
+#notifications {
+    position: fixed; bottom: 20px; right: 20px; z-index: 1050; max-width: 300px;
+}
+.notification {
+    background-color: #34495e; color: white; padding: 12px 18px; margin-bottom: 10px;
+    border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); opacity: 0;
+    transform: translateX(20px); transition: opacity 0.4s ease, transform 0.4s ease;
+    font-size: 0.95em; cursor: pointer;
+    animation: slideInNotification 0.4s ease forwards;
+}
+.notification.success { background-color: #27ae60; } /* Green */
+.notification.error { background-color: #c0392b; } /* Red */
+.notification.info { background-color: #2980b9; } /* Blue */
+@keyframes slideInNotification { to { opacity: 0.95; transform: translateX(0); } }
+/* Class added by JS to trigger fade-out */
+.notification.show ~ .notification { /* Adjust spacing if needed when multiple show */ }
+.notification:not(.show) { /* Style for fading out */
+    opacity: 0 !important;
+    transform: translateX(30px) !important;
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out !important;
+}
+
+
+/* === Print Styles (Adapted for Echo) === */
+@media print {
+    body { background-color: #fff !important; margin: 0 !important; padding: 0 !important; font-size: 10.5pt; line-height: 1.4; color: #000; }
+    .container { width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
+    /* Hide UI elements not part of the report */
+    .tab-container, .tab-nav, .tab-content:not(#report), #notifications, .report-actions,
+    #translation-loading, #translation-section .report-header, #translation-edit-area,
+    #templates, #images, #patient-info, #echo-assessment /* Hide input tabs */
+    { display: none !important; }
+
+    /* Show only the content areas for printing */
+    #report-preview, #translation-content {
+        display: block !important; border: none !important; box-shadow: none !important;
+        padding: 0 !important; /* Use @page margin */ margin: 0 !important;
+        max-width: 100% !important; overflow: visible !important; min-height: 0 !important;
+    }
+
+    /* Ensure report content styles are applied (Same as Abdominal, should work for Echo) */
+    .report-container { width: 100%; margin: 0; padding: 0;}
+    .report-title { text-align: center; font-size: 1.3em; margin-bottom: 0.8em; color: #000; font-weight: bold; }
+    .report-section { margin-bottom: 1em; page-break-inside: avoid; }
+    .report-section-title { font-size: 1.15em; font-weight: bold; color: #000; border-bottom: 1px solid #999; margin-bottom: 0.5em; padding-bottom: 0.15em; font-family: Arial, sans-serif;}
+    .report-section p { margin: 0.3em 0 0.6em 0; orphans: 3; widows: 3; }
+    .report-section strong { font-weight: bold; color: #000; }
+    hr.report-hr { border: none; border-top: 1px solid #ccc; margin: 0.8em 0; }
+
+    /* Styles for the formatted echo findings (Same as Abdominal, should work) */
+     .report-findings-section h4 {
+        font-size: 1.05em; font-weight: bold; color: #000; margin-top: 0.8em; margin-bottom: 0.3em; padding-bottom: 1px; border-bottom: 1px dotted #aaa; page-break-after: avoid;
+    }
+     .report-findings-section ul { list-style: none; padding-left: 5px; margin-top: 0.2em; margin-bottom: 0.8em; page-break-inside: avoid; }
+     .report-findings-section li { margin-bottom: 0.3em; line-height: 1.4; page-break-inside: avoid; }
+      .report-findings-section p { margin: 0.4em 0 0.8em 5px !important; line-height: 1.4; page-break-inside: avoid;} /* Indented description paras */
+     .report-findings-section strong { color: #000; margin-right: 4px; }
+
+    /* Image printing (Same as Abdominal) */
+    .report-images-section .image-flex-container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 5mm !important; margin-top: 0.4em !important; }
+    .report-image-item { flex: 0 1 calc(50% - 3mm); box-sizing: border-box; text-align: center; page-break-inside: avoid !important; margin-bottom: 5mm !important; border: 1px solid #ccc; padding: 2mm; background-color: #fdfdfd !important; print-color-adjust: exact !important; -webkit-print-color-adjust: exact !important; overflow: hidden; max-height: 47mm; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .report-image-item img { display: block; max-width: 100%; height: auto; max-height: 44mm; object-fit: contain; margin: 0 auto 1mm auto; }
+    .report-image-item .caption { font-size: 8pt; color: #333; margin-top: 0; line-height: 1.1; word-wrap: break-word; }
+    /* Signature printing (Same as Abdominal) */
+    .signature-section { margin-top: 10mm !important; text-align: center; page-break-inside: avoid; }
+    .signature-title { font-size: 10pt; margin-bottom: 1.5mm; font-weight: bold;}
+    .signature-space { height: 12mm; margin-bottom: 1.5mm; border-bottom: 1px dotted #aaa; width: 60%; margin-left: auto; margin-right: auto; }
+    .signature-name { font-size: 10pt; font-weight: bold; margin-top: 0; }
+    /* Footer printing (Same as Abdominal) */
+    .report-footer { margin-top: 1em !important; font-size: 9pt; color: #333; text-align: center; border-top: 1px solid #ccc; padding-top: 0.5em !important; page-break-before: auto; }
+}
