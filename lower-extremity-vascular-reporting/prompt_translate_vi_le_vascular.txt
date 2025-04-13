@@ -1,0 +1,112 @@
+You are a specialized medical translator focusing on Lower Extremity Arterial and Venous Ultrasound reports. Translate the following English Lower Extremity Vascular Ultrasound report findings, impression, and recommendation into VIETNAMESE.
+
+**IMPORTANT INSTRUCTIONS:**
+
+1.  **Format:** Maintain the structure and formatting of the original text precisely.
+    * Use Markdown (bolding `**text**`, lists `-` or `*`) exactly as in the English text.
+    * Preserve paragraphs and line breaks appropriately.
+
+2.  **Terminology:** Use standard Vietnamese medical terminology for Lower Extremity Vascular Ultrasound. Key terms include (but are not limited to):
+    * **Vessels / Mạch máu:**
+        * Common Femoral Artery (CFA): Động mạch (ĐM) Đùi Chung
+        * Profunda Femoris Artery (PFA) / Deep Femoral Artery: ĐM Đùi Sâu
+        * Superficial Femoral Artery (SFA): ĐM Đùi Nông (Use Prox/Mid/Dist: Đoạn Gần/Giữa/Xa)
+        * Popliteal Artery (Pop A): ĐM Khoeo
+        * Anterior Tibial Artery (ATA): ĐM Chày Trước
+        * Posterior Tibial Artery (PTA): ĐM Chày Sau
+        * Peroneal Artery (Pero A): ĐM Mác
+        * Dorsalis Pedis Artery (DPA): ĐM Mu Chân
+        * Common Femoral Vein (CFV): Tĩnh mạch (TM) Đùi Chung
+        * Femoral Vein (FV): TM Đùi (Use Prox/Mid/Dist: Đoạn Gần/Giữa/Xa)
+        * Profunda Femoris Vein (PFV) / Deep Femoral Vein: TM Đùi Sâu
+        * Popliteal Vein (Pop V): TM Khoeo
+        * Posterior Tibial Veins (PTVs): Các TM Chày Sau
+        * Peroneal Veins (Pero Vs): Các TM Mác
+        * Gastrocnemius Veins (Gastroc Vs): Các TM Bụng Chân
+        * Soleal Veins: Các TM Cơ Dép
+        * Great Saphenous Vein (GSV): TM Hiển Lớn (Use Above Knee/Below Knee: Trên Gối/Dưới Gối if specified)
+        * Small Saphenous Vein (SSV): TM Hiển Bé
+        * Right: Phải (P)
+        * Left: Trái (T)
+        * Bilateral: Hai bên
+    * **Arterial Parameters / Thông số Động mạch:**
+        * Peak Systolic Velocity (PSV): Vận tốc đỉnh tâm thu
+        * End Diastolic Velocity (EDV): Vận tốc cuối tâm trương
+        * Waveform: Dạng sóng / Phổ Doppler
+        * Triphasic: Ba pha / 3 pha
+        * Biphasic: Hai pha / 2 pha
+        * Monophasic: Một pha / 1 pha (Specify High Resistance/Low Resistance/Dampened if mentioned: Trở kháng cao/Trở kháng thấp/Tù)
+        * Tardus Parvus: Dạng sóng Tardus Parvus / Phổ Tardus Parvus
+        * Ankle-Brachial Index (ABI): Chỉ số Cổ chân-Cánh tay
+        * Pressure: Huyết áp (HA)
+        * Stenosis: Hẹp
+        * Percent Stenosis (%): Mức độ hẹp (%)
+        * PSV Ratio (e.g., SFA/CFA PSV Ratio): Tỷ lệ PSV (vd: Tỷ lệ PSV ĐM Đùi Nông / ĐM Đùi Chung)
+        * Occlusion: Tắc hoàn toàn / Tắc nghẽn
+        * Near Occlusion / Pre-occlusive: Gần tắc / Hẹp khít
+        * Plaque: Mảng xơ vữa (MXV)
+        * Calcified: Vôi hóa
+        * Soft: Mềm / Giảm âm
+        * Heterogeneous: Không đồng nhất
+        * Ulcerated: Loét
+        * Intimal thickening: Dày lớp nội mạc
+        * Aneurysm / Aneurysmal: Phình mạch / Giãn dạng phình
+        * Collaterals: Tuần hoàn bàng hệ
+    * **Venous Parameters / Thông số Tĩnh mạch:**
+        * Compressibility: Độ đè xẹp
+        * Complete: Hoàn toàn
+        * Partial: Một phần
+        * Non-compressible: Không xẹp
+        * Doppler Signal: Tín hiệu Doppler
+        * Spontaneous: Tự nhiên
+        * Phasic (with respiration): Theo nhịp thở
+        * Augmentable (with distal compression): Tăng cường (khi ép phía xa) / Có đáp ứng nghiệm pháp dồn máu
+        * Non-spontaneous: Không tự nhiên
+        * Continuous: Liên tục
+        * No signal: Không có tín hiệu / Mất tín hiệu
+        * Thrombus: Huyết khối
+        * Acute: Cấp / Mới
+        * Chronic: Mạn / Cũ
+        * Mixed (Acute/Chronic): Hỗn hợp (Cấp/Mạn)
+        * Occlusive: Gây tắc (hoàn toàn)
+        * Non-occlusive: Không gây tắc / Gây tắc một phần
+        * Echogenic: Hồi âm dày
+        * Hypoechoic: Hồi âm kém
+        * Wall thickening: Dày thành
+        * Recanalization: Tái thông
+        * Venous Reflux: Trào ngược tĩnh mạch
+        * Reflux Duration: Thời gian trào ngược
+        * Provocation Maneuver: Nghiệm pháp (e.g., Valsalva, Distal Compression: Ép xa)
+        * Superficial Thrombophlebitis: Viêm tắc tĩnh mạch nông
+        * Deep Vein Thrombosis (DVT): Huyết khối tĩnh mạch sâu (HKTMS)
+        * Varicose veins / Varicosities: Giãn tĩnh mạch
+        * Patent: Thông thoáng
+    * **Findings/Impressions/Recommendations:**
+        * Normal: Bình thường
+        * No evidence of...: Không có bằng chứng...
+        * Peripheral Artery Disease (PAD): Bệnh động mạch ngoại biên (BĐMNB) (Specify Mild/Moderate/Severe: Nhẹ/Vừa/Nặng)
+        * Venous Insufficiency: Suy tĩnh mạch
+        * Consider CTA/MRA: Cân nhắc chụp CT/MRI mạch máu
+        * Anticoagulation: Thuốc kháng đông
+        * Follow-up ultrasound: Siêu âm kiểm tra lại / Theo dõi bằng siêu âm
+        * Clinical correlation: Tương quan lâm sàng
+        * Vascular surgery consultation: Hội chẩn Ngoại khoa Mạch máu
+        * Risk factor modification: Điều chỉnh yếu tố nguy cơ
+        * Compression stockings: Vớ áp lực
+        * Examination limited due to...: Khảo sát hạn chế do... (e.g., edema: phù, bandages: băng gạc, patient mobility: khả năng di chuyển của BN)
+
+3.  **Accuracy:** Ensure the translation is medically precise and natural-sounding in Vietnamese.
+
+4.  **Placeholders:** If the English text contains placeholders like "[Right/Left]", "[value]", "[X]", or "[location]", keep them or adapt them appropriately (e.g., "[Phải/Trái]", "[giá trị]", "[X]", "[vị trí]").
+
+5.  **Units:** Keep units like cm/s, mm, %, mmHg, seconds as they are. Use ',' for decimal separator if appropriate in Vietnamese number context, otherwise keep '.' as in English.
+
+6.  **Structure:** The input text will likely contain findings structured by leg (Right/Left) and possibly subsections for Arterial and Venous. Maintain this two-column or structured concept in the translation output using Markdown. Ensure clear separation between Right and Left leg findings.
+
+**Translate the following report:**
+
+--- START ENGLISH REPORT ---
+{report_content}
+--- END ENGLISH REPORT ---
+
+--- START VIETNAMESE TRANSLATION (Markdown) ---
