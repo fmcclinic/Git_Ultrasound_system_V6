@@ -1,0 +1,468 @@
+/* styles.css - For the Gynecologic Ultrasound Reporting Project */
+/* Adapted from Obstetric project - Maintaining Single Column Report Findings */
+
+/* === General Styles === */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f7f9;
+    color: #333;
+    font-size: 14px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 20px auto;
+    background: #ffffff;
+    padding: 25px 35px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+h1, h2, h3, h4, h5 {
+    color: #2c3e50;
+    margin-top: 0.5em;
+    margin-bottom: 0.8em;
+    font-weight: 600;
+}
+h1 { /* Page Title */
+    text-align: center;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    font-size: 1.8em;
+    color: #34495e;
+}
+h2 { /* Tab titles */
+    font-size: 1.5em;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+    color: #16a085; /* Keep OB color or change if desired */
+}
+h3 { /* Main Assessment Section Toggles (e.g., Uterus, Adnexa) */
+     font-size: 1.3em;
+     /* Keep OB color #2980b9 or change */
+     color: #2980b9; /* GYN color example - adjust if needed */
+     margin: 0;
+     display: inline;
+     vertical-align: middle;
+}
+h4 { /* Used for sub-section titles like Fibroids, Adnexal Findings */
+    font-size: 1.1em;
+    color: #333;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    padding-bottom: 3px;
+    border-bottom: 1px dashed #ddd;
+}
+h5 { /* Used for report findings sub-titles */
+     font-size: 1em;
+     font-weight: bold;
+     color: #555;
+     margin-top: 1em;
+     margin-bottom: 0.5em;
+     border-bottom: none;
+     padding-bottom: 0;
+ }
+
+summary { font-weight: 600; cursor: pointer; }
+
+/* Icons inside summary */
+details.section > summary.section-toggle h3 i.fas,
+details.section > summary.section-toggle h4 i.fas {
+    margin-right: 8px;
+    font-size: 0.9em;
+    /* color: #5a8ebc; */ /* OB Color */
+    color: #6a5acd; /* GYN example color - adjust */
+}
+
+hr { border: none; border-top: 1px solid #e0e0e0; margin: 1.2em 0; }
+hr.report-hr { border: none; border-top: 1px solid #ccc; margin: 1.2em 0; } /* Specific for report preview/print */
+
+/* === Tab System === (Unchanged) */
+.tab-container { margin-top: 25px; }
+.tab-nav { display: flex; flex-wrap: wrap; border-bottom: 2px solid #bdc3c7; margin-bottom: 0; }
+.tab-button {
+    padding: 10px 18px; cursor: pointer; border: none; background-color: #f8f9fa;
+    border-bottom: 3px solid transparent; margin-right: 5px; margin-bottom: -2px;
+    font-size: 1em; color: #7f8c8d; transition: all 0.3s ease;
+    border-radius: 6px 6px 0 0; font-weight: 500;
+}
+.tab-button:hover { color: #34495e; background-color: #e9ecef; }
+.tab-button.active {
+    border-bottom-color: #3498db; background-color: #ffffff;
+    font-weight: 600; color: #2980b9;
+}
+.tab-content {
+    display: none; padding: 25px; border: 1px solid #bdc3c7; border-top: none;
+    border-radius: 0 0 8px 8px; background-color: #ffffff; min-height: 400px;
+}
+.tab-content.active { display: block; animation: fadeIn 0.4s ease-in-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+/* === Form Styles === (Largely Unchanged) */
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; margin-bottom: 6px; font-weight: 600; color: #555; font-size: 0.9em; }
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group input[type="file"],
+.form-group select,
+.form-group textarea {
+    width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 5px;
+    box-sizing: border-box; font-size: 0.95em; transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fdfdfd;
+}
+.form-group input[type=number]::-webkit-inner-spin-button,
+.form-group input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.form-group input[type=number] { -moz-appearance: textfield; /* Keep for Firefox */ }
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #3498db; box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+    outline: none; background-color: #fff;
+}
+.form-group select[multiple] { height: auto; min-height: 100px; }
+.form-group textarea { min-height: 50px; resize: vertical; }
+/* Style for calculated fields (e.g., Ovarian Volume) */
+.calculated-value {
+    font-weight: bold;
+    color: #16a085; /* Teal color */
+    background-color: #f0fdfa; /* Light teal background */
+    padding: 3px 6px;
+    border-radius: 3px;
+    display: inline-block; /* or block depending on usage */
+    min-width: 30px;
+    text-align: right;
+}
+input.calculated-value { /* If using inputs for calculated display */
+     background-color: #e8f8f5;
+     border-color: #b8e6d9;
+     color: #138d75;
+     font-weight: bold;
+}
+/* Shorter select/input group for things like Scan Approach */
+.short-input-group {
+    max-width: 300px; /* Adjust as needed */
+}
+
+/* === Collapsible Section Styles (<details> / <summary>) === (Reused) */
+details.section.organ-section { margin-bottom: 20px; border: 1px solid #adb5bd; border-radius: 6px; overflow: hidden; background-color: #ffffff; }
+details.section.organ-section > summary.section-toggle { padding: 12px 20px; cursor: pointer; background-color: #e9ecef; border-bottom: 1px solid #adb5bd; list-style: none; position: relative; transition: background-color 0.2s ease; user-select: none; }
+details.section.organ-section[open] > summary.section-toggle { background-color: #dde4e6; border-bottom-color: #9fa8b3; }
+details.section.organ-section > summary.section-toggle:hover { background-color: #dde4e6; }
+details.section.organ-section > summary.section-toggle::before { content: '►'; font-family: sans-serif; position: absolute; left: 15px; top: 50%; transform: translateY(-50%) rotate(0deg); transition: transform 0.3s ease; font-size: 0.8em; color: #6c757d; }
+details.section.organ-section[open] > summary.section-toggle::before { transform: translateY(-50%) rotate(90deg); }
+details.section.organ-section > summary.section-toggle h3 { margin-left: 20px; }
+details.section.organ-section > .section-content { padding: 20px; border-top: none; background-color: #fff; }
+details.section.organ-section[open] > .section-content { animation: fadeInContent 0.4s ease-out; } /* Add fade-in for content */
+
+/* Sub-Sections (e.g., Ovary fieldsets styled as sub-sections) */
+fieldset.sub-section {
+    margin: 15px 0;
+    border: 1px dashed #ced4da;
+    padding: 15px 15px 10px 15px; /* Adjust padding */
+    border-radius: 4px;
+    background-color: #f8f9fa;
+}
+fieldset.sub-section legend {
+    font-weight: bold;
+    padding: 0 8px;
+    font-size: 1em;
+    color: #495057;
+    background-color: #f8f9fa; /* Match background to avoid border overlap */
+}
+
+/* NEW: Styles for dynamic GYN entries (Fibroids, Adnexal Findings) */
+.dynamic-entry {
+    border: 1px solid #d1e7dd; /* Light green border */
+    background-color: #f8fdfb; /* Very light green background */
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    position: relative;
+}
+.dynamic-entry h5 { /* Title for each entry if needed */
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.05em;
+    color: #0f5132; /* Dark green */
+}
+.dynamic-entry .remove-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 3px 8px;
+    font-size: 0.8em;
+    line-height: 1;
+    border-radius: 4px;
+}
+/* Style for row of L x W x AP inputs */
+.dimension-input-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.dimension-input-row input[type="number"] {
+    flex: 1; /* Allow inputs to take space */
+    min-width: 50px; /* Minimum width */
+    text-align: right;
+}
+.dimension-input-row span {
+    color: #888;
+    padding: 0 2px;
+}
+/* Style Ovary sub-sections */
+.ovary-section legend {
+    color: #663399; /* Rebeccapurple example */
+}
+
+/* Removed anatomy-subsection styling - GYN structure is simpler */
+
+@keyframes fadeInContent { from { opacity: 0; } to { opacity: 1; } }
+
+/* === Form Grid Layouts === (Reused) */
+.form-grid-col-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: 15px 20px; }
+.form-grid-col-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 15px 20px; }
+.form-grid-col-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: 15px 20px; }
+.form-grid-col-5 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr)); gap: 15px 20px; }
+.form-grid-col-2, .form-grid-col-3, .form-grid-col-4, .form-grid-col-5 { align-items: end; }
+.form-grid-col-2 .form-group,
+.form-grid-col-3 .form-group,
+.form-grid-col-4 .form-group,
+.form-grid-col-5 .form-group { margin-bottom: 0; }
+
+
+/* === Button Styles === (Unchanged) */
+button { padding: 9px 16px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.95em; font-weight: 500; transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease; margin-right: 8px; vertical-align: middle; line-height: 1.5; }
+button:hover { background-color: #2980b9; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+button:active { background-color: #2471a3; transform: translateY(1px); box-shadow: none; }
+button:disabled { background-color: #bdc3c7; cursor: not-allowed; box-shadow: none; transform: none; }
+button i.fas, button i.fa-solid { margin-right: 7px; font-size: 0.9em; }
+button.danger-btn { background-color: #e74c3c; }
+button.danger-btn:hover { background-color: #c0392b; }
+button#translate-report-btn { background-color: #f39c12; }
+button#translate-report-btn:hover { background-color: #e67e22; }
+button#print-translation-btn { background-color: #9b59b6; }
+button#print-translation-btn:hover { background-color: #8e44ad; }
+button#export-report-html-btn { background-color: #7f8c8d; }
+button#export-report-html-btn:hover { background-color: #6c7a89; }
+#edit-translation-btn { background-color: #ecf0f1; color: #34495e; border: 1px solid #bdc3c7; padding: 5px 10px; font-size: 0.9em; }
+#edit-translation-btn:hover { background-color: #dde4e6; }
+#edit-translation-btn.editing { background-color: #d4edda; color: #155724; border-color: #c3e6cb; }
+button.small-btn { padding: 4px 10px; font-size: 0.9em; }
+button.remove-btn { /* Specific style for remove buttons in dynamic sections */
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+button.remove-btn:hover {
+    background-color: #f1b0b7;
+    border-color: #eba1a8;
+}
+
+/* === Suggestion Buttons Styling === (Unchanged) */
+.suggestion-button-container { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; display: none; padding-top: 6px; border-top: 1px dashed #eee; }
+.suggestion-btn { padding: 3px 10px; font-size: 0.85em; background-color: #ecf0f1; color: #34495e; border: 1px solid #bdc3c7; border-radius: 15px; cursor: pointer; transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease; white-space: nowrap; margin: 0; }
+.suggestion-btn:hover { background-color: #dde4e6; border-color: #aab3b9; }
+.suggestion-btn:active { background-color: #cad3d6; transform: scale(0.98); }
+
+/* === Image Preview Styling === (Unchanged) */
+#image-preview-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; padding: 10px; background-color: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 5px; min-height: 100px; }
+.image-preview-wrapper { position: relative; display: inline-block; border: 1px solid #ccc; padding: 4px; background-color: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.08); border-radius: 4px; }
+.image-preview-wrapper img { max-width: 140px; max-height: 140px; display: block; border-radius: 2px; }
+.image-preview-wrapper .remove-image-btn { position: absolute; top: 1px; right: 1px; padding: 1px 6px; font-size: 0.8em; line-height: 1; border-radius: 50%; z-index: 1; background-color: rgba(231, 76, 60, 0.8); color: white; border: none; cursor: pointer; transition: background-color 0.2s ease; }
+.image-preview-wrapper .remove-image-btn:hover { background-color: #c0392b; }
+
+/* === Report Tab Styling (Shell) === (Unchanged) */
+.report-output-area { border: 1px solid #ccc; padding: 20mm; margin: 25px auto 0 auto; max-width: 210mm; box-sizing: border-box; background: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.15); font-family: 'Times New Roman', Times, serif; font-size: 10.5pt; line-height: 1.4; color: #222; min-height: 100px; overflow-x: hidden; overflow-y: auto; }
+.report-output-area .placeholder-text { color: #888; text-align: center; padding: 30px 0; font-style: italic; font-size: 1em; }
+
+/* === Report Content Styling (Preview) === */
+#report-preview .report-container { width: 100%; box-sizing: border-box; }
+#report-preview .report-title { text-align: center; font-size: 1.4em; margin-bottom: 1em; color: #111; font-weight: bold; }
+#report-preview .report-section { margin-bottom: 1.2em; }
+#report-preview .report-section-title { font-size: 1.15em; font-weight: bold; color: #111; border-bottom: 1px solid #aaa; margin-bottom: 0.6em; padding-bottom: 0.2em; font-family: Arial, sans-serif;}
+#report-preview .report-section p { margin: 0.4em 0; }
+#report-preview .report-section strong { font-weight: bold; color: #000; }
+#report-preview .report-footer { margin-top: 2em; font-size: 0.9em; color: #444; text-align: center; border-top: 1px solid #ccc; padding-top: 0.8em; }
+#report-preview .signature-section { margin-top: 10mm; text-align: center; }
+#report-preview .signature-title { font-size: 10pt; margin-bottom: 1.5mm; font-weight: bold; }
+#report-preview .signature-space { height: 12mm; margin-bottom: 1.5mm; border-bottom: 1px dotted #aaa; width: 60%; margin-left: auto; margin-right: auto; }
+#report-preview .signature-name { font-size: 10pt; font-weight: bold; margin-top: 0; }
+
+/* === *** UPDATED: Report Findings (Single Column Preview for GYN) *** === */
+/* Assume JS adds a class like 'gynecologic-findings-container' */
+#report-preview .report-findings-section .gynecologic-findings-container {
+    margin-top: 10px;
+    /* No grid here - default block layout */
+}
+/* Titles within the single column */
+#report-preview .report-findings-section .gynecologic-findings-container h4 { /* e.g., Uterus, Endometrium, Adnexa... */
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+    margin-top: 0.8em;
+    margin-bottom: 0.4em;
+    padding-bottom: 2px;
+    border-bottom: 1px dotted #aaa;
+}
+#report-preview .report-findings-section .gynecologic-findings-container h4:first-child {
+    margin-top: 0; /* Remove top margin for the very first heading */
+}
+#report-preview .report-findings-section .gynecologic-findings-container h5 { /* e.g., Right Ovary, Left Ovary, Fibroid 1... */
+    font-size: 1em;
+    font-weight: bold;
+    color: #555;
+    margin-top: 0.6em;
+    margin-bottom: 0.3em;
+    border-bottom: none;
+    padding-bottom: 0;
+    padding-left: 10px; /* Indent sub-headings */
+}
+/* List items within the single column */
+#report-preview .report-findings-section .gynecologic-findings-container ul {
+    list-style: none; /* Or use 'disc' or 'circle' if preferred */
+    padding-left: 15px; /* Indent list items */
+    margin-top: 0.3em;
+    margin-bottom: 0.8em;
+}
+#report-preview .report-findings-section .gynecologic-findings-container li {
+    margin-bottom: 0.4em;
+    line-height: 1.4;
+}
+#report-preview .report-findings-section .gynecologic-findings-container li strong {
+    color: #111;
+    margin-right: 5px;
+    display: inline-block;
+    min-width: 140px; /* Adjust as needed for GYN parameter names */
+}
+/* Special handling for Impression/Recommendation H4s */
+#report-preview .report-findings-section .gynecologic-findings-container > hr + h4, /* Target H4 after the first hr */
+#report-preview .report-findings-section .gynecologic-findings-container > h4:last-of-type /* Target last H4 if no hr */
+{
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #ccc; /* Separator line */
+    border-bottom: none; /* Override default H4 style */
+    color: #111;
+    font-family: Arial, sans-serif;
+    padding-left: 0; /* Reset indent */
+}
+/* === END UPDATED GYN Report Findings Preview Styles === */
+
+
+/* Images inside generated report preview (Unchanged) */
+#report-preview .report-images-section .image-flex-container { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 8mm; margin-top: 10px; }
+#report-preview .report-image-item { flex: 0 1 calc(50% - 4mm); box-sizing: border-box; text-align: center; margin-bottom: 8mm; }
+#report-preview .report-image-item img { max-width: 100%; height: auto; border: 1px solid #aaa; display: block; margin: 0 auto 5px auto; object-fit: contain; max-height: 45mm; }
+#report-preview .report-image-item .caption { font-size: 8pt; color: #555; margin-top: 0; word-wrap: break-word; line-height: 1.2; }
+
+/* Translation Section Styling (Unchanged) */
+#report .report-section-container#translation-section { margin-top: 30px; border: 1px solid #c3dae8; border-radius: 6px; background-color: #fafdff; }
+#report .report-section-container#translation-section .report-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; background-color: #eaf5ff; border-bottom: 1px solid #c3dae8; border-radius: 5px 5px 0 0; }
+#report .report-section-container#translation-section .report-header h3 { margin: 0; font-size: 1.1em; color: #1a5276; display: flex; align-items: center; gap: 8px; }
+#translation-content { padding: 15px 20mm; border: none; box-shadow: none; margin: 0; background-color: transparent; border-radius: 0 0 5px 5px; min-height: 80px; }
+#translation-edit-area { width: 100%; box-sizing: border-box; padding: 15px 20mm; border: none; font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace; font-size: 10pt; line-height: 1.6; background-color: #fff; resize: vertical; border-radius: 0 0 5px 5px; border-top: 1px solid #c3dae8; margin-top: -1px; min-height: 350px; display: none; }
+#translation-edit-area:focus { outline: none; box-shadow: inset 0 0 8px rgba(0, 86, 179, 0.1); }
+#translation-loading { text-align: center; margin: 25px 0; color: #555; font-style: italic; display: none; padding: 20px; background-color: #f8f9fa; border-radius: 5px; }
+#translation-loading .loading-spinner { vertical-align: middle; margin-right: 10px; border-color: rgba(0,0,0,0.1); border-top-color: #f39c12; display: inline-block; width: 20px; height: 20px; border-width: 3px; border-style: solid; border-radius: 50%; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Action Buttons Area (Unchanged) */
+#report .report-actions { margin-top: 30px; padding-top: 25px; border-top: 1px solid #eee; text-align: center; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+#report .report-actions button { min-width: 140px; }
+
+/* Notifications (Unchanged) */
+#notifications { position: fixed; bottom: 20px; right: 20px; z-index: 1050; max-width: 300px; }
+.notification { background-color: #34495e; color: white; padding: 12px 18px; margin-bottom: 10px; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); opacity: 0; transform: translateX(20px); transition: opacity 0.4s ease, transform 0.4s ease; font-size: 0.95em; cursor: pointer; animation: slideInNotification 0.4s ease forwards; }
+.notification.success { background-color: #27ae60; }
+.notification.error { background-color: #c0392b; }
+.notification.info { background-color: #2980b9; }
+@keyframes slideInNotification { to { opacity: 0.95; transform: translateX(0); } }
+.notification.fade-out { opacity: 0; transform: translateX(20px); }
+
+/* === Print Styles === */
+@media print {
+    body { background-color: #fff !important; margin: 0 !important; padding: 0 !important; font-size: 10.5pt; line-height: 1.4; color: #000; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important;}
+    .container { width: 100% !important; max-width: 100% !important; margin: 0 !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
+    /* Hide non-report elements */
+    .tab-container, .tab-nav, .tab-content:not(#report), #notifications, .report-actions,
+    #translation-loading, #translation-section .report-header, #translation-edit-area,
+    #templates, #images, #patient-info,
+    #gyn-assessment /* *** Hide GYN assessment form *** */
+    { display: none !important; }
+
+    #report-preview, #translation-content {
+        display: block !important; border: none !important; box-shadow: none !important;
+        padding: 0 !important; margin: 0 !important; max-width: 100% !important;
+        overflow: visible !important; min-height: 0 !important;
+    }
+
+    /* Ensure report content base styles are applied */
+    .report-container { width: 100%; margin: 0; padding: 0;}
+    .report-title { text-align: center; font-size: 1.3em; margin-bottom: 0.8em; color: #000; font-weight: bold; }
+    .report-section { margin-bottom: 1em; page-break-inside: avoid; }
+    .report-section-title { font-size: 1.1em; font-weight: bold; color: #000; border-bottom: 1px solid #999; margin-bottom: 0.5em; padding-bottom: 0.15em; font-family: Arial, sans-serif;}
+    .report-section p { margin: 0.3em 0 0.6em 0; orphans: 3; widows: 3; }
+    .report-section strong { font-weight: bold; color: #000; }
+    hr.report-hr { border: none; border-top: 1px solid #ccc; margin: 0.8em 0; }
+
+    /* === *** UPDATED: Print Findings (Single Column for GYN) *** === */
+    /* Target the correct container class */
+    .report-findings-section .gynecologic-findings-container {
+        /* No grid */
+        margin-top: 5mm !important;
+        page-break-inside: auto; /* Allow breaking within the findings */
+    }
+     /* Titles within the single column */
+    .report-findings-section .gynecologic-findings-container h4 { /* e.g., Uterus, Adnexa... */
+        font-size: 1.05em; font-weight: bold; color: #000; margin-top: 0.6em; margin-bottom: 0.3em; padding-bottom: 1px; border-bottom: 1px dotted #aaa; page-break-after: avoid; page-break-inside: avoid;
+    }
+     .report-findings-section .gynecologic-findings-container h4:first-child { margin-top: 0;}
+     .report-findings-section .gynecologic-findings-container h5 { /* e.g., Right Ovary, Fibroid 1... */
+        font-size: 1em; font-weight: bold; color: #333; margin-top: 0.5em; margin-bottom: 0.2em; border-bottom: none; padding-bottom: 0; page-break-after: avoid; page-break-inside: avoid; padding-left: 5mm;
+    }
+    /* List items within the single column */
+    .report-findings-section .gynecologic-findings-container ul {
+        list-style: none; padding-left: 5mm; /* Indent list items */ margin-top: 0.2em; margin-bottom: 0.8em; page-break-inside: avoid;
+    }
+    .report-findings-section .gynecologic-findings-container li {
+        margin-bottom: 0.3em; line-height: 1.4; page-break-inside: avoid; /* Avoid breaking mid-item */
+    }
+    .report-findings-section .gynecologic-findings-container li strong {
+        color: #000; margin-right: 4px; display: inline-block; min-width: 120px; /* Adjust for GYN */
+    }
+    /* Impression/Recommendation in Print */
+     .report-findings-section .gynecologic-findings-container > hr + h4, /* Target H4 after hr */
+     .report-findings-section .gynecologic-findings-container > h4:last-of-type
+     {
+         margin-top: 8mm; padding-top: 4mm; border-top: 1px solid #ccc; page-break-before: auto; page-break-inside: avoid; padding-left: 0;
+     }
+      .report-findings-section .gynecologic-findings-container > h4 + p { /* Paragraphs after Impression/Reco H4s */
+         page-break-inside: auto; /* Allow breaking within long paragraphs */
+     }
+     /* === END UPDATED GYN Print Findings Styles === */
+
+
+    /* Image printing (Unchanged - 2 per row is usually fine) */
+    .report-images-section .image-flex-container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 5mm !important; margin-top: 0.4em !important; }
+    .report-image-item { flex: 0 1 calc(50% - 3mm); box-sizing: border-box; text-align: center; page-break-inside: avoid !important; margin-bottom: 5mm !important; border: 1px solid #ccc; padding: 2mm; background-color: #fdfdfd !important; print-color-adjust: exact !important; -webkit-print-color-adjust: exact !important; overflow: hidden; max-height: 47mm; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .report-image-item img { display: block; max-width: 100%; height: auto; max-height: 44mm; object-fit: contain; margin: 0 auto 1mm auto; }
+    .report-image-item .caption { font-size: 8pt; color: #333; margin-top: 0; line-height: 1.1; word-wrap: break-word; }
+
+    /* Signature printing (Unchanged) */
+    .signature-section { page-break-inside: avoid; margin-top: 10mm !important; }
+
+    /* Footer printing (Unchanged) */
+    .report-footer { margin-top: 1em !important; font-size: 9pt; color: #333; text-align: center; border-top: 1px solid #ccc; padding-top: 0.5em !important; page-break-before: auto; }
+
+    /* Hide suggestion buttons in print */
+    .suggestion-button-container { display: none !important; }
+
+    /* Ensure links don't show URL */
+    a[href]:after { content: none !important; }
+}
