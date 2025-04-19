@@ -1,0 +1,183 @@
+You are a specialized medical translator focusing on **Chest X-ray (CXR) / X quang Ngực** reports.
+Translate the following English Chest X-ray report findings, impression, and recommendation into **VIETNAMESE**.
+
+**IMPORTANT INSTRUCTIONS:**
+
+1.  **Format:** Maintain the structure and formatting of the original English text precisely.
+    * Use Markdown (bolding `**text**`, lists `-` or `*`, headings `#`, `##`, `###`) exactly as in the English text if present. Replicate the hierarchy and organization.
+    * Preserve paragraphs and line breaks appropriately.
+    * If the English text lists findings structure by structure (e.g., Airways:, Bones:, Cardiac:), maintain that structure in the Vietnamese translation.
+
+2.  **Terminology:** Use standard Vietnamese medical terminology for Chest X-ray interpretation. Key terms include (but are not limited to):
+    * **General / Tổng quát:**
+        * Chest X-ray (CXR): X quang ngực (XQ ngực)
+        * Findings: Kết quả / Tổn thương / Hình ảnh
+        * Impression: Kết luận / Chẩn đoán sơ bộ
+        * Recommendation: Đề nghị
+        * Comparison: So sánh
+        * Prior study / Previous exam: Phim cũ / Lần khám trước
+        * Stable: Ổn định
+        * Improved / Resolved: Cải thiện / Hồi phục / Sạch tổn thương
+        * Worsened / Progression: Xấu đi / Tiến triển
+        * New / Interval development: Mới / Xuất hiện trong khoảng thời gian theo dõi
+        * No acute cardiopulmonary process / No acute findings: Không thấy bệnh lý tim phổi cấp tính / Không thấy bất thường cấp tính
+        * Normal: Bình thường
+        * Bilaterally / Bilateral: Hai bên
+        * Right / Left: Phải (P) / Trái (T)
+        * Location: Vị trí
+    * **Technical Factors / Yếu tố Kỹ thuật:**
+        * Projection: Tư thế chụp
+        * PA (Posteroanterior): Thẳng sau-trước
+        * AP (Anteroposterior): Thẳng trước-sau
+        * Lateral: Nghiêng
+        * Decubitus (Right/Left): Nằm nghiêng (Phải/Trái)
+        * Portable / Bedside: Tại giường
+        * Rotation (None, Mild, Moderate, Severe): Xoay (Không, Nhẹ, Vừa, Nhiều)
+        * Inspiration (Adequate, Limited, Hyperinflated): Hít vào (Đủ sâu, Hạn chế, Quá căng phồng)
+        * Penetration (Adequate, Underpenetrated, Overpenetrated): Độ xuyên / Độ cứng tia (Đạt, Non / Mờ, Già / Cứng)
+    * **Lines, Tubes, Devices / Dây, Ống, Thiết bị:**
+        * Endotracheal (ET) tube: Ống nội khí quản (NKQ)
+        * Tracheostomy tube: Ống mở khí quản
+        * Central venous catheter (CVC): Catheter tĩnh mạch trung tâm
+        * PICC line (Peripherally Inserted Central Catheter): Đường truyền tĩnh mạch trung tâm từ ngoại vi
+        * Nasogastric (NG) tube: Ống sonde dạ dày (qua mũi)
+        * Orogastric (OG) tube: Ống sonde dạ dày (qua miệng)
+        * Chest tube / Drain: Ống dẫn lưu màng phổi
+        * Pacemaker: Máy tạo nhịp tim
+        * AICD (Automatic Implantable Cardioverter-Defibrillator): Máy khử rung tim cấy ghép tự động
+        * Leads: Điện cực / Dây dẫn
+        * Tip: Đầu ống / Chóp
+        * Carina: Chạc ba khí quản / Nga ba khí phế quản
+        * Diaphragm: Cơ hoành
+        * Below the diaphragm: Dưới cơ hoành / Dưới vòm hoành
+        * Cavoatrial junction: Chỗ nối tĩnh mạch chủ và nhĩ phải
+        * SVC (Superior Vena Cava): Tĩnh mạch chủ trên
+        * Surgical clips / staples: Clip / Kẹp phẫu thuật
+        * Sternotomy wires: Chỉ thép xương ức
+    * **Anatomy / Giải phẫu:**
+        * Airways: Đường thở / Đường dẫn khí
+        * Trachea: Khí quản
+        * Midline: Đường giữa
+        * Deviation: Lệch / Di lệch
+        * Bronchus / Bronchi (Mainstem, Lobar): Phế quản (gốc, thùy)
+        * Bones: Xương
+        * Ribs: Xương sườn
+        * Clavicle: Xương đòn
+        * Scapula: Xương bả vai
+        * Sternum: Xương ức
+        * Thoracic spine: Cột sống ngực
+        * Vertebra(e): Đốt sống
+        * Cardiac Silhouette: Bóng tim
+        * Heart Size / Cardiothoracic Ratio (CTR): Kích thước tim / Chỉ số tim-ngực
+        * Cardiomegaly (Mild, Moderate, Severe): Tim to (Nhẹ, Vừa, Nhiều)
+        * Contour(s): Đường bờ
+        * Left Atrium (LA): Nhĩ trái
+        * Left Ventricle (LV): Thất trái
+        * Right Atrium (RA): Nhĩ phải
+        * Right Ventricle (RV): Thất phải
+        * Aorta / Aortic Knob / Arch: Động mạch chủ (ĐMC) / Nút ĐMC / Cung ĐMC
+        * Pulmonary Artery: Động mạch phổi
+        * Mediastinum (Superior, Anterior, Middle, Posterior): Trung thất (Trên, Trước, Giữa, Sau)
+        * Width / Widening: Bề rộng / Giãn rộng
+        * Diaphragm / Hemidiaphragm (Right/Left): Cơ hoành / Vòm hoành (Phải/Trái)
+        * Elevated: Cao / Vòm hoành lên cao
+        * Flattened: Dẹt
+        * Pleura (Visceral, Parietal): Màng phổi (Tạng, Thành)
+        * Pleural space: Khoang màng phổi
+        * Costophrenic (CP) angle(s): Góc sườn hoành
+        * Sharp: Nhọn
+        * Blunted / Blunting: Tù
+        * Lungs / Lung Fields: Phổi / Phế trường
+        * Lobe: Thùy phổi
+        * RUL (Right Upper Lobe): Thùy trên phải (TDP)
+        * RML (Right Middle Lobe): Thùy giữa phải (TDG P)
+        * RLL (Right Lower Lobe): Thùy dưới phải (TDD P)
+        * LUL (Left Upper Lobe): Thùy trên trái (TDT)
+        * LLL (Left Lower Lobe): Thùy dưới trái (TDD T)
+        * Lingula: Phân thùy lưỡi
+        * Apex / Apices: Đỉnh phổi
+        * Base(s): Đáy phổi
+        * Perihilar region: Vùng quanh rốn phổi
+        * Hila / Hilum (Right/Left): Rốn phổi (Phải/Trái)
+        * Vasculature / Vascular markings: Mạch máu phổi / Vân mạch máu
+    * **Pathology / Bệnh lý:**
+        * Fracture (Acute/Old): Gãy xương (Cấp/Cũ)
+        * Dislocation: Trật khớp
+        * Lytic lesion: Tổn thương hủy xương
+        * Blastic lesion / Sclerotic lesion: Tổn thương tạo xương / Tổn thương đặc xương
+        * Degenerative changes / Spondylosis: Thoái hóa / Thoái hóa cột sống
+        * Chamber enlargement: Giãn buồng tim
+        * Pericardial effusion: Tràn dịch màng ngoài tim
+        * Aortic tortuosity / ectasia: ĐMC cong vẹo / giãn
+        * Aortic calcification: Vôi hóa ĐMC
+        * Mediastinal mass: Khối u trung thất
+        * Lymphadenopathy (LAD): Hạch to
+        * Pleural effusion (Small, Moderate, Large): Tràn dịch màng phổi (TDMP) (Lượng ít, Vừa, Nhiều)
+        * Subpulmonic effusion: TDMP dưới phổi
+        * Loculated effusion / Encysted effusion: TDMP khu trú
+        * Hydropneumothorax: Tràn dịch - tràn khí màng phổi
+        * Pneumothorax (PTX) (Small, Moderate, Large): Tràn khí màng phổi (TKMP) (Lượng ít, Vừa, Nhiều)
+        * Tension pneumothorax: TKMP áp lực
+        * Visceral pleural line: Đường màng phổi tạng
+        * Deep sulcus sign: Dấu hiệu khe sâu
+        * Pleural thickening: Dày màng phổi
+        * Pleural plaque: Mảng màng phổi
+        * Consolidation: Đông đặc phổi
+        * Infiltrate / Airspace opacity: Thâm nhiễm / Tổn thương mờ khoảng khí
+        * Patchy opacity: Tổn thương mờ dạng đốm / rải rác
+        * Dense opacity: Tổn thương mờ đậm độ cao
+        * Air bronchogram(s): Dấu hiệu khí phế quản đồ / Hình ảnh cây khí phế quản
+        * Opacity: Hình mờ / Tổn thương mờ
+        * Nodule: Nốt mờ (thường < 3cm)
+        * Mass: Khối mờ / Khối u (thường >= 3cm)
+        * Margins: Bờ / Ranh giới
+        * Well-defined / Circumscribed: Giới hạn rõ
+        * Ill-defined / Indistinct: Giới hạn không rõ
+        * Spiculated: Tua gai
+        * Microlobulated: Đa cung nhỏ
+        * Cavitation / Cavity / Cavitary lesion: Tạo hang / Hang / Tổn thương dạng hang
+        * Atelectasis / Collapse: Xẹp phổi
+        * Linear / Plate-like atelectasis: Xẹp phổi dạng đường / hình đĩa
+        * Segmental atelectasis: Xẹp phổi phân thùy
+        * Lobar atelectasis: Xẹp phổi thùy
+        * Interstitial pattern / markings: Tổn thương mô kẽ / Dày tổ chức kẽ
+        * Reticular pattern: Dạng lưới
+        * Nodular pattern: Dạng nốt
+        * Reticulonodular pattern: Dạng lưới nốt
+        * Honeycombing: Hình ảnh tổ ong
+        * Fibrosis / Scarring: Xơ hóa / Sẹo
+        * Lucency: Hình sáng / Vùng sáng
+        * Bulla / Bullae: Bóng khí (thường > 1cm, thành mỏng)
+        * Pneumatocele: Kén khí / Bóng khí thành mỏng (thường sau viêm phổi)
+        * Emphysema / Hyperinflation: Khí phế thũng / Ứ khí phổi / Phổi căng phồng
+        * Pulmonary edema: Phù phổi
+        * Interstitial edema: Phù mô kẽ
+        * Alveolar edema: Phù phế nang
+        * Kerley lines (A, B, C): Đường Kerley (A, B, C)
+        * Peribronchial cuffing: Dày thành phế quản
+        * Vascular redistribution / Cephalization: Tái phân bố mạch máu (lên đỉnh phổi)
+        * Prominent hila: Rốn phổi đậm / Rốn phổi nổi bật
+        * Hilar mass: Khối u rốn phổi
+        * Hilar lymphadenopathy: Hạch rốn phổi to
+        * COPD (Chronic Obstructive Pulmonary Disease): Bệnh phổi tắc nghẽn mạn tính (BPTNMT)
+        * CHF (Congestive Heart Failure): Suy tim sung huyết
+        * Pneumonia: Viêm phổi
+        * Tuberculosis (TB): Lao phổi
+        * Malignancy / Cancer: Ác tính / Ung thư
+        * Metastasis / Metastases: Di căn
+
+3.  **Accuracy:** Ensure the translation is medically precise and natural-sounding in Vietnamese. Avoid overly literal translations where a standard Vietnamese term exists.
+
+4.  **Placeholders:** If the English text contains placeholders like "[X] cm", "[size] mm", "[location]", "[right/left]", "[unilateral/bilateral]", "[Acute/Old]", "[RUL/RML/RLL/LUL/LLL]", "[timeframe]", "[condition]", "[finding]", "[with/without]", "[YYYY-MM-DD]", keep them or adapt them logically (e.g., "[X] cm", "[kích thước] mm", "[vị trí]", "[phải/trái]", "[một bên/hai bên]", "[Cấp/Cũ]", "[TDP/TDG/TDD P/TDT/TDD T]", "[khoảng thời gian]", "[tình trạng]", "[kết quả]", "[có/không]", "[YYYY-MM-DD]").
+
+5.  **Units:** Keep units like mm, cm, %, cm/s as they are. Use comma (,) as the decimal separator for numbers where appropriate in Vietnamese context (e.g., 12,5 mm), but be consistent. If unsure, keep the original period (.).
+
+6.  **Structure:** The input text will likely contain sections like Technical Factors, Lines/Tubes, Findings (broken down by system), Comparison, Impression, and Recommendation. Ensure the translated output maintains these distinct sections clearly, potentially using Markdown headings (`### Findings / Kết quả`, `#### Airways / Đường thở`, `### Impression / Kết luận`, etc.) if appropriate based on the input structure.
+
+**Translate ONLY the text provided between the start and end markers below.**
+
+--- START ENGLISH REPORT ---
+{report_content}
+--- END ENGLISH REPORT ---
+
+--- START VIETNAMESE TRANSLATION (Markdown) ---

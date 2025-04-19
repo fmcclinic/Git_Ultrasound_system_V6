@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Form Filler v3.4 (Fixed Views & Resize Notes)</title>
+    <style>
+        /* --- CSS (Giữ nguyên từ phiên bản trước v3.3) --- */
+        :root {
+            --user-bg: #d1e7fd; --bot-bg: #e9ecef; --system-bg: #fff3cd; --error-bg: #f8d7da;
+            --border-color: #dee2e6; --text-color: #212529; --primary-color: #007bff;
+            --primary-hover: #0056b3; --secondary-color: #6c757d; --light-bg: #f8f9fa;
+            --white: #fff; --red: #dc3545; --orange: #fd7e14; --green: #28a745;
+        }
+        html { box-sizing: border-box; }
+        *, *:before, *:after { box-sizing: inherit; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.5; margin: 0; padding: 0; background-color: #f4f7f6; color: var(--text-color); display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        header { background-color: #343a40; color: var(--white); padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        header h1 { margin: 0; font-size: 1.4rem; }
+        #settings-button { background: none; border: none; color: var(--white); font-size: 1.75rem; cursor: pointer; padding: 5px; line-height: 1; }
+        #settings-button:hover { opacity: 0.8; }
+        .main-container { display: flex; flex-grow: 1; overflow: hidden; }
+        .chat-container { flex: 3; display: flex; flex-direction: column; border-right: 1px solid var(--border-color); background-color: var(--white); }
+        .result-container { flex: 2; display: flex; flex-direction: column; background-color: #fdfdfd; }
+        .result-header { display: flex; justify-content: space-between; align-items: center; padding: 0 15px; border-bottom: 1px solid var(--border-color); background-color: var(--light-bg); flex-shrink: 0; }
+        .result-header h2 { padding: 12px 0; margin: 0; border-bottom: none; background-color: transparent; font-size: 1rem; font-weight: 600; color: #495057; }
+        .result-tabs { display: flex; gap: 5px; }
+        .tab-button { padding: 8px 12px; border: 1px solid transparent; border-bottom: none; background-color: transparent; cursor: pointer; font-size: 0.9rem; color: var(--secondary-color); border-radius: 4px 4px 0 0; position: relative; bottom: -1px; }
+        .tab-button.active { background-color: #fdfdfd; border-color: var(--border-color); color: var(--primary-color); font-weight: 600; }
+        .result-content-area { flex-grow: 1; overflow-y: auto; position: relative; }
+        #result-output, #html-preview { padding: 15px; white-space: pre-wrap; word-wrap: break-word; font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace; font-size: 0.9rem; background-color: var(--white); border: 1px solid #eee; margin: 10px; border-radius: 4px; color: #333; height: calc(100% - 20px); overflow-y: auto; }
+        #html-preview { font-family: sans-serif; font-size: 1rem; line-height: 1.6; white-space: normal; }
+        #html-preview h1, #html-preview h2, #html-preview h3 { margin-top: 1em; margin-bottom: 0.5em; border-bottom: 1px solid #eee; padding-bottom: 0.3em;}
+        #html-preview p { margin-bottom: 1em; }
+        #html-preview ul, #html-preview ol { margin-left: 20px; margin-bottom: 1em; }
+        #html-preview li { margin-bottom: 0.4em; }
+        #html-preview code { background-color: #f0f0f0; padding: 0.2em 0.4em; border-radius: 3px; font-family: monospace; }
+        #html-preview pre { background-color: #f0f0f0; padding: 10px; border-radius: 4px; overflow-x: auto; }
+        #html-preview blockquote { border-left: 4px solid #ccc; padding-left: 10px; color: #666; margin-left: 0; margin-right: 0; }
+        #html-preview table { border-collapse: collapse; width: auto; margin-bottom: 1em; }
+        #html-preview th, #html-preview td { border: 1px solid #ccc; padding: 6px 10px; text-align: left; }
+        #html-preview th { background-color: #f2f2f2; }
+        #html-preview input[type="checkbox"] { margin-right: 5px; vertical-align: middle; }
+        #chat-history { flex-grow: 1; overflow-y: auto; padding: 15px; border-bottom: 1px solid var(--border-color); }
+        .message { margin-bottom: 12px; padding: 10px 15px; border-radius: 18px; max-width: 85%; position: relative; clear: both; word-wrap: break-word; }
+        .message.user { background-color: var(--user-bg); color: #052c65; margin-left: auto; float: right; border-bottom-right-radius: 5px; }
+        .message.bot { background-color: var(--bot-bg); color: var(--text-color); margin-right: auto; float: left; border-bottom-left-radius: 5px; }
+        .message .bot-content { padding-bottom: 5px;}
+        .message.system, .message.error { background-color: var(--system-bg); color: #664d03; font-style: italic; font-size: 0.9em; width: auto; max-width: 95%; text-align: center; padding: 8px 15px; margin: 10px auto; border-radius: 4px; border: 1px solid #ffeeba; float: none; clear: both; }
+        .message.error { background-color: var(--error-bg); color: #58151c; border-color: #f5c6cb; font-weight: bold; font-style: normal; }
+        .suggestions-container { margin-top: 8px; padding-left: 0px; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; clear: both; }
+        .suggestions-container .suggestion-label { font-size: 0.8em; color: var(--secondary-color); margin-bottom: 4px; font-style: italic; }
+        .suggestion-button { background-color: var(--white); border: 1px solid var(--secondary-color); color: var(--secondary-color); padding: 4px 12px; border-radius: 15px; cursor: pointer; font-size: 0.85em; transition: background-color 0.2s, color 0.2s, border-color 0.2s; text-align: left; }
+        .suggestion-button:hover { background-color: #f1f1f1; border-color: var(--secondary-color); color: #333; }
+        .suggestion-button:disabled { opacity: 0.6; cursor: not-allowed; background-color: #eee; border-color: #ccc; color: #888; }
+        .input-area { display: flex; padding: 10px 15px; border-top: 1px solid var(--border-color); background-color: var(--light-bg); flex-shrink: 0; align-items: flex-end; }
+        #user-input { flex-grow: 1; padding: 10px; border: 1px solid var(--border-color); border-radius: 20px; margin-right: 10px; resize: none; font-size: 1rem; line-height: 1.4; max-height: 120px; overflow-y: auto; }
+        #send-button { padding: 0 18px; height: 42px; background-color: var(--primary-color); color: var(--white); border: none; border-radius: 20px; cursor: pointer; font-size: 1rem; transition: background-color 0.3s ease; flex-shrink: 0; }
+        #send-button:hover { background-color: var(--primary-hover); }
+        #send-button:disabled { background-color: #a0cfff; cursor: not-allowed; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+        .modal.fade-out { animation: fadeOut 0.3s ease-in-out forwards; }
+        .modal-content { background-color: #fefefe; margin: 8% auto; padding: 25px 35px; border: 1px solid #888; width: 90%; max-width: 650px; border-radius: 8px; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .close-button { color: #aaa; position: absolute; top: 10px; right: 20px; font-size: 32px; font-weight: bold; cursor: pointer; line-height: 1; }
+        .close-button:hover, .close-button:focus { color: black; text-decoration: none; }
+        .modal h2 { margin-top: 0; color: #333; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .modal label { display: block; margin-top: 15px; margin-bottom: 5px; font-weight: 600; color: #555;}
+        .modal input[type="password"], .modal input[type="file"], .modal textarea, .modal pre { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 0.95rem;}
+        .modal input[type="file"] { background-color: #f1f1f1; cursor: pointer; }
+        .modal pre { min-height: 40px; max-height: 100px; overflow-y: auto; background-color: #eee; font-size: 0.85em; padding: 8px; }
+        .modal button { width: auto; padding: 10px 20px; margin-top: 25px; font-size: 1rem; }
+        .warning-modal { background-color: #fff3cd; color: #664d03; border: 1px solid #ffeeba; padding: 12px; border-radius: 4px; margin: 15px 0; font-size: 0.9em; line-height: 1.4;}
+        .loading-indicator { text-align: center; font-style: italic; color: var(--secondary-color); display: none; margin-top: 10px; font-size: 0.9em;}
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Chatbot Form Filler v3.4</h1>
+        <button id="settings-button" title="Cài đặt">⚙️</button>
+    </header>
+
+    <div class="main-container">
+        <div class="chat-container">
+            <div id="chat-history">
+                </div>
+            <div class="input-area">
+                <textarea id="user-input" placeholder="Nhập thông tin ban đầu hoặc yêu cầu chỉnh sửa..." rows="1"></textarea>
+                <button id="send-button" disabled>Gửi</button>
+            </div>
+             <div class="loading-indicator" id="chat-loading">Bot đang xử lý...</div>
+        </div>
+        <div class="result-container">
+             <div class="result-header">
+                 <h2>Kết quả Form</h2>
+                 <div class="result-tabs">
+                    <button class="tab-button active" data-view="markdown">Markdown</button>
+                    <button class="tab-button" data-view="html">HTML Preview</button>
+                 </div>
+            </div>
+            <div class="result-content-area">
+                 <pre id="result-output">[Chưa có kết quả]</pre>
+                 <div id="html-preview" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="settings-modal" class="modal">
+         <div class="modal-content">
+            <span class="close-button" onclick="closeSettingsModal()">&times;</span>
+            <h2>Cài đặt Ứng dụng</h2>
+            <div class="warning-modal">
+                <strong>Cảnh báo Bảo mật:</strong> Việc lưu API Key trong trình duyệt không phải là phương pháp an toàn nhất. Chỉ sử dụng trên máy tính cá nhân và tự chịu rủi ro.
+            </div>
+            <label for="modal-api-key">Gemini API Key:</label>
+            <input type="password" id="modal-api-key">
+            <label for="modal-form-template-file">File Template Form (.txt):</label>
+            <input type="file" id="modal-form-template-file" accept=".txt">
+            <label>Preview Template Form:</label>
+            <pre id="modal-form-template-preview">Chưa chọn file...</pre>
+            <label for="modal-prompt-template-file">File Template Prompt (.txt):</label>
+            <input type="file" id="modal-prompt-template-file" accept=".txt">
+            <label>Preview Template Prompt:</label>
+            <pre id="modal-prompt-template-preview">Chưa chọn file...</pre>
+            <button id="save-settings-button">Lưu Cài đặt</button>
+             <div class="loading-indicator" id="settings-loading">Đang lưu...</div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.11/dist/purify.min.js"></script>
+
+    <script>
+        // --- DOM References (Unchanged) ---
+        const chatHistoryEl = document.getElementById('chat-history');
+        const userInputEl = document.getElementById('user-input');
+        const sendButtonEl = document.getElementById('send-button');
+        const resultOutputEl = document.getElementById('result-output');
+        const htmlPreviewEl = document.getElementById('html-preview');
+        const resultTabsContainer = document.querySelector('.result-tabs');
+        const settingsButtonEl = document.getElementById('settings-button');
+        const settingsModalEl = document.getElementById('settings-modal');
+        const modalApiKeyEl = document.getElementById('modal-api-key');
+        const modalFormTemplateFileEl = document.getElementById('modal-form-template-file');
+        const modalFormTemplatePreviewEl = document.getElementById('modal-form-template-preview');
+        const modalPromptTemplateFileEl = document.getElementById('modal-prompt-template-file');
+        const modalPromptTemplatePreviewEl = document.getElementById('modal-prompt-template-preview');
+        const saveSettingsButtonEl = document.getElementById('save-settings-button');
+        const chatLoadingEl = document.getElementById('chat-loading');
+        const settingsLoadingEl = document.getElementById('settings-loading');
+
+        // --- State Variables (Unchanged) ---
+        let state = {
+            apiKey: '', formTemplateContent: '', promptTemplateContent: '',
+            chatHistory: [], gatheredInfo: {}, lastBotResultMd: '',
+            isLoading: false, settingsModalOpen: false, tempFormTemplateContent: '',
+            tempPromptTemplateContent: '', messageCounter: 0, resultView: 'markdown'
+        };
+
+        // --- Initialization (Unchanged) ---
+        function initApp() {
+            console.log("Initializing App v3.4 (Fixed Views & Resize Notes)...");
+            state.gatheredInfo = state.gatheredInfo || {};
+            loadSettings();
+            configureMarked();
+            addEventListeners();
+            renderChatHistory();
+
+            if (!state.apiKey || !state.formTemplateContent || !state.promptTemplateContent) {
+                addMessageToChat('system', 'Chào mừng! Vui lòng mở Cài đặt (⚙️) để nhập API Key và chọn các file template.');
+            } else {
+                addMessageToChat('system', 'Sẵn sàng! Hãy cung cấp thông tin ban đầu hoặc yêu cầu của bạn.');
+                displayFilledFormResult(state.formTemplateContent || "[Chưa có template form]");
+            }
+            updateSendButtonState();
+            adjustTextareaHeight();
+            // Set initial view state AFTER potentially displaying initial content
+            switchResultView(state.resultView);
+        }
+
+        // --- Configure Marked.js (Unchanged) ---
+        function configureMarked() {
+             if (typeof marked === 'undefined') { console.error("Marked.js not loaded!"); return; }
+             marked.use({ gfm: true, breaks: true, pedantic: false, mangle: false, headerIds: false });
+             console.log("Marked.js configured.");
+        }
+
+
+        // --- Settings Management (Unchanged) ---
+        function loadSettings() { /* ... same as v3.3 ... */
+             console.log("Loading settings...");
+             try {
+                 state.apiKey = localStorage.getItem('geminiApiKey_v3') || '';
+                 state.formTemplateContent = localStorage.getItem('formTemplateContent_v3') || '';
+                 state.promptTemplateContent = localStorage.getItem('promptTemplateContent_v3') || '';
+                 state.gatheredInfo = {}; state.lastBotResultMd = '';
+                 modalApiKeyEl.value = state.apiKey;
+                 modalFormTemplatePreviewEl.textContent = state.formTemplateContent || '...';
+                 modalPromptTemplatePreviewEl.textContent = state.promptTemplateContent || '...';
+                 state.tempFormTemplateContent = state.formTemplateContent;
+                 state.tempPromptTemplateContent = state.promptTemplateContent;
+                 console.log("Settings loaded.", { apiKey: !!state.apiKey, formSet: !!state.formTemplateContent, promptSet: !!state.promptTemplateContent });
+             } catch (e) { console.error("Error loading settings:", e); addMessageToChat('error', "Lỗi tải cài đặt."); }
+        }
+        function saveSettings() { /* ... same as v3.3 ... */
+             console.log("Saving settings...");
+             try {
+                 localStorage.setItem('geminiApiKey_v3', state.apiKey);
+                 localStorage.setItem('formTemplateContent_v3', state.formTemplateContent);
+                 localStorage.setItem('promptTemplateContent_v3', state.promptTemplateContent);
+                 console.log("Settings saved.");
+                 state.chatHistory = []; state.gatheredInfo = {};
+                 state.lastBotResultMd = state.formTemplateContent || "[Chưa có template form]";
+                 displayFilledFormResult(state.lastBotResultMd);
+             } catch (error) { console.error("Error saving settings:", error); addMessageToChat('error', `Lỗi lưu cài đặt: ${error.message}`); }
+        }
+        function handleSettingsSave() { /* ... same as v3.3 ... */
+            console.log("Save Settings button clicked.");
+            settingsLoadingEl.style.display = 'block'; saveSettingsButtonEl.disabled = true;
+            state.apiKey = modalApiKeyEl.value.trim();
+            state.formTemplateContent = state.tempFormTemplateContent;
+            state.promptTemplateContent = state.tempPromptTemplateContent;
+            saveSettings();
+            setTimeout(() => {
+                 settingsLoadingEl.style.display = 'none'; saveSettingsButtonEl.disabled = false;
+                 closeSettingsModal();
+                 addMessageToChat('system', 'Cài đặt đã lưu. Cuộc trò chuyện đã được đặt lại. Hãy bắt đầu.');
+                 updateSendButtonState();
+                 switchResultView(state.resultView);
+            }, 300);
+        }
+        function openSettingsModal() { /* ... same as v3.3 ... */
+             modalApiKeyEl.value = state.apiKey;
+             modalFormTemplatePreviewEl.textContent = state.formTemplateContent || '...';
+             modalPromptTemplatePreviewEl.textContent = state.promptTemplateContent || '...';
+             state.tempFormTemplateContent = state.formTemplateContent;
+             state.tempPromptTemplateContent = state.promptTemplateContent;
+             modalFormTemplateFileEl.value = null; modalPromptTemplateFileEl.value = null;
+             settingsModalEl.style.display = 'block'; state.settingsModalOpen = true;
+         }
+        function closeSettingsModal() { /* ... same as v3.3 ... */
+             settingsModalEl.classList.add('fade-out');
+             setTimeout(() => {
+                 settingsModalEl.style.display = 'none';
+                 settingsModalEl.classList.remove('fade-out');
+                 state.settingsModalOpen = false;
+             }, 300);
+         }
+        function handleFileRead(fileInput, contentSetter, previewEl) { /* ... same as v3.3 ... */
+            const file = fileInput.files[0];
+             if (!file) return;
+             if (file.type !== 'text/plain') { alert(`Vui lòng chỉ chọn file .txt!`); fileInput.value = null; return; }
+            const reader = new FileReader();
+            reader.onload = (e) => { contentSetter(e.target.result); previewEl.textContent = e.target.result; };
+            reader.onerror = (e) => { console.error(`Lỗi đọc file ${fileInput.id}:`, e); alert(`Không thể đọc file.`); previewEl.textContent = 'Lỗi đọc file...'; contentSetter(''); };
+            reader.readAsText(file);
+         }
+
+        // --- Chat UI (Unchanged) ---
+        function renderChatHistory() { /* ... same as v3.3 ... */
+            chatHistoryEl.innerHTML = '';
+            state.chatHistory.forEach(msg => {
+                const msgDiv = document.createElement('div');
+                msgDiv.classList.add('message', msg.sender); msgDiv.dataset.messageId = msg.id;
+                const contentDiv = document.createElement('div');
+                contentDiv.classList.add(`${msg.sender}-content`); contentDiv.textContent = msg.text; msgDiv.appendChild(contentDiv);
+                const suggestionsDiv = document.createElement('div');
+                suggestionsDiv.classList.add('suggestions-container'); suggestionsDiv.dataset.suggestionsFor = msg.id;
+                 if (msg.suggestions && msg.suggestions.length > 0) { renderSuggestions(suggestionsDiv, msg.suggestions); }
+                msgDiv.appendChild(suggestionsDiv);
+                chatHistoryEl.appendChild(msgDiv);
+            });
+            chatHistoryEl.scrollTop = chatHistoryEl.scrollHeight;
+         }
+        function renderSuggestions(container, suggestions) { /* ... same as v3.3 ... */
+             container.innerHTML = '';
+             if (!suggestions || suggestions.length === 0) return;
+             const label = document.createElement('div');
+             label.classList.add('suggestion-label'); label.textContent = "Gợi ý câu hỏi/chỉnh sửa:"; container.appendChild(label);
+             suggestions.forEach(suggestion => {
+                 const button = document.createElement('button');
+                 button.classList.add('suggestion-button'); button.textContent = suggestion;
+                 button.onclick = () => handleSuggestionClick(suggestion); button.disabled = state.isLoading;
+                 container.appendChild(button);
+             });
+         }
+        function updateSuggestionsForMessage(messageId, suggestions) { /* ... same as v3.3 ... */
+              const suggestionsContainer = chatHistoryEl.querySelector(`.suggestions-container[data-suggestions-for='${messageId}']`);
+              if (suggestionsContainer) { renderSuggestions(suggestionsContainer, suggestions); chatHistoryEl.scrollTop = chatHistoryEl.scrollHeight; }
+              else { console.warn(`Could not find suggestions container for message ID: ${messageId}`); }
+          }
+        function addMessageToChat(sender, text, suggestions = null) { /* ... same as v3.3, returns messageId ... */
+              const messageId = state.messageCounter++;
+              const messageData = { id: messageId, sender, text, suggestions: suggestions || null };
+              state.chatHistory.push(messageData);
+              const MAX_HISTORY = 50;
+              if (state.chatHistory.length > MAX_HISTORY) { state.chatHistory.shift(); }
+              renderChatHistory();
+              return messageId;
+          }
+        function adjustTextareaHeight() { /* ... same as v3.3 ... */
+             // GHI CHÚ DEBUG: Nếu gặp lỗi resize cửa sổ, thử comment (//) dòng gọi hàm này trong addEventListeners và handleUserInput
+              userInputEl.style.height = 'auto';
+              let scrollHeight = userInputEl.scrollHeight;
+              const maxHeight = 120;
+              userInputEl.style.height = Math.min(scrollHeight, maxHeight) + 'px';
+              userInputEl.style.overflowY = scrollHeight > maxHeight ? 'auto' : 'hidden';
+           }
+        function updateSendButtonState() { /* ... same as v3.3 ... */
+              const canSend = !state.isLoading && !!state.apiKey && !!state.formTemplateContent && !!state.promptTemplateContent;
+              sendButtonEl.disabled = !canSend;
+          }
+        function handleUserInput() { /* ... same as v3.3, calls processUserInput ... */
+              const inputText = userInputEl.value.trim();
+              if (!inputText || state.isLoading) return;
+              if (!state.apiKey || !state.formTemplateContent || !state.promptTemplateContent) { addMessageToChat('error', 'Lỗi: Chưa đủ cài đặt.'); return; }
+              addMessageToChat('user', inputText);
+              userInputEl.value = '';
+              // GHI CHÚ DEBUG: Nếu gặp lỗi resize cửa sổ, thử comment (//) dòng dưới
+              adjustTextareaHeight();
+              processUserInput(inputText);
+          }
+        function handleSuggestionClick(suggestionText) { /* ... same as v3.3, populates input ... */
+              if (state.isLoading) return;
+              userInputEl.value = suggestionText;
+              adjustTextareaHeight();
+              userInputEl.focus();
+          }
+        function setLoadingState(loading) { /* ... same as v3.3 ... */
+              state.isLoading = loading;
+              chatLoadingEl.style.display = loading ? 'block' : 'none';
+              userInputEl.disabled = loading;
+              sendButtonEl.disabled = loading || !state.apiKey || !state.formTemplateContent || !state.promptTemplateContent ;
+              document.querySelectorAll('.suggestion-button').forEach(button => button.disabled = loading);
+          }
+
+
+        // --- Core Logic (Unchanged from v3.3 logic) ---
+        async function processUserInput(inputText) { /* ... same as v3.3 ... */
+             console.log("Processing input:", inputText);
+             setLoadingState(true);
+             let isCorrectionRequest = state.lastBotResultMd && state.lastBotResultMd !== state.formTemplateContent;
+             try {
+                 state.gatheredInfo = state.gatheredInfo || {};
+                 let promptContext = "";
+                 if (!isCorrectionRequest) {
+                     state.gatheredInfo = {};
+                     state.gatheredInfo['initial_context'] = inputText;
+                     promptContext = "Thông tin ban đầu: " + inputText;
+                 } else {
+                     promptContext = `Kết quả trước đó:\n---\n${state.lastBotResultMd}\n---\nYêu cầu chỉnh sửa/làm rõ:\n${inputText}`;
+                 }
+                 const mainPrompt = buildMainPrompt(promptContext);
+                 if (!mainPrompt) throw new Error("Không thể tạo prompt chính.");
+                 const filledOrCorrectedMarkdown = await callGeminiAPI(mainPrompt);
+                 state.lastBotResultMd = filledOrCorrectedMarkdown; // Update state first
+                 displayFilledFormResult(filledOrCorrectedMarkdown); // Then display
+                 const botMessageText = isCorrectionRequest ? "Đã cập nhật form. Bạn muốn chỉnh sửa hay hỏi gì thêm không?" : "Đây là kết quả điền form. Bạn muốn chỉnh sửa hay hỏi gì thêm không?";
+                 const botMessageId = addMessageToChat('bot', botMessageText);
+                 getSuggestedQuestionsFromAI(promptContext, state.lastBotResultMd, botMessageId);
+             } catch (error) { console.error("Error processing user input:", error); addMessageToChat('error', `Đã xảy ra lỗi: ${error.message}`); }
+             finally { setLoadingState(false); updateSendButtonState(); }
+         }
+        function buildMainPrompt(contextText) { /* ... same as v3.3 ... */
+             if (!state.promptTemplateContent || !state.formTemplateContent) return null;
+             let prompt = state.promptTemplateContent;
+             prompt = prompt.replace(/\{\{RAW_CONTENT\}\}/g, contextText);
+             prompt = prompt.replace(/\{\{FORM_TEMPLATE\}\}/g, state.formTemplateContent);
+             return prompt;
+         }
+        async function getSuggestedQuestionsFromAI(context, currentResultMd, targetMessageId) { /* ... same as v3.3 ... */
+              console.log("Requesting suggestions for message:", targetMessageId);
+              if (!state.apiKey) { updateSuggestionsForMessage(targetMessageId, ["(Lỗi: Thiếu API Key)"]); return; }
+              if (!currentResultMd) { updateSuggestionsForMessage(targetMessageId, ["(Chưa có kết quả)"]); return; }
+              const suggestionPrompt = `Dựa trên kết quả form Markdown dưới đây và bối cảnh yêu cầu trước đó, hãy gợi ý 5 câu hỏi hoặc yêu cầu chỉnh sửa ngắn gọn, phù hợp bằng tiếng Việt mà người dùng có thể muốn thực hiện tiếp theo để làm rõ hoặc hoàn thiện form. Chỉ trả về 5 gợi ý, mỗi gợi ý trên một dòng, không đánh số hay thêm bất kỳ định dạng nào khác.\n\nBối cảnh yêu cầu/chỉnh sửa trước đó:\n---\n${context || "(Không có)"}\n---\n\nKết quả form Markdown hiện tại:\n---\n${currentResultMd}\n---\n\n5 Gợi ý câu hỏi/chỉnh sửa tiếp theo (tiếng Việt):`;
+              const SUGGESTION_API_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${state.apiKey}`;
+              try {
+                 const response = await fetch(SUGGESTION_API_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contents: [{ parts: [{ text: suggestionPrompt }] }], generationConfig: { temperature: 0.6, maxOutputTokens: 150 } }) });
+                 const data = await response.json();
+                 if (!response.ok) { throw new Error(data?.error?.message || `Lỗi HTTP ${response.status}`); }
+                 if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
+                      const suggestionsText = data.candidates[0].content.parts[0].text;
+                      const suggestionsArray = suggestionsText.split('\n').map(s => s.trim().replace(/^- /, '')).filter(s => s && s.length > 3);
+                      updateSuggestionsForMessage(targetMessageId, suggestionsArray.slice(0, 5));
+                 } else { updateSuggestionsForMessage(targetMessageId, ["(Không tạo được gợi ý)"]); }
+              } catch (error) { console.error('Error getting suggestions:', error); updateSuggestionsForMessage(targetMessageId, [`(Lỗi lấy gợi ý)`]); }
+          }
+        async function callGeminiAPI(promptText) { /* ... same as v3.3 ... */
+              console.log("Calling Main Gemini API...");
+              if (!state.apiKey) throw new Error("API Key chưa được cài đặt.");
+              const API_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${state.apiKey}`;
+              try {
+                 const response = await fetch(API_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] }) });
+                 const data = await response.json();
+                 if (!response.ok) { const message = data?.error?.message || `Lỗi HTTP: ${response.status}`; if (message.includes('API key not valid')) { throw new Error('API Key không hợp lệ.'); } throw new Error(message); }
+                 if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
+                     let resultText = data.candidates[0].content.parts[0].text;
+                     if (resultText.startsWith("```markdown") && resultText.endsWith("```")) { resultText = resultText.substring(10, resultText.length - 3).trim(); }
+                     else if (resultText.startsWith("```") && resultText.endsWith("```")) { resultText = resultText.substring(3, resultText.length - 3).trim(); }
+                     return resultText;
+                  } else if (data.candidates?.[0]?.finishReason === 'SAFETY') { throw new Error('Kết quả bị chặn vì lý do an toàn.'); }
+                  else if (data.promptFeedback?.blockReason) { throw new Error(`Yêu cầu bị chặn: ${data.promptFeedback.blockReason}`); }
+                  else { throw new Error('Không nhận được nội dung hợp lệ từ Gemini.'); }
+              } catch (error) { console.error('Fetch/API Error:', error); throw error; }
+          }
+
+        // --- Result Display Logic (FIXED) ---
+        function displayFilledFormResult(markdown) {
+            const safeMarkdown = markdown || "[Lỗi hoặc không có nội dung]";
+            state.lastBotResultMd = safeMarkdown; // Store raw MD safely
+            console.log("Updating result views with new markdown...");
+            // Update Markdown View
+            resultOutputEl.textContent = safeMarkdown;
+
+            // Update HTML view content (regardless of whether it's currently visible)
+            // This ensures it's ready when the user switches tabs
+            updateHtmlPreview();
+
+            // Ensure the correct view (tab and content pane) is displayed based on current state
+            // This function handles showing/hiding panes and setting active tab class
+            switchResultView(state.resultView);
+        }
+
+        function updateHtmlPreview() {
+            console.log("Updating HTML Preview content...");
+            if (typeof marked === 'undefined' || typeof DOMPurify === 'undefined') {
+                console.error("Marked.js or DOMPurify not loaded!");
+                htmlPreviewEl.textContent = "[Lỗi: Thiếu thư viện chuyển đổi]";
+                return;
+            }
+             // Use state.lastBotResultMd which was updated in displayFilledFormResult
+             if (!state.lastBotResultMd || state.lastBotResultMd === "[Chưa có kết quả]" || state.lastBotResultMd.startsWith("[")) {
+                 htmlPreviewEl.innerHTML = `<p style='color: grey; font-style: italic;'>${state.lastBotResultMd}</p>`;
+                 return;
+             }
+            try {
+                // Ensure Marked is configured before parsing
+                configureMarked(); // Call configure again just in case? Or ensure it runs once reliably.
+                const rawHtml = marked.parse(state.lastBotResultMd);
+                const cleanHtml = DOMPurify.sanitize(rawHtml, { USE_PROFILES: { html: true }, ADD_TAGS: ['input'], ADD_ATTR: ['type', 'checked', 'disabled'] });
+                htmlPreviewEl.innerHTML = cleanHtml;
+                 console.log("HTML Preview updated successfully.");
+            } catch (error) {
+                console.error("Error converting Markdown to HTML:", error);
+                htmlPreviewEl.textContent = `[Lỗi hiển thị HTML preview: ${error.message}]`;
+            }
+        }
+
+        function switchResultView(viewType) {
+             if (viewType !== 'markdown' && viewType !== 'html') { console.warn(`Invalid viewType: ${viewType}`); return; }
+             console.log(`Switching result view UI to: ${viewType}`);
+             state.resultView = viewType; // Update state
+
+             if (!resultTabsContainer) { console.error("resultTabsContainer is null!"); return; }
+             const markdownButton = resultTabsContainer.querySelector('button[data-view="markdown"]');
+             const htmlButton = resultTabsContainer.querySelector('button[data-view="html"]');
+
+             // Defensive checks
+             if (!markdownButton || !htmlButton) { console.error("Could not find tab buttons!"); return; }
+             if (!resultOutputEl || !htmlPreviewEl) { console.error("Could not find result display elements!"); return; }
+
+
+             if (viewType === 'markdown') {
+                 resultOutputEl.style.display = 'block';
+                 htmlPreviewEl.style.display = 'none';
+                 markdownButton.classList.add('active');
+                 htmlButton.classList.remove('active');
+             } else { // viewType === 'html'
+                 resultOutputEl.style.display = 'none';
+                 htmlPreviewEl.style.display = 'block';
+                 markdownButton.classList.remove('active');
+                 htmlButton.classList.add('active');
+                 // No need to call updateHtmlPreview() here explicitly,
+                 // as displayFilledFormResult ensures it's up-to-date before switching.
+                 // Calling it again might be redundant unless the source MD changed WITHOUT calling displayFilledFormResult.
+             }
+        }
+
+
+        // --- Event Listeners Setup ---
+        function addEventListeners() {
+            settingsButtonEl.addEventListener('click', openSettingsModal);
+            saveSettingsButtonEl.addEventListener('click', handleSettingsSave);
+            modalFormTemplateFileEl.addEventListener('change', () => handleFileRead(modalFormTemplateFileEl, (c) => state.tempFormTemplateContent = c, modalFormTemplatePreviewEl));
+            modalPromptTemplateFileEl.addEventListener('change', () => handleFileRead(modalPromptTemplateFileEl, (c) => state.tempPromptTemplateContent = c, modalPromptTemplatePreviewEl));
+            sendButtonEl.addEventListener('click', handleUserInput);
+            userInputEl.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); handleUserInput(); }
+            });
+             // GHI CHÚ DEBUG: Nếu gặp lỗi resize cửa sổ, thử comment (//) dòng dưới
+            userInputEl.addEventListener('input', adjustTextareaHeight);
+            const closeBtn = settingsModalEl.querySelector('.close-button');
+            if(closeBtn) closeBtn.addEventListener('click', closeSettingsModal);
+            window.addEventListener('click', (event) => {
+                if (event.target == settingsModalEl) closeSettingsModal();
+            });
+
+             // Event listener for result tabs using delegation
+             if(resultTabsContainer){
+                resultTabsContainer.addEventListener('click', (event) => {
+                    const button = event.target.closest('.tab-button'); // Handle clicks inside button too
+                    if (button) {
+                        const view = button.dataset.view;
+                        if (view && view !== state.resultView) { // Only switch if view is different
+                            switchResultView(view);
+                        }
+                    }
+                });
+             } else {
+                 console.error("Could not find resultTabsContainer to attach listener.");
+             }
+        }
+
+        // --- Start the app ---
+        document.addEventListener('DOMContentLoaded', initApp);
+
+    </script>
+</body>
+</html>

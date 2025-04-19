@@ -1,0 +1,56 @@
+### FOLLOW-UP OPD CONSULTATION
+
+#### PHIẾU TÁI KHÁM DÀNH CHO BỆNH NHÂN NGOẠI TRÚ
+
+**Diagnosis/** Chẩn đoán:
+
+**Current situation/** Tình trạng hiện tại:
+
+   **\* Current complaint(s)/** Lý do đến khám:
+
+   \* **Home medications**/ Thuốc dùng tại nhà:
+
+   \* **Current treatment**/ Điều trị hiện tại:
+
+   **\* Response to treatment/** Đáp ứng điều trị:
+
+   **\* Relevant clinical findings/** Dấu hiệu lâm sàng liên quan:
+
+ Pulse: 80 b/m BP:130/80 mmHg; SpO2: 98%, Temperature: 37 degree of Celsius, respiratory rate 16 /min
+
+GENERAL: Alert, well contact, No jaundice, no peripheral adenopathy,
+LUNGS: Clear to auscultation.No audible wheezing or rhonchi.
+HEART: Regular rate and rhythm. No murmur
+ABDOMEN: Soft, nondistended, no tenderness, no hepatosplenomegaly
+NEUROLOGIC: At ptresent time, Metal status is normal, cranial nervers are intact; Motor and sensory function are normal; Coordination is intact.
+
+   **\* Relevant Investigation results/** Kết quả khảo sát liên quan:
+
+**Conclusion/** Kết luận:
+
+   **\* Evolution/** Diễn tiến bệnh:
+
+\* **Hospitalisation required**/ Yêu cầu nhập viện:
+
+* [x] **No/** không
+
+**Yes, specify the reason**/ Có, ghi rõ lý do: No
+
+
+   **\* Treatment/** Điều trị:
+
+     **\-  Plan/** Kế hoạch điều trị:
+
+        **-  Prescription/** Đơn thuốc:
+
+   **\* Additional investigation(s)/** Khảo sát bổ sung:
+
+   **\* Specialised opinion requested/** Yêu cầu ý kiến chuyên khoa:
+
+   **\* Specific education required**/ Hướng dẫn cụ thể dành cho bệnh nhân:
+
+                 **Yes, specify on which subject**/ Có, ghi rõ nội dung
+
+  **ICD-10 code(s)**/ Mã bệnh theo ICD-10:
+
+**Next appointment/** Lịch hẹn tái khám:

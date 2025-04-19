@@ -1,0 +1,38 @@
+### MEDICAL REPORT FOR INSURED PATIENT
+
+### (FOR OUTPATIENTS)
+
+#### BÁO CÁO Y KHOA DÀNH CHO BỆNH NHÂN CÓ BẢO HIỂM
+
+#### (BỆNH NHÂN NGOẠI TRÚ)
+
+**This report must be completed by the doctor in charge of the patient. It will be sent to the insurance company**
+
+**to claim payment from the insurance company**
+
+*Báo cáo này do bác sĩ phụ trách khám và điều trị cho bệnh nhân điền. Báo cáo sẽ được gửi đến công ty bảo hiểm*
+
+ *để đề nghị công ty bảo hiểm thanh toán*                                                     
+
+| OPD Visit Date: April 15, 2025 Ngày khám ngoại trú | Report Date: April 15, 2025 Ngày báo cáo |
+| :---- | :---- |
+
+   
+**Chief Complaint (specify if accident)/** Lý do đến khám (nêu rõ nếu là trường hợp bị tai nạn):  
+   
+**Summary of Present Illness/** Tóm tắt bệnh sử:   
+   
+**Relevant Medical History (provide dates of diagnosis)/** Tiền sử bệnh liên quan (ghi các ngày chẩn đoán):  
+   
+**Main Clinical Findings/** Các kết quả lâm sàng chính:   
+   
+**Results of Main Investigations/** Kết quả các khảo sát chính:   
+   
+**Diagnosis/** Chẩn đoán:   
+**ICD-10 Code(s)/** Mã bệnh theo ICD-10:   
+   
+**Treatment/** Điều trị:   
+   
+   
+**Doctor's name and signature**  
+Họ tên và chữ ký của bác sĩ

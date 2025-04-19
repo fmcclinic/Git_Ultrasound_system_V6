@@ -1,0 +1,59 @@
+### INITIAL MEDICAL ASSESSMENT FOR OPD PATIENTS
+
+#### ĐÁNH GIÁ Y KHOA BAN ĐẦU CHO BỆNH NHÂN NGOẠI TRÚ
+
+**Chief complaint**/ **Reason for consultation/** Lý do khám bệnh:
+
+**History of present illness**/ Bệnh sử:
+
+**Home medications**/ Thuốc dùng tại nhà:
+
+**Past medical history/** Tiền sử bệnh:
+
+**Habits**/ Thói quen:
+
+**Allergies**/ Tiền sử dị ứng:   **No/** Không                   **Yes, specify**/ Có, ghi rõ
+
+**Relevant family history**/ Tiền sử gia đình có liên quan:
+
+**Relevant physical examination/** Khám lâm sàng có liên quan:
+
+   **\* Physical findings**/ Khám lâm sàng:
+
+   **\* Is a psychological assessment required?**/ Có yêu cầu khám chuyên khoa tâm lý hay không?
+
+             **No**/ Không    **Yes, specify/** Có, ghi rõ
+
+**Relevant investigations results**/ Kết quả khảo sát có liên quan:
+
+**Conclusion**/ Kết luận:
+
+   **\* Initial diagnosis/** Chẩn đoán ban đầu:
+
+   **\* Differential diagnosis/** Chẩn đoán phân biệt:
+
+   **\* Comorbidity(ies)/** Bệnh kèm theo:
+
+\* **Hospitalisation required**/ Yêu cầu nhập viện:
+
+* [x] **No/** không
+
+**Yes, specify the reason**/ Có, ghi rõ lý do: No
+
+   **\* Treatment/** Điều trị:
+
+         **Plan/** Kế hoạch:
+
+         **Prescription**/ Đơn thuốc:
+
+   **\* Additional investigations/** Khảo sát bổ sung khác:
+
+   **\* Specialised opinion requested/** Yêu cầu ý kiến chuyên khoa:
+
+   **\* Specific education required/** Hướng dẫn cụ thể dành cho bệnh nhân: **Yes, specify on with subject/** Có, ghi rõ
+
+   **\* PEM given/** Đã đưa tài liệu hướng dẫn cho bệnh nhân:   **Yes, specify**/ Có ghi rõ
+
+**Next Appointment/** Hẹn lần khám tới:
+
+**ICD-10 Code(S)/** Mã bệnh theo ICD-10:

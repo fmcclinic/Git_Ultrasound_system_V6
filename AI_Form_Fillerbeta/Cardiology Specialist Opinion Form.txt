@@ -1,0 +1,97 @@
+# 🫀 Cardiology Specialist Opinion Form
+
+## 1. Patient Information
+- **Full Name:**  
+- **Age / Gender:**  
+- **Hospital ID:**  
+- **Date of Consultation:**  
+
+---
+
+## 2. Reason for Referral  
+(Describe the main complaint or clinical question posed by the referring physician)
+
+> _e.g., Evaluation of chest pain, unexplained syncope, abnormal ECG, suspected heart failure..._  
+__________________________________________________________  
+__________________________________________________________  
+
+---
+
+## 3. Summary of Clinical History  
+(Include onset, duration, character of symptoms, functional status, and relevant systemic review)
+
+> _e.g., Patient reports exertional chest tightness for 2 months, NYHA class II dyspnea..._  
+__________________________________________________________  
+__________________________________________________________  
+
+---
+
+## 4. Relevant Past Medical History  
+(Include comorbidities, known cardiac conditions, previous interventions)
+
+> _e.g., History of hypertension and type 2 diabetes. No prior cardiac events..._  
+__________________________________________________________  
+__________________________________________________________  
+
+---
+
+## 5. Medications  
+(List all current medications including dosage and frequency)
+
+> _e.g., Amlodipine 5mg OD, Metformin 500mg BID, Atorvastatin 20mg QHS..._  
+__________________________________________________________  
+__________________________________________________________  
+
+---
+
+## 6. Relevant Investigations  
+(Summarize key findings from ECG, echocardiography, labs, imaging)
+
+> _e.g., ECG shows sinus rhythm with LVH. Echo: EF 50%, mild concentric LVH..._  
+__________________________________________________________  
+__________________________________________________________  
+
+---
+
+## 7. Clinical Examination Findings  
+(Summarize cardiovascular examination and other relevant findings)
+
+> _e.g., BP 140/90 mmHg, HR 80 bpm, no murmurs, no peripheral edema..._  
+__________________________________________________________  
+__________________________________________________________  
+
+---
+
+## 8. Impression / Working Diagnosis  
+(Provide the clinical impression based on available data)
+
+> _e.g., Likely stable angina, possible hypertensive heart disease..._  
+__________________________________________________________  
+__________________________________________________________  
+
+---
+
+## 9. Recommendations  
+(Outline diagnostic or therapeutic plan, medications, referrals, and advice)
+
+> _e.g., Start bisoprolol 2.5mg daily, order stress test, lifestyle counseling..._  
+__________________________________________________________  
+__________________________________________________________  
+
+---
+
+## 10. Follow-up Plan  
+(Define timing and purpose of follow-up, or return to referring doctor)
+
+> _e.g., Review in 4 weeks with stress test results. Return to primary care if stable..._  
+__________________________________________________________  
+__________________________________________________________  
+
+---
+
+**Cardiologist Name & Signature:**  
+**Date:**  
+
+
+
+

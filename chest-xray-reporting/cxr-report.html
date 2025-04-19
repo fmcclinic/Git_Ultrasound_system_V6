@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chest X-ray Report / Báo cáo X quang Ngực</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Chest X-ray Reporting System / Hệ thống tạo báo cáo X quang Ngực</h1>
+
+        <div class="tab-container">
+            <div class="tab-nav">
+                <button class="tab-button active" data-tab="patient-info">Patient Info / Thông tin BN</button>
+                <button class="tab-button" data-tab="cxr-assessment">Chest X-ray Assessment / Khảo sát X quang Ngực</button>
+                <button class="tab-button" data-tab="images">Images / Hình ảnh</button>
+                <button class="tab-button" data-tab="templates">Templates / Mẫu</button>
+                <button class="tab-button" data-tab="report">Report / Báo cáo</button>
+            </div>
+
+            <div class="tab-content active" id="patient-info">
+                 <h2>Patient Information / Thông tin Bệnh nhân</h2>
+                 <form id="patient-info-form">
+                    <div class="form-group">
+                        <label for="patient-name">Họ và Tên / Full Name:</label>
+                        <input type="text" id="patient-name" name="patientName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-id">Mã BN / Patient ID:</label>
+                        <input type="text" id="patient-id" name="patientId" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="patient-dob">Ngày sinh / Date of Birth:</label>
+                        <input type="date" id="patient-dob" name="patientDob">
+                    </div>
+                    <div class="form-group">
+                        <label for="requesting-physician">Bác sĩ chỉ định / Requesting Physician:</label>
+                        <input type="text" id="requesting-physician" name="requestingPhysician">
+                    </div>
+                    <div class="form-group">
+                        <label for="exam-date">Ngày chụp / Exam Date:</label> <input type="date" id="exam-date" name="examDate" value=""> </div>
+                    <div class="form-group">
+                        <label for="reason">Reason for Exam / Clinical Info / Lý do khám / LS:</label>
+                        <input type="text" id="reason" name="reason" list="reason-suggestions-cxr" placeholder="Enter reason or select from list... / Nhập lý do hoặc chọn từ danh sách...">
+                        <datalist id="reason-suggestions-cxr">
+                            <option value="Chest pain / Đau ngực"></option>
+                            <option value="Shortness of breath / Khó thở"></option>
+                            <option value="Cough / Ho"></option>
+                            <option value="Fever / Sốt"></option>
+                            <option value="Rule out pneumonia / Tìm viêm phổi"></option>
+                            <option value="Rule out pneumothorax (PTX) / Tìm TKMP"></option>
+                            <option value="Line check / Kiểm tra ống"></option>
+                            <option value="Pre-op / Tiền phẫu"></option>
+                            <option value="Follow-up / Theo dõi"></option>
+                            <option value="Trauma / Chấn thương"></option>
+                        </datalist>
+                    </div>
+                     <div class="form-group">
+                        <label for="reporting-doctor">Reporting Doctor / Bác sĩ đọc KQ:</label> <input type="text" id="reporting-doctor" name="reportingDoctor" placeholder="Enter reporting doctor's name / Nhập tên BS đọc KQ">
+                    </div>
+                </form>
+            </div>
+
+            <div class="tab-content" id="cxr-assessment">
+                <h2>Chest X-ray Assessment / Khảo sát X quang Ngực</h2>
+                <form id="cxr-assessment-form">
+
+                    <details class="section organ-section" open>
+                        <summary class="section-toggle"><h3><i class="fas fa-sliders-h"></i> Technical Factors / Yếu tố Kỹ thuật</h3></summary>
+                        <div class="section-content form-grid-col-4">
+                            <div class="form-group">
+                                <label for="cxr_projection">Projection / Tư thế:</label>
+                                <select id="cxr_projection" name="cxrProjection">
+                                    <option value="PA">PA</option>
+                                    <option value="AP">AP</option>
+                                    <option value="Lateral / Nghiêng">Lateral / Nghiêng</option>
+                                    <option value="AP/Lateral / Thẳng/Nghiêng">AP/Lateral / Thẳng/Nghiêng</option>
+                                    <option value="PA/Lateral / Thẳng/Nghiêng">PA/Lateral / Thẳng/Nghiêng</option>
+                                    <option value="Decubitus (Right/Left) / Nằm nghiêng (P/T)">Decubitus (Right/Left) / Nằm nghiêng (P/T)</option>
+                                    <option value="Portable / Tại giường">Portable / Tại giường</option>
+                                </select>
+                            </div>
+                             <div class="form-group">
+                                <label for="cxr_rotation">Rotation / Xoay:</label>
+                                <select id="cxr_rotation" name="cxrRotation">
+                                    <option value="None / Không xoay">None / Không xoay</option>
+                                    <option value="Mild / Nhẹ">Mild / Nhẹ</option>
+                                    <option value="Moderate / Vừa">Moderate / Vừa</option>
+                                    <option value="Severe / Nhiều">Severe / Nhiều</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="cxr_inspiration">Inspiration / Hít vào:</label>
+                                <select id="cxr_inspiration" name="cxrInspiration">
+                                    <option value="Adequate / Đủ sâu">Adequate / Đủ sâu</option>
+                                    <option value="Limited / Hạn chế">Limited / Hạn chế</option>
+                                    <option value="Hyperinflated / Quá căng phồng">Hyperinflated / Quá căng phồng</option>
+                                </select>
+                            </div>
+                             <div class="form-group">
+                                <label for="cxr_penetration">Penetration / Độ xuyên:</label>
+                                <select id="cxr_penetration" name="cxrPenetration">
+                                    <option value="Adequate / Đạt">Adequate / Đạt</option>
+                                    <option value="Underpenetrated / Mờ (Non)">Underpenetrated / Mờ (Non)</option>
+                                    <option value="Overpenetrated / Tia cứng (Già)">Overpenetrated / Tia cứng (Già)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="section organ-section">
+                        <summary class="section-toggle"><h3><i class="fas fa-plug"></i> (Optional) Lines and Tubes / (Tùy chọn) Dây và ống dẫn lưu</h3></summary>
+                        <div class="section-content">
+                             <div class="form-group">
+                                <label for="cxr_lines_tubes">Description / Mô tả:</label>
+                                <textarea id="cxr_lines_tubes" name="cxrLinesTubes" rows="4" placeholder="Describe lines, tubes, and devices... / Mô tả các loại dây, ống, thiết bị..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="Endotracheal (ET) tube tip is [X] cm above the carina. / Đầu ống nội khí quản (ET) cách carina [X] cm.">ET Tube</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Tracheostomy tube in place. / Ống mở khí quản tại chỗ.">Tracheostomy</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Central venous catheter (CVC) via [right/left internal jugular/subclavian] vein, tip projects over the SVC. / Catheter tĩnh mạch trung tâm (CVC) qua tĩnh mạch [cảnh trong/dưới đòn phải/trái], đầu ống ở vị trí TM chủ trên.">CVC</button>
+                                    <button type="button" class="suggestion-btn" data-insert="PICC line via [right/left arm] vein, tip projects over the cavoatrial junction. / Đường truyền PICC qua tĩnh mạch [tay phải/trái], đầu ống ở vị trí nối TM chủ và nhĩ phải.">PICC</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Nasogastric (NG) tube tip is below the diaphragm. / Đầu ống sonde dạ dày (NG) nằm dưới cơ hoành.">NG Tube</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Orogastric (OG) tube tip is below the diaphragm. / Đầu ống sonde miệng-dạ dày (OG) nằm dưới cơ hoành.">OG Tube</button>
+                                    <button type="button" class="suggestion-btn" data-insert="[Right/Left] chest tube in place. / Ống dẫn lưu màng phổi [phải/trái] tại chỗ.">Chest Tube</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Pacemaker/AICD leads in appropriate position. / Các điện cực máy tạo nhịp/khử rung tại vị trí phù hợp.">Pacemaker/AICD</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Surgical clips noted in the [location]. / Thấy clip phẫu thuật ở [vị trí].">Surgical Clips</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="section organ-section" open>
+                        <summary class="section-toggle"><h3><i class="fas fa-lungs"></i> Findings / Kết quả</h3></summary>
+                        <div class="section-content">
+
+                             <details class="anatomy-subsection"> <summary>Airways / Đường thở</summary>
+                                <div class="anatomy-content">
+                                    <div class="form-group">
+                                        <label for="cxr_airways_desc">Trachea & Bronchi / Khí quản & Phế quản:</label>
+                                        <textarea id="cxr_airways_desc" name="cxrAirwaysDesc" rows="2" placeholder="Trachea midline? Bronchi clear? / Khí quản đường giữa? Phế quản thông thoáng?"></textarea>
+                                        <div class="suggestion-button-container">
+                                            <button type="button" class="suggestion-btn" data-insert="Trachea is midline. / Khí quản nằm ở đường giữa.">Trachea Midline</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Trachea is deviated to the [right/left]. / Khí quản bị lệch sang [phải/trái].">Tracheal Deviation</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Mainstem bronchi appear clear. / Phế quản gốc hai bên có vẻ thông thoáng.">Bronchi Clear</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Possible narrowing of the [trachea/bronchus]. / Có thể hẹp [khí quản/phế quản].">Narrowing</button>
+                                             <button type="button" class="suggestion-btn" data-insert="Suspected foreign body in the [right/left] main bronchus. / Nghi ngờ dị vật phế quản gốc [phải/trái].">Foreign Body</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+
+                             <details class="anatomy-subsection">
+                                <summary>Bones / Xương</summary>
+                                <div class="anatomy-content">
+                                     <div class="form-group">
+                                        <label for="cxr_bones_status">Status / Tình trạng:</label>
+                                        <select id="cxr_bones_status" name="cxrBonesStatus" class="anatomy-status-select" data-target-area="cxr_bones_desc">
+                                            <option value="Normal / Bình thường">Normal / Bình thường</option>
+                                            <option value="Abnormal / Bất thường">Abnormal / Bất thường</option>
+                                        </select>
+                                    </div>
+                                     <div class="form-group anatomy-description-group" style="display: none;">
+                                        <label for="cxr_bones_desc">Description / Mô tả Bất thường:</label>
+                                        <textarea id="cxr_bones_desc" name="cxrBonesDesc" rows="3" placeholder="Fractures, lesions, degenerative changes... / Gãy xương, tổn thương hủy xương/tạo xương, thoái hóa..."></textarea>
+                                        <div class="suggestion-button-container">
+                                            <button type="button" class="suggestion-btn" data-insert="No acute fracture or dislocation. / Không thấy gãy xương cấp hoặc trật khớp.">No Acute Fracture</button>
+                                            <button type="button" class="suggestion-btn" data-insert="[Acute/Old] fracture of the [right/left] [location, e.g., posterior 7th] rib. / Gãy xương [cấp/cũ] sườn [phải/trái] [vị trí, vd: cung sau số 7].">Rib Fracture</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Degenerative changes of the thoracic spine. / Thoái hóa cột sống ngực.">Degenerative Spine</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Lytic lesion in the [location, e.g., right clavicle]. / Tổn thương hủy xương ở [vị trí, vd: xương đòn P].">Lytic Lesion</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Blastic lesion in the [location]. / Tổn thương tạo xương ở [vị trí].">Blastic Lesion</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Surgical changes of [sternotomy/thoracotomy]. / Thay đổi sau phẫu thuật [mở xương ức/mở ngực].">Surgical Changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+
+                            <details class="anatomy-subsection">
+                                <summary>Cardiac Silhouette & Mediastinum / Bóng tim & Trung thất</summary>
+                                <div class="anatomy-content">
+                                    <div class="form-grid-col-3">
+                                        <div class="form-group">
+                                            <label for="cxr_cardiac_size">Cardiac Size / Kích thước tim:</label>
+                                            <select id="cxr_cardiac_size" name="cxrCardiacSize">
+                                                <option value="Normal / Bình thường">Normal / Bình thường</option>
+                                                <option value="Mild cardiomegaly / Tim to nhẹ">Mild cardiomegaly / Tim to nhẹ</option>
+                                                <option value="Moderate cardiomegaly / Tim to vừa">Moderate cardiomegaly / Tim to vừa</option>
+                                                <option value="Severe cardiomegaly / Tim to nhiều">Severe cardiomegaly / Tim to nhiều</option>
+                                                <option value="Cannot assess / Không đánh giá được">Cannot assess / Không đánh giá được</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cxr_mediastinum_width">Mediastinal Width / Bề rộng trung thất:</label>
+                                            <select id="cxr_mediastinum_width" name="cxrMediastinumWidth">
+                                                 <option value="Normal / Bình thường">Normal / Bình thường</option>
+                                                <option value="Wide / Rộng">Wide / Rộng</option>
+                                                <option value="Cannot assess / Không đánh giá được">Cannot assess / Không đánh giá được</option>
+                                            </select>
+                                        </div>
+                                     </div>
+                                    <div class="form-group">
+                                        <label for="cxr_cardiac_mediastinum_desc">Description / Mô tả:</label>
+                                        <textarea id="cxr_cardiac_mediastinum_desc" name="cxrCardiacMediastinumDesc" rows="3" placeholder="Contour, aorta, specific chamber enlargement, mass... / Bờ tim, ĐM chủ, giãn buồng tim cụ thể, khối u..."></textarea>
+                                        <div class="suggestion-button-container">
+                                            <button type="button" class="suggestion-btn" data-insert="Cardiac silhouette size is normal. / Bóng tim kích thước bình thường.">Normal Size</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Contours are normal. / Các đường bờ bình thường.">Normal Contours</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Aorta is tortuous/calcified. / Động mạch chủ cong vẹo/vôi hóa.">Aorta Tortuous/Calcified</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Left atrial enlargement suspected. / Nghi ngờ giãn nhĩ trái.">LAE</button>
+                                             <button type="button" class="suggestion-btn" data-insert="Left ventricular enlargement suspected. / Nghi ngờ giãn thất trái.">LVE</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Double atrial contour suggests left atrial enlargement. / Dấu hiệu bờ đôi nhĩ phải gợi ý giãn nhĩ trái.">Double Contour</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Mediastinal contours are normal. / Trung thất không rộng, đường bờ bình thường.">Normal Mediastinum</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Mediastinum is wide, consider [aortic dissection/hematoma/mass]. / Trung thất rộng, xem xét [bóc tách ĐMC/khối máu tụ/khối u].">Wide Mediastinum</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Hiatal hernia noted. / Thoát vị hoành.">Hiatal Hernia</button>
+                                             <button type="button" class="suggestion-btn" data-insert="Mediastinal lymphadenopathy suspected. / Nghi ngờ hạch trung thất.">Mediastinal LAD</button>
+                                             <button type="button" class="suggestion-btn" data-insert="Pericardial effusion cannot be excluded. / Không thể loại trừ tràn dịch màng ngoài tim.">Pericardial Effusion?</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+
+                             <details class="anatomy-subsection">
+                                <summary>Diaphragm & Pleura / Cơ hoành & Màng phổi</summary>
+                                <div class="anatomy-content">
+                                    <div class="form-grid-col-4">
+                                         <div class="form-group">
+                                            <label for="cxr_cp_angles">CP Angles / Góc sườn hoành:</label>
+                                            <select id="cxr_cp_angles" name="cxrCpAngles">
+                                                <option value="Sharp bilaterally / Nhọn hai bên">Sharp bilaterally / Nhọn hai bên</option>
+                                                <option value="Blunted (Right) / Tù (Phải)">Blunted (Right) / Tù (Phải)</option>
+                                                <option value="Blunted (Left) / Tù (Trái)">Blunted (Left) / Tù (Trái)</option>
+                                                <option value="Blunted (Bilateral) / Tù (Hai bên)">Blunted (Bilateral) / Tù (Hai bên)</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cxr_pleural_effusion">Pleural Effusion / Tràn dịch MP:</label>
+                                            <select id="cxr_pleural_effusion" name="cxrPleuralEffusion">
+                                                <option value="None / Không">None / Không</option>
+                                                <option value="Small (Right) / Ít (Phải)">Small (Right) / Ít (Phải)</option>
+                                                <option value="Small (Left) / Ít (Trái)">Small (Left) / Ít (Trái)</option>
+                                                <option value="Small (Bilateral) / Ít (Hai bên)">Small (Bilateral) / Ít (Hai bên)</option>
+                                                <option value="Moderate (Right) / Vừa (Phải)">Moderate (Right) / Vừa (Phải)</option>
+                                                <option value="Moderate (Left) / Vừa (Trái)">Moderate (Left) / Vừa (Trái)</option>
+                                                <option value="Moderate (Bilateral) / Vừa (Hai bên)">Moderate (Bilateral) / Vừa (Hai bên)</option>
+                                                <option value="Large (Right) / Nhiều (Phải)">Large (Right) / Nhiều (Phải)</option>
+                                                <option value="Large (Left) / Nhiều (Trái)">Large (Left) / Nhiều (Trái)</option>
+                                                <option value="Large (Bilateral) / Nhiều (Hai bên)">Large (Bilateral) / Nhiều (Hai bên)</option>
+                                            </select>
+                                        </div>
+                                         <div class="form-group">
+                                            <label for="cxr_pneumothorax">Pneumothorax / Tràn khí MP:</label>
+                                            <select id="cxr_pneumothorax" name="cxrPneumothorax">
+                                                 <option value="None / Không">None / Không</option>
+                                                <option value="Small (Right) / Ít (Phải)">Small (Right) / Ít (Phải)</option>
+                                                <option value="Small (Left) / Ít (Trái)">Small (Left) / Ít (Trái)</option>
+                                                <option value="Moderate (Right) / Vừa (Phải)">Moderate (Right) / Vừa (Phải)</option>
+                                                <option value="Moderate (Left) / Vừa (Trái)">Moderate (Left) / Vừa (Trái)</option>
+                                                <option value="Large (Right) / Nhiều (Phải)">Large (Right) / Nhiều (Phải)</option>
+                                                <option value="Large (Left) / Nhiều (Trái)">Large (Left) / Nhiều (Trái)</option>
+                                                <option value="Tension (Right) / Áp lực (Phải)">Tension (Right) / Áp lực (Phải)</option>
+                                                <option value="Tension (Left) / Áp lực (Trái)">Tension (Left) / Áp lực (Trái)</option>
+                                            </select>
+                                        </div>
+                                     </div>
+                                    <div class="form-group">
+                                        <label for="cxr_diaphragm_pleura_desc">Description / Mô tả:</label>
+                                        <textarea id="cxr_diaphragm_pleura_desc" name="cxrDiaphragmPleuraDesc" rows="3" placeholder="Hemidiaphragm shape/position, blunting causes, effusion/PTX details, pleural thickening..."></textarea>
+                                        <div class="suggestion-button-container">
+                                            <button type="button" class="suggestion-btn" data-insert="Hemidiaphragms are normal in position and contour. / Vòm hoành hai bên vị trí và hình dạng bình thường.">Normal Diaphragms</button>
+                                            <button type="button" class="suggestion-btn" data-insert="[Right/Left] hemidiaphragm is elevated. / Vòm hoành [phải/trái] cao.">Elevated Hemidiaphragm</button>
+                                             <button type="button" class="suggestion-btn" data-insert="Subpulmonic effusion suspected on the [right/left]. / Nghi ngờ tràn dịch dưới phổi bên [phải/trái].">Subpulmonic Effusion</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Costophrenic angles are sharp. / Góc sườn hoành hai bên nhọn.">Sharp Angles</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Blunting of the [right/left/bilateral] costophrenic angle(s) likely due to [effusion/scarring]. / Tù góc sườn hoành [phải/trái/hai bên] khả năng do [tràn dịch/sẹo cũ].">Blunted Angles Cause</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Layering pleural effusion seen on decubitus view. / Thấy tràn dịch màng phổi lớp mỏng trên phim nằm nghiêng.">Layering Effusion</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Loculated pleural effusion in the [location]. / Tràn dịch màng phổi khu trú ở [vị trí].">Loculated Effusion</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Pleural thickening noted [location]. / Dày màng phổi ở [vị trí].">Pleural Thickening</button>
+                                            <button type="button" class="suggestion-btn" data-insert="No definite pneumothorax identified. / Không thấy tràn khí màng phổi rõ.">No PTX</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Visceral pleural line is visible, consistent with pneumothorax. / Thấy rõ đường màng phổi tạng, phù hợp với tràn khí màng phổi.">PTX Line Visible</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Deep sulcus sign suggests pneumothorax. / Dấu hiệu khe sâu gợi ý tràn khí màng phổi.">Deep Sulcus Sign</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Tension pneumothorax suspected with mediastinal shift to the [contralateral side]. / Nghi ngờ tràn khí màng phổi áp lực với trung thất bị đẩy lệch sang [bên đối diện].">Tension PTX</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+
+                            <details class="anatomy-subsection">
+                                <summary>Lung Fields / Phế trường</summary>
+                                <div class="anatomy-content">
+                                    <div class="form-group">
+                                        <label for="cxr_lungs_status">Status / Tình trạng:</label>
+                                        <select id="cxr_lungs_status" name="cxrLungsStatus" class="anatomy-status-select" data-target-area="cxr_lungs_desc">
+                                            <option value="Clear bilaterally / Phổi hai bên trong">Clear bilaterally / Phổi hai bên trong</option>
+                                            <option value="Abnormal / Bất thường">Abnormal / Bất thường</option>
+                                        </select>
+                                    </div>
+                                     <div class="form-group anatomy-description-group" style="display: none;">
+                                        <label for="cxr_lungs_desc">Description / Mô tả Bất thường:</label>
+                                        <textarea id="cxr_lungs_desc" name="cxrLungsDesc" rows="5" placeholder="Location (RUL/RML/RLL/LUL/LLL/Apices/Bases/Perihilar/Diffuse) and type (Consolidation, Opacity/Nodule/Mass, Atelectasis, Interstitial, Lucency, Edema...) / Vị trí (TDP/TDP/TDD P/TDT/TDD T/Đỉnh/Đáy/Quanh rốn/Lan tỏa) và loại tổn thương (Đông đặc, Mờ/Nốt/Khối, Xẹp phổi, Mô kẽ, Sáng, Phù...)"></textarea>
+                                        <div class="suggestion-button-container">
+                                            <button type="button" class="suggestion-btn" data-insert="Lungs are clear bilaterally. / Phổi hai bên trong, không thấy tổn thương khu trú.">Clear Lungs</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Consolidation in the [RUL/RML/RLL/LUL/LLL]. / Đông đặc ở [TDP/TDG/TDD P/TDT/TDD T].">Consolidation</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Patchy airspace opacities in the [location]. / Tổn thương mờ dạng khoảng khí rải rác ở [vị trí].">Patchy Opacities</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Dense infiltrate in the [location] with air bronchograms. / Thâm nhiễm đậm ở [vị trí] kèm dấu hiệu khí phế quản đồ.">Dense Infiltrate w/ Air Bronchograms</button>
+                                             <button type="button" class="suggestion-btn" data-insert="[Well-defined/Ill-defined] opacity in the [location]. / Nốt mờ giới hạn [rõ/không rõ] ở [vị trí].">Opacity</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Nodule measuring [size] mm in the [location]. Margins are [well-defined/ill-defined/spiculated]. / Nốt kích thước [size] mm ở [vị trí]. Bờ [giới hạn rõ/không rõ/tua gai].">Nodule Description</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Mass measuring [size] cm in the [location]. Margins are [well-defined/ill-defined/spiculated]. / Khối u kích thước [size] cm ở [vị trí]. Bờ [giới hạn rõ/không rõ/tua gai].">Mass Description</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Cavitary nodule/mass in the [location]. / Nốt/khối dạng hang ở [vị trí].">Cavitary Lesion</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Linear atelectasis in the [location]. / Xẹp phổi dạng đường ở [vị trí].">Linear Atelectasis</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Segmental atelectasis of the [RUL/RML/RLL/LUL/LLL]. / Xẹp phổi phân thùy [TDP/TDG/TDD P/TDT/TDD T].">Segmental Atelectasis</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Lobar atelectasis/collapse of the [RUL/RML/RLL/LUL/LLL]. / Xẹp phổi thùy [TDP/TDG/TDD P/TDT/TDD T].">Lobar Atelectasis</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Reticular interstitial pattern noted diffusely. / Tổn thương mô kẽ dạng lưới lan tỏa.">Reticular Pattern</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Nodular interstitial pattern. / Tổn thương mô kẽ dạng nốt.">Nodular Pattern</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Reticulonodular interstitial pattern. / Tổn thương mô kẽ dạng lưới nốt.">Reticulonodular Pattern</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Honeycombing suggestive of fibrosis, predominantly in the [location]. / Hình ảnh tổ ong gợi ý xơ hóa, chủ yếu ở [vị trí].">Honeycombing</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Large bulla in the [location]. / Bóng khí lớn ở [vị trí].">Bulla</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Thin-walled cavity in the [location]. / Hang thành mỏng ở [vị trí].">Cavity</button>
+                                             <button type="button" class="suggestion-btn" data-insert="Pneumatocele(s) noted. / Ghi nhận bóng khí thành mỏng (kén khí).">Pneumatocele</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Findings suggestive of pulmonary edema including Kerley B lines, peribronchial cuffing, and vascular redistribution. / Các dấu hiệu gợi ý phù phổi bao gồm đường Kerley B, dày thành phế quản, và tái phân bố mạch máu.">Pulmonary Edema Signs</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Cephalization of pulmonary vessels. / Tái phân bố mạch máu lên đỉnh phổi.">Cephalization</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Peribronchial cuffing noted. / Dấu hiệu dày thành phế quản.">Peribronchial Cuffing</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Kerley B lines present. / Có đường Kerley B.">Kerley B Lines</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+
+                            <details class="anatomy-subsection">
+                                <summary>Hila / Rốn phổi</summary>
+                                <div class="anatomy-content">
+                                     <div class="form-group">
+                                        <label for="cxr_hila_desc">Appearance / Hình dạng:</label>
+                                        <textarea id="cxr_hila_desc" name="cxrHilaDesc" rows="2" placeholder="Normal, Prominent, Lymphadenopathy, Mass... / Bình thường, Đậm, Hạch to, Khối u..."></textarea>
+                                        <div class="suggestion-button-container">
+                                            <button type="button" class="suggestion-btn" data-insert="Hila appear normal. / Rốn phổi hai bên bình thường.">Normal Hila</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Hila are prominent bilaterally. / Rốn phổi hai bên đậm.">Prominent Hila</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Hilar lymphadenopathy suspected. / Nghi ngờ hạch rốn phổi.">Hilar LAD</button>
+                                            <button type="button" class="suggestion-btn" data-insert="Hilar mass suspected on the [right/left]. / Nghi ngờ khối u rốn phổi bên [phải/trái].">Hilar Mass</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+
+                        </div>
+                    </details>
+
+                    <details class="section organ-section">
+                         <summary class="section-toggle"><h3><i class="fas fa-exchange-alt"></i> Comparison / So sánh</h3></summary>
+                         <div class="section-content">
+                            <div class="form-group">
+                                <label for="cxr_comparison_date">Date of Prior Study / Ngày phim cũ:</label>
+                                <input type="date" id="cxr_comparison_date" name="cxrComparisonDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="cxr_comparison_desc">Comparison Description / Mô tả so sánh:</label>
+                                <textarea id="cxr_comparison_desc" name="cxrComparisonDesc" rows="3" placeholder="Compared to prior study dated [YYYY-MM-DD], findings are [stable/improved/worsened]... / So với phim cũ ngày [YYYY-MM-DD], kết quả [ổn định/cải thiện/xấu đi]..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="Compared to prior study dated [YYYY-MM-DD], findings are stable. / So với phim cũ ngày [...], kết quả ổn định.">Stable</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Compared to prior study dated [YYYY-MM-DD], findings have improved/resolved. / So với phim cũ ngày [...], kết quả cải thiện/hồi phục.">Improved</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Compared to prior study dated [YYYY-MM-DD], findings have worsened (e.g., increased effusion, progression of infiltrate). / So với phim cũ ngày [...], kết quả xấu đi (ví dụ: tràn dịch tăng, thâm nhiễm tiến triển).">Worsened</button>
+                                     <button type="button" class="suggestion-btn" data-insert="No prior studies available for comparison. / Không có phim cũ để so sánh.">No Comparison</button>
+                                    <button type="button" class="suggestion-btn" data-insert="The [nodule/opacity] in the [location] appears stable compared to [YYYY-MM-DD]. / [Nốt/Mờ] ở [vị trí] có vẻ ổn định so với ngày [...].">Finding Stable</button>
+                                    <button type="button" class="suggestion-btn" data-insert="The [nodule/opacity] in the [location] has [increased/decreased] in size compared to [YYYY-MM-DD]. / [Nốt/Mờ] ở [vị trí] đã [tăng/giảm] kích thước so với ngày [...].">Finding Changed Size</button>
+                                </div>
+                            </div>
+                         </div>
+                    </details>
+
+                    <details class="section organ-section" open>
+                        <summary class="section-toggle"><h3><i class="fas fa-file-medical-alt"></i> Impression & Recommendation / Kết luận & Đề nghị</h3></summary>
+                         <div class="section-content">
+                            <div class="form-group">
+                                <label for="impression">Impression / Kết luận:</label>
+                                <textarea id="impression" name="impression" rows="5" placeholder="Summarize key findings for Chest X-ray... / Tóm tắt các kết quả chính của X quang ngực..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="No acute cardiopulmonary process. / Không thấy bệnh lý tim phổi cấp tính.">No Acute Findings</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Lungs are clear. / Phổi trong.">Clear Lungs Imp</button>
+                                    <button type="button" class="suggestion-btn" data-insert="[RUL/RML/RLL/LUL/LLL] airspace consolidation, consistent with pneumonia. / Đông đặc khoảng khí ở [TDP/TDG/TDD P/TDT/TDD T], phù hợp với viêm phổi.">Pneumonia</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Cardiomegaly. Findings suggestive of congestive heart failure (CHF). / Tim to. Các dấu hiệu gợi ý suy tim sung huyết (CHF).">Cardiomegaly CHF</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Stable cardiomegaly. / Tim to ổn định.">Stable Cardiomegaly</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Small [right/left] pneumothorax. / Tràn khí màng phổi lượng ít bên [phải/trái].">Small PTX</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Large [right/left] pneumothorax. / Tràn khí màng phổi lượng nhiều bên [phải/trái].">Large PTX</button>
+                                    <button type="button" class="suggestion-btn" data-insert="[Small/Moderate/Large] [right/left/bilateral] pleural effusion(s). / Tràn dịch màng phổi lượng [ít/vừa/nhiều] bên [phải/trái/hai bên].">Pleural Effusion Imp</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Pulmonary edema. / Phù phổi.">Pulmonary Edema Imp</button>
+                                    <button type="button" class="suggestion-btn" data-insert="[Size] mm nodule in the [location]. Comparison with prior studies recommended if available. / Nốt [Size] mm ở [vị trí]. Đề nghị so sánh với phim cũ nếu có.">Lung Nodule</button>
+                                    <button type="button" class="suggestion-btn" data-insert="The nodule in the [location] is stable compared to [YYYY-MM-DD]. / Nốt ở [vị trí] ổn định so với ngày [...].">Stable Nodule</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Findings consistent with COPD/emphysema. / Kết quả phù hợp với COPD/khí phế thũng.">COPD/Emphysema</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Postoperative changes of [sternotomy/thoracotomy]. / Thay đổi sau phẫu thuật [mở xương ức/mở ngực].">Post-op Changes</button>
+                                    <button type="button" class="suggestion-btn" data-insert="ET tube tip is well-positioned. / Đầu ống NKQ vị trí tốt.">ET Tube OK</button>
+                                    <button type="button" class="suggestion-btn" data-insert="NG tube terminates below the diaphragm. / Đầu ống sonde dạ dày dưới vòm hoành.">NG Tube OK</button>
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <label for="recommendation">Recommendation / Đề nghị:</label>
+                                <textarea id="recommendation" name="recommendation" rows="3" placeholder="e.g., Clinical correlation, Follow-up CXR, CT chest... / Ví dụ: Tương quan LS, Chụp X quang ngực kiểm tra, CT ngực..."></textarea>
+                                <div class="suggestion-button-container">
+                                     <button type="button" class="suggestion-btn" data-insert="Clinical correlation is recommended. / Đề nghị tương quan lâm sàng.">Clinical Correlation</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Follow-up chest x-ray in [timeframe, e.g., 24-48 hours / 6-8 weeks] to assess [condition, e.g., pneumothorax resolution / pneumonia clearance]. / Chụp X quang ngực kiểm tra sau [khoảng thời gian, vd: 24-48 giờ / 6-8 tuần] để đánh giá [tình trạng, vd: sự hồi phục TKMP / sạch viêm phổi].">Follow-up CXR</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Recommend CT chest [with/without] contrast for further evaluation of [finding, e.g., lung nodule / mediastinal widening]. / Đề nghị chụp CT ngực [có/không] cản quang để đánh giá thêm [kết quả, vd: nốt phổi / trung thất rộng].">Recommend CT Chest</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Recommend comparison with prior imaging studies, if available. / Đề nghị so sánh với các phim cũ, nếu có.">Recommend Comparison</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Further evaluation with lateral view may be helpful. / Đánh giá thêm bằng phim nghiêng có thể hữu ích.">Recommend Lateral View</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Consider pulmonology consultation. / Cân nhắc hội chẩn chuyên khoa Hô hấp.">Pulm Consult</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Consider cardiology consultation. / Cân nhắc hội chẩn chuyên khoa Tim mạch.">Cardio Consult</button>
+                                </div>
+                            </div>
+                         </div>
+                    </details>
+
+                </form>
+            </div>
+            <div class="tab-content" id="images">
+                 <h2>Images / Hình ảnh</h2>
+                <div class="form-group">
+                    <label for="image-upload">Upload Images / Tải ảnh lên:</label>
+                    <input type="file" id="image-upload" multiple accept="image/*" style="display: block; margin-top: 5px;">
+                </div>
+                <div id="image-preview-container" style="margin-top: 15px;">
+                    </div>
+            </div>
+
+            <div class="tab-content" id="templates">
+                 <h2>Template Management / Quản lý Mẫu</h2>
+                <div class="form-group">
+                    <label for="template-name">Template Name / Tên Mẫu:</label>
+                    <input type="text" id="template-name" placeholder="Enter name to save / Nhập tên để lưu">
+                    <button type="button" id="save-template-btn"><i class="fas fa-save"></i> Save Current as Template / Lưu thành Mẫu</button>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="load-template-select">Select Template to Load / Chọn Mẫu để tải:</label>
+                    <select id="load-template-select">
+                        <option value="">-- Select Template / Chọn Mẫu --</option>
+                        <optgroup label="Presets / Mẫu có sẵn" id="preset-templates-group"></optgroup>
+                        <optgroup label="My Templates / Mẫu của tôi" id="user-templates-group"></optgroup>
+                    </select>
+                    <button type="button" id="load-template-btn"><i class="fas fa-download"></i> Load Template / Tải Mẫu</button>
+                    <button type="button" id="delete-template-btn" class="danger-btn"><i class="fas fa-trash-alt"></i> Delete Selected Template / Xóa Mẫu</button>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="import-template-file">Import Template (JSON) / Nhập Mẫu (JSON):</label>
+                    <input type="file" id="import-template-file" accept=".json" style="display: none;"> <button type="button" id="import-template-btn"><i class="fas fa-file-import"></i> Import / Nhập</button>
+                </div>
+                <div class="form-group">
+                    <label>Export Current State / Xuất trạng thái hiện tại:</label>
+                    <button type="button" id="export-template-btn"><i class="fas fa-file-export"></i> Export Current State (JSON) / Xuất (JSON)</button>
+                </div>
+            </div>
+
+            <div class="tab-content" id="report">
+                 <h2>Report Preview & Actions / Xem trước & Thao tác Báo cáo</h2>
+
+                <div id="report-preview" class="report-output-area">
+                    <p class="placeholder-text"><i>Report preview (EN) will appear here after generation. / Bản xem trước (EN) sẽ hiện ở đây sau khi tạo.</i></p>
+                </div>
+
+                <div class="report-section-container" id="translation-section" style="margin-top: 20px; display: none;">
+                    <div class="report-header">
+                        <h3><i class="fas fa-language"></i> Vietnamese Translation / Bản dịch Tiếng Việt (VI)</h3>
+                        <button type="button" id="edit-translation-btn" class="edit-toggle-btn" style="display: none;"><i class="fas fa-edit"></i> Sửa bản dịch</button>
+                    </div>
+                    <div id="translation-content" class="report-output-area" style="border-top: 1px solid #ddd; border-radius: 0 0 5px 5px; min-height: 100px;">
+                        <p class="placeholder-text"><i>Translation (VI) will appear here. / Bản dịch (VI) sẽ hiện ở đây.</i></p>
+                    </div>
+                    <textarea id="translation-edit-area" class="report-textarea" rows="15" style="display: none; border-radius: 0 0 5px 5px; border-top: 1px solid #ddd; margin-top: -1px;" placeholder="Edit the Markdown translation here... / Chỉnh sửa bản dịch dạng Markdown tại đây..."></textarea>
+                </div>
+
+                <div id="translation-loading" style="text-align: center; margin-top: 15px; display: none;">
+                    <span class="loading-spinner"></span> Translating report... / Đang dịch báo cáo...
+                </div>
+
+                <div class="report-actions">
+                    <button type="button" id="generate-report-btn"><i class="fas fa-cogs"></i> Generate Report / Tạo Báo cáo</button>
+                    <button type="button" id="translate-report-btn" style="display: none;" class="action-btn-translate"><i class="fas fa-language"></i> Dịch (VI)</button>
+                    <button type="button" id="print-report-btn" style="display: none;"><i class="fas fa-print"></i> Print / In (EN)</button>
+                    <button type="button" id="print-translation-btn" style="display: none;" class="action-btn-print-vi"><i class="fas fa-print"></i> Print / In (VI)</button>
+                    <button type="button" id="export-report-html-btn" style="display: none;"><i class="fas fa-file-export"></i> Export / Xuất (HTML)</button>
+                </div>
+            </div>
+
+        </div> <div id="notifications"></div>
+
+    </div>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
