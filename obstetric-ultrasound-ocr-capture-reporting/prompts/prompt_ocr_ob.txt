@@ -1,0 +1,55 @@
+Analyze the provided obstetric ultrasound image. Your primary task is to identify and extract specific fetal biometry, associated gestational ages, amniotic fluid index, and estimated fetal weight measurements that are clearly displayed as text overlays on the image.
+
+Use Optical Character Recognition (OCR) and your understanding of common obstetric ultrasound measurement labels to find and accurately read the numeric values and relevant string values associated with the following parameters:
+
+**Target Parameters:**
+
+* **BPD** (Biparietal Diameter) - *Numeric value*
+* **GA by BPD** (Gestational Age associated with BPD) - *String value, e.g., "20w1d"*
+* **HC** (Head Circumference) - *Numeric value*
+* **GA by HC** (Gestational Age associated with HC) - *String value, e.g., "20w3d"*
+* **AC** (Abdominal Circumference) - *Numeric value*
+* **GA by AC** (Gestational Age associated with AC) - *String value, e.g., "20w0d"*
+* **FL** (Femur Length) - *Numeric value*
+* **GA by FL** (Gestational Age associated with FL) - *String value, e.g., "19w6d"*
+* **CRL** (Crown-Rump Length) - *Numeric value, extract only if clearly labeled (typically 1st trimester)*
+* **GA by CRL** (Gestational Age associated with CRL) - *String value, e.g., "12w0d", extract only if CRL is present*
+* **EFW** (Estimated Fetal Weight) - *Numeric value*
+* **EFW Method** (Calculation method for EFW, e.g., Hadlock) - *String value, extract if displayed near EFW*
+* **AFI** (Amniotic Fluid Index) - *Numeric value*
+* **SDP** (Single Deepest Pocket) - *Numeric value, if present*
+* **HL** (Humerus Length) - *Numeric value, if present*
+* *Optional:* OFD, TAD, APAD - *Numeric values, extract only if clearly labeled and present.*
+
+**Output Requirements:**
+
+1.  **Format:** Return the extracted data as a single, valid **JSON object**. Do not include any explanatory text before or after the JSON object itself.
+2.  **Keys:** Use the lowercase parameter abbreviations or designated keys (e.g., `"bpd"`, `"ga_bpd"`, `"hc"`, `"ga_hc"`, `"ac"`, `"ga_ac"`, `"fl"`, `"ga_fl"`, `"crl"`, `"ga_crl"`, `"efw"`, `"efwMethod"`, `"afi"`, `"sdp"`, `"hl"`) as the keys in the JSON object.
+3.  **Values:**
+    * For biometry measurements (BPD, HC, AC, FL, CRL, HL, AFI, SDP, EFW, OFD, TAD, APAD): The value must be the **numeric measurement only**, represented as a number (integer or float). **Do NOT include units** (like "mm", "cm", "g").
+    * For associated Gestational Ages (ga\_bpd, ga\_hc, ga\_ac, ga\_fl, ga\_crl): The value must be the **string representing the weeks and days** (e.g., `"20w1d"`, `"12w0d"`), exactly as read.
+    * For `efwMethod`: The value should be the calculation method name as a string (e.g., `"Hadlock (AC,FL)"`).
+4.  **Accuracy and Confidence:**
+    * Only extract values that are clearly readable and directly associated with one of the target parameter labels.
+    * **CRITICAL: If a parameter (measurement OR associated GA string) is not found on the image, or if its value cannot be read with high confidence, DO NOT include its key-value pair in the JSON output.**
+    * **ABSOLUTELY DO NOT GUESS, ESTIMATE, OR HALLUCINATE values or GAs.** Omission is required if uncertain.
+5.  **Multiple Fetuses:** If the image clearly labels measurements for multiple fetuses (e.g., "Fetus A", "Fetus B"), attempt to differentiate them by adding a suffix to the keys (e.g., `"bpd_A"`, `"ga_bpd_A"`, `"bpd_B"`, `"ga_bpd_B"`). If fetus labels are absent or ambiguous, extract only one clear set or omit if impossible to distinguish reliably.
+6.  **Focus:** Ignore non-measurement text, annotations, logos, or other image elements unless they directly identify a target parameter label or its associated GA.
+
+**Example JSON Output Structure (including associated GAs):**
+
+```json
+{
+  "bpd": 58.3,
+  "ga_bpd": "22w5d",
+  "hc": 215.1,
+  "ga_hc": "22w4d",
+  "ac": 180.0,
+  "ga_ac": "22w0d",
+  "fl": 40.5,
+  "ga_fl": "22w6d",
+  "hl": 37.0,
+  "afi": 15.2,
+  "efw": 550,
+  "efwMethod": "Hadlock (BPD,HC,AC,FL)"
+}

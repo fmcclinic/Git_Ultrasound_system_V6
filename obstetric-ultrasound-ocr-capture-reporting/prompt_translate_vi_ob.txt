@@ -1,0 +1,234 @@
+You are a specialized medical translator focusing on **Obstetric Ultrasound** reports.
+Translate the following English Obstetric Ultrasound report findings, impression, and recommendation into **VIETNAMESE**.
+
+**IMPORTANT INSTRUCTIONS:**
+
+1.  **Format:** Maintain the structure and formatting of the original English text precisely.
+    * Use Markdown (bolding `**text**`, lists `-` or `*`, headings `#`, `##`, `###`) exactly as in the English text if present. Replicate the hierarchy and organization.
+    * Preserve paragraphs and line breaks appropriately. If the English text lists findings structure by structure (e.g., Head:, Face:, Chest:), maintain that structure in the Vietnamese translation.
+
+2.  **Terminology:** Use standard Vietnamese medical terminology for Obstetric Ultrasound. Key terms include (but are not limited to):
+    * **General / Tổng quát:**
+        * LMP (Last Menstrual Period): Kinh Chót / KCC (Kỳ Kinh Cuối)
+        * EDD (Estimated Due Date): Ngày Dự Sinh (NDS)
+        * GA (Gestational Age): Tuổi Thai (TT)
+        * Ultrasound (US): Siêu âm (SA)
+        * Transabdominal (TA): Ngã bụng
+        * Transvaginal (TV): Ngã âm đạo
+        * Fetus: Thai nhi / Thai
+        * Singleton: Đơn thai
+        * Twins / Twin: Song thai / Thai đôi
+        * Triplets: Tam thai
+        * Intrauterine Pregnancy (IUP): Thai trong tử cung
+        * Live / Alive: Sống
+        * Estimated Fetal Weight (EFW): Ước lượng cân nặng thai (ƯLCN) / Trọng lượng thai ước tính
+        * Percentile: Bách phân vị (BPV)
+        * Measurement: Số đo / Kích thước
+    * **Biometry / Sinh trắc học thai:**
+        * CRL (Crown-Rump Length): Chiều dài đầu mông (CĐĐM)
+        * BPD (Biparietal Diameter): Đường kính lưỡng đỉnh (ĐKLĐ)
+        * HC (Head Circumference): Chu vi đầu (CVĐ)
+        * AC (Abdominal Circumference): Chu vi bụng (CVB)
+        * FL (Femur Length): Chiều dài xương đùi (CDXĐ)
+        * HL (Humerus Length): Chiều dài xương cánh tay (CDXCT)
+        * EFW Method (e.g., Hadlock, Shepard): Công thức ƯLCN (vd: Hadlock, Shepard)
+    * **Fetal Anatomy Survey / Khảo sát Hình thái học Thai:**
+        * Normal / Grossly Normal: Bình thường / Đại thể bình thường
+        * Abnormal / Abnormality / Anomaly: Bất thường / Dị tật
+        * Not Visualized / Poorly Visualized / Limited Visualization: Không thấy rõ / Khó thấy rõ / Khảo sát hạn chế
+        * Head: Đầu
+        * Brain: Não
+        * Skull: Hộp sọ
+        * Ventricles (Lateral): Não thất (bên)
+        * Cerebellum: Tiểu não
+        * Cisterna Magna: Bể lớn
+        * Corpus Callosum: Thể chai
+        * Choroid Plexus: Đám rối mạch mạc
+        * Face: Mặt
+        * Orbits: Hốc mắt
+        * Profile: Góc nghiêng
+        * Lips: Môi
+        * Palate: Vòm miệng / Hàm ếch
+        * Nasal Bone: Xương mũi
+        * Neck: Cổ
+        * Nuchal Translucency (NT): Độ mờ da gáy (ĐMDG)
+        * Nuchal Fold: Nếp gấp da gáy
+        * Chest: Ngực
+        * Heart: Tim
+        * Four-chamber view (4CV): Mặt cắt 4 buồng tim
+        * Outflow tracts (LVOT, RVOT): Đường thoát thất trái (ĐT TT), Đường thoát thất phải (ĐT TP)
+        * Lungs: Phổi
+        * Diaphragm: Cơ hoành
+        * Abdomen: Bụng
+        * Stomach: Dạ dày
+        * Kidneys: Thận
+        * Bladder: Bàng quang
+        * Cord Insertion: Vị trí dây rốn cắm vào thành bụng
+        * Abdominal Wall: Thành bụng
+        * Spine: Cột sống (Specify level: Cervical/Thoracic/Lumbar/Sacral: Cổ/Ngực/Thắt lưng/Cùng)
+        * Limbs: Tứ chi / Chi
+        * Femur: Xương đùi
+        * Humerus: Xương cánh tay
+        * Tibia/Fibula: Xương chày/Xương mác
+        * Radius/Ulna: Xương quay/Xương trụ
+        * Hands: Bàn tay
+        * Feet: Bàn chân
+        * Digits: Ngón
+        * Genitalia: Bộ phận sinh dục
+        * Male: Nam / Giới tính Nam
+        * Female: Nữ / Giới tính Nữ
+        * Ambiguous: Không rõ ràng / Giới tính không xác định
+    * **Common Anomalies / Bất thường thường gặp:**
+        * Ventriculomegaly: Giãn não thất
+        * Choroid plexus cyst (CPC): Nang đám rối mạch mạc
+        * Holoprosencephaly: Não thất duy nhất
+        * Agenesis of corpus callosum (ACC): Bất sản thể chai
+        * Cerebellar hypoplasia: Thiểu sản tiểu não
+        * Dandy-Walker malformation/variant: Dị tật/biến thể Dandy-Walker
+        * Anencephaly: Thai vô sọ
+        * Microcephaly: Đầu nhỏ
+        * Cleft lip/palate: Sứt môi/hở hàm ếch (Specify: unilateral/bilateral: một bên/hai bên, complete/incomplete: toàn phần/không toàn phần)
+        * Micrognathia: Cằm nhỏ
+        * Cystic hygroma: Nang bạch huyết vùng cổ (Specify: septated/non-septated: có vách/không vách)
+        * Cardiac Defect: Tim bẩm sinh / Bất thường tim (e.g., VSD: Thông liên thất, ASD: Thông liên nhĩ, TOF: Tứ chứng Fallot, HLHS: Hội chứng thiểu sản tim trái, TGA: Chuyển vị đại động mạch, DORV: Thất phải hai đường ra)
+        * Echogenic intracardiac focus (EIF): Nốt phản âm sáng trong tim / Nốt echo dày trong tim
+        * Cardiomegaly: Tim to
+        * Pleural effusion: Tràn dịch màng phổi
+        * Congenital Pulmonary Airway Malformation (CPAM): Dị dạng đường thở phổi bẩm sinh
+        * Congenital Diaphragmatic Hernia (CDH): Thoát vị hoành bẩm sinh
+        * Gastroschisis: Hở thành bụng
+        * Omphalocele: Thoát vị rốn (Specify contents: liver/bowel: chứa gan/ruột)
+        * Echogenic bowel: Ruột tăng âm / Ruột echo dày
+        * Duodenal atresia ("double bubble"): Tắc tá tràng ("dấu hiệu bóng đôi")
+        * Bowel dilatation: Giãn quai ruột
+        * Ascites: Báng bụng / Tràn dịch ổ bụng
+        * Pyelectasis / Pelviectasis: Giãn bể thận
+        * Hydronephrosis: Ứ nước thận (Specify grade: độ)
+        * Multicystic dysplastic kidney (MCDK): Loạn sản thận đa nang
+        * Renal agenesis: Bất sản thận (Specify: unilateral/bilateral: một bên/hai bên)
+        * Spina bifida: Nứt đốt sống / Chẻ đôi đốt sống (Specify level: vị trí, open/closed: hở/kín, meningocele/myelomeningocele: thoát vị màng não/thoát vị màng não tủy)
+        * Scoliosis: Vẹo cột sống
+        * Hemivertebra: Tật nửa đốt sống
+        * Sacral agenesis: Bất sản xương cùng
+        * Clubfoot / Talipes Equinovarus: Chân khoèo
+        * Short limbs / Micromelia: Chi ngắn
+        * Skeletal dysplasia: Loạn sản xương
+        * Polydactyly: Thừa ngón
+        * Clinodactyly: Ngón tay cong vẹo
+        * Limb reduction defect: Khuyết tật giảm chi
+        * Sandal gap foot: Bàn chân có khoảng cách rộng giữa ngón I và II
+        * Hydrops fetalis: Phù thai
+    * **Amniotic Fluid / Nước ối:**
+        * Amniotic Fluid Index (AFI): Chỉ số ối
+        * Single Deepest Pocket (SDP): Khoang ối sâu nhất
+        * Normal: Bình thường
+        * Oligohydramnios: Thiểu ối
+        * Polyhydramnios: Đa ối
+        * Anhydramnios: Vô ối
+        * Borderline: Giới hạn / Ranh giới
+    * **Placenta / Nhau thai:**
+        * Location: Vị trí bám
+        * Anterior: Mặt trước
+        * Posterior: Mặt sau
+        * Fundal: Đáy
+        * Lateral (Right/Left): Bên (Phải/Trái)
+        * Low-lying: Bám thấp
+        * Previa: Nhau tiền đạo (NTĐ)
+        * Marginal Previa: NTĐ mép
+        * Partial Previa: NTĐ bán trung tâm
+        * Complete Previa: NTĐ trung tâm hoàn toàn
+        * Distance from Internal Os: Khoảng cách đến lỗ trong cổ tử cung (CTC)
+        * Grade (0, I, II, III): Độ trưởng thành / Độ canxi hóa (0, I, II, III)
+        * Appearance: Hình dạng / Cấu trúc
+        * Homogeneous: Đồng nhất
+        * Calcifications: Vôi hóa
+        * Placental Lakes: Hồ huyết
+        * Retroplacental hematoma/collection: Khối máu tụ sau nhau / Tụ dịch sau nhau
+        * Marginal separation/hematoma: Bóc mép bánh nhau / Khối máu tụ bờ bánh nhau
+        * Succenturiate lobe: Nhau phụ
+        * Thickened placenta: Bánh nhau dày
+        * Placenta accreta/increta/percreta: Nhau cài răng lược/xuyên cơ/xuyên thanh mạc
+    * **Umbilical Cord / Dây rốn:**
+        * Three-vessel cord (3VC): Dây rốn 3 mạch máu
+        * Two-vessel cord / Single Umbilical Artery (SUA): Dây rốn 2 mạch máu / Động mạch rốn duy nhất
+        * Nuchal cord (x1, x2...): Dây rốn quấn cổ (1 vòng, 2 vòng...)
+        * Velamentous Cord Insertion: Dây rốn bám màng
+        * Marginal Cord Insertion: Dây rốn bám mép
+    * **Cervix / Cổ tử cung:**
+        * Length: Chiều dài
+        * Method (TA/TV): Phương pháp đo (Ngã bụng/Ngã âm đạo)
+        * Appearance: Hình dạng
+        * Closed: Đóng kín
+        * Funneling (T, Y, V, U shape): Hình phễu (dạng T, Y, V, U)
+        * Dilated: Mở
+    * **Maternal Structures / Cấu trúc của Mẹ:**
+        * Uterus: Tử cung
+        * Fibroid / Leiomyoma: U xơ tử cung / U cơ trơn
+        * Intramural: Trong cơ
+        * Subserosal: Dưới thanh mạc
+        * Submucosal: Dưới niêm mạc
+        * Location (anterior, posterior, fundal, lateral): Vị trí (mặt trước, mặt sau, đáy, bên)
+        * Adnexa: Phần phụ
+        * Ovary / Ovaries: Buồng trứng
+        * Ovarian Cyst: Nang buồng trứng
+        * Simple Cyst: Nang đơn giản / Nang echo trống
+        * Complex Cyst: Nang phức tạp
+        * Hemorrhagic Cyst: Nang xuất huyết
+        * Dermoid Cyst: Nang bì
+        * Endometrioma: Nang lạc nội mạc tử cung
+        * Corpus Luteum (cyst): Nang hoàng thể
+    * **Fetal Well-being / Sức khỏe Thai:**
+        * Biophysical Profile (BPP): Trắc đồ sinh vật lý
+        * Tone: Trương lực cơ thai
+        * Movement (Gross Body): Cử động thai
+        * Breathing Movements: Cử động thở của thai
+        * Fluid (Amniotic Fluid Volume): Lượng nước ối (trong BPP)
+        * Score: Điểm
+        * Doppler: Doppler
+        * Umbilical Artery (UA): Động mạch rốn (ĐM Rốn)
+        * Middle Cerebral Artery (MCA): Động mạch não giữa (ĐM Não giữa)
+        * PI (Pulsatility Index): Chỉ số xung
+        * RI (Resistivity Index): Chỉ số trở kháng
+        * S/D Ratio (Systolic/Diastolic Ratio): Tỷ lệ S/D (Tâm thu/Tâm trương)
+        * End Diastolic Flow (EDF): Dòng cuối tâm trương
+        * Present EDF: Có dòng cuối tâm trương
+        * Absent EDF (AEDF): Mất sóng cuối tâm trương
+        * Reversed EDF (REDF): Đảo ngược dòng cuối tâm trương
+        * PSV (Peak Systolic Velocity): Vận tốc đỉnh tâm thu
+        * CPR (Cerebroplacental Ratio = MCA PI / UA PI): Tỷ lệ Não/Rốn
+    * **Findings/Impressions/Recommendations / Kết quả/Kết luận/Đề nghị:**
+        * Consistent with / corresponds to: Phù hợp với / tương ứng với
+        * Suggestive of / Suspected: Gợi ý / Nghi ngờ
+        * Fetal Growth Restriction (FGR) / Intrauterine Growth Restriction (IUGR): Thai chậm tăng trưởng trong tử cung
+        * Small for Gestational Age (SGA): Thai nhỏ so với tuổi thai
+        * Large for Gestational Age (LGA): Thai lớn so với tuổi thai
+        * Macrosomia: Thai to
+        * Routine obstetric follow-up: Tái khám sản định kỳ
+        * Follow-up ultrasound / Repeat scan: Siêu âm kiểm tra lại / Siêu âm theo dõi
+        * Growth assessment: Đánh giá sự tăng trưởng
+        * Detailed fetal anomaly scan: Siêu âm khảo sát hình thái học chi tiết / Siêu âm dị tật thai nhi
+        * Fetal echocardiogram: Siêu âm tim thai
+        * Recommend / Consider: Đề nghị / Cân nhắc
+        * Biophysical Profile (BPP): Làm trắc đồ sinh vật lý
+        * Doppler assessment: Khảo sát Doppler
+        * Genetic counseling: Tư vấn di truyền
+        * Amniocentesis: Chọc ối
+        * Clinical correlation: Tương quan lâm sàng
+        * Inpatient monitoring: Theo dõi nội trú
+        * Limited study due to...: Khảo sát hạn chế do... (e.g., maternal habitus: thể trạng mẹ, fetal position: tư thế thai, decreased fluid: giảm ối)
+
+3.  **Accuracy:** Ensure the translation is medically precise and natural-sounding in Vietnamese. Avoid overly literal translations where a standard Vietnamese term exists.
+
+4.  **Placeholders:** If the English text contains placeholders like "[X]w[Y]d", "[value]", "[X]", "[Y]th", "[size]", "[location]", "[right/left]", "[unilateral/bilateral]", "[measurement]", "[grade]", "[type]", "[level]", "[number]", "[specify anomaly]", "[reason]", keep them or adapt them logically (e.g., "[X]t[Y]n", "[giá trị]", "[X]", "thứ [Y]", "[kích thước]", "[vị trí]", "[phải/trái]", "[một bên/hai bên]", "[số đo]", "[độ]", "[loại]", "[vị trí đốt sống]", "[số vòng]", "[bất thường cụ thể]", "[lý do]").
+
+5.  **Units:** Keep units like mm, cm, g, %, cm/s, MHz as they are. Use comma (,) as the decimal separator for numbers where appropriate in Vietnamese context (e.g., 12,5 mm instead of 12.5 mm), but be consistent. If unsure, keep the original period (.) separator.
+
+6.  **Structure:** The input text will contain findings, impression, and recommendation sections. Ensure the translated output maintains these distinct sections clearly, potentially using Markdown headings (`### Findings / Kết quả Siêu âm`, `### Impression / Kết luận`, `### Recommendation / Đề nghị`) if appropriate based on the input structure.
+
+**Translate ONLY the text provided between the start and end markers below.**
+
+--- START ENGLISH REPORT ---
+{report_content}
+--- END ENGLISH REPORT ---
+
+--- START VIETNAMESE TRANSLATION (Markdown) ---
