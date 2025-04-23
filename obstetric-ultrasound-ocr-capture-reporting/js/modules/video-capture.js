@@ -256,4 +256,3 @@ export function initVideoCapture(options) {
 
 // Log khi module được tải
 console.log("video-capture.js loaded.");
-//===========
