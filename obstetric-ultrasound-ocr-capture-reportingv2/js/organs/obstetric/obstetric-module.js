@@ -164,32 +164,85 @@ function calculateGA_EDD_FromLMP(lmpDateString) {
     } catch (e) { console.error("Error calculating GA/EDD from LMP:", e); gaLmpField.value = 'Error'; eddLmpField.value = ''; }
 }
 
+
+
+/** Calculates Estimated Fetal Weight (EFW). Requires specific formulas. */
+// Bên trong tệp: js/organs/obstetric/obstetric-module.js
+
 /** Calculates Estimated Fetal Weight (EFW). Requires specific formulas. */
 function calculateEFW(fetusNumber = 1) {
     const methodSelect = document.getElementById(`efw-method_${fetusNumber}`);
     const efwField = document.getElementById(`efw_${fetusNumber}`);
     if (!methodSelect || !efwField) return;
+
     const method = methodSelect.value;
-    const bpd = parseFloat(document.getElementById(`bpd_${fetusNumber}`)?.value); // mm
-    const hc = parseFloat(document.getElementById(`hc_${fetusNumber}`)?.value); // mm
-    const ac = parseFloat(document.getElementById(`ac_${fetusNumber}`)?.value); // mm
-    const fl = parseFloat(document.getElementById(`fl_${fetusNumber}`)?.value); // mm
-    let efw = null;
+    // Lấy giá trị gốc bằng mm từ input
+    const bpd_mm = parseFloat(document.getElementById(`bpd_${fetusNumber}`)?.value);
+    const hc_mm = parseFloat(document.getElementById(`hc_${fetusNumber}`)?.value);
+    const ac_mm = parseFloat(document.getElementById(`ac_${fetusNumber}`)?.value);
+    const fl_mm = parseFloat(document.getElementById(`fl_${fetusNumber}`)?.value);
+
+    let efw = null; // Đặt giá trị mặc định là null
+    let calculationPerformed = false; // Biến cờ để biết phép tính có được thực hiện không
+
     try {
-        if (method.startsWith('Hadlock') && !isNaN(bpd) && !isNaN(hc) && !isNaN(ac) && !isNaN(fl)) {
-            const hc_cm = hc / 10, ac_cm = ac / 10, fl_cm = fl / 10, bpd_cm = bpd / 10;
-             // Hadlock 1985 (J Ultrasound Med. 1985 Feb;4(2):87-96.) - common 4 param
-             const log10EFW = 1.3596 + (0.0064 * hc_cm) + (0.0424 * ac_cm) + (0.174 * fl_cm) + (0.00061 * bpd_cm * ac_cm) - (0.00386 * ac_cm * fl_cm);
-             efw = Math.pow(10, log10EFW);
-        } else if (method.includes('Shepard') && !isNaN(bpd) && !isNaN(ac)) {
-            const bpd_cm = bpd / 10, ac_cm = ac / 10;
-            // Shepard 1982 (Am J Obstet Gynecol. 1982 Jan 1;142(1):47-54)
-            const log10EFW = -1.7492 + (0.166 * bpd_cm) + (0.046 * ac_cm) - (0.002546 * ac_cm * bpd_cm);
-            efw = Math.pow(10, log10EFW);
-        } // Add other methods if needed
-        if (efw !== null && !isNaN(efw)) efwField.value = efw.toFixed(0); else efwField.value = '';
-    } catch (e) { console.error(`Error calculating EFW for fetus ${fetusNumber}:`, e); efwField.value = 'Error'; }
+        // --- Hadlock (BPD,HC,AC,FL) - Công thức 4 tham số chuẩn ---
+        if (method.startsWith('Hadlock') && !isNaN(bpd_mm) && !isNaN(hc_mm) && !isNaN(ac_mm) && !isNaN(fl_mm)) {
+            console.log("[EFW Calc] Using Hadlock (BPD,HC,AC,FL) formula.");
+            calculationPerformed = true;
+            const bpd_cm = bpd_mm / 10.0;
+            const hc_cm = hc_mm / 10.0;
+            const ac_cm = ac_mm / 10.0;
+            const fl_cm = fl_mm / 10.0;
+            const log10EFW = 1.3596 + (0.0064 * hc_cm) + (0.0424 * ac_cm) + (0.174 * fl_cm) + (0.00061 * bpd_cm * ac_cm) - (0.00386 * ac_cm * fl_cm);
+            efw = Math.pow(10, log10EFW); // Kết quả bằng GAM
+            console.log(`[EFW Calc] Hadlock4 Params (cm): BPD=${bpd_cm}, HC=${hc_cm}, AC=${ac_cm}, FL=${fl_cm}. Calculated EFW (g): ${efw}`);
+
+        // --- Shepard (BPD,AC) - Công thức chuẩn 1982 (ĐÃ SỬA LỖI KG -> G) ---
+        } else if (method.includes('Shepard') && !isNaN(bpd_mm) && !isNaN(ac_mm)) {
+            console.log("[EFW Calc] Using Standard Shepard (BPD,AC) formula (1982).");
+            calculationPerformed = true;
+            const bpd_cm = bpd_mm / 10.0;
+            const ac_cm = ac_mm / 10.0;
+
+            const log10EFW_kg = -1.7492 + (0.166 * bpd_cm) + (0.046 * ac_cm) - (0.002546 * bpd_cm * ac_cm);
+            // Công thức tính ra log10 của cân nặng theo KG
+            const efw_kg = Math.pow(10, log10EFW_kg);
+            // *** SỬA LỖI: Chuyển từ KG sang Gram ***
+            efw = efw_kg * 1000;
+            // *** KẾT THÚC SỬA LỖI ***
+            console.log(`[EFW Calc] Shepard Params (cm): BPD=${bpd_cm}, AC=${ac_cm}. Calculated log10(kg): ${log10EFW_kg.toFixed(4)}, EFW (kg): ${efw_kg.toFixed(3)}, EFW (g): ${efw}`);
+
+        // --- INTERGROWTH-21st (HC,AC,FL) - Công thức 3 tham số ---
+        } else if (method === 'INTERGROWTH-21st (HC,AC,FL)' && !isNaN(hc_mm) && !isNaN(ac_mm) && !isNaN(fl_mm)) {
+            console.log("[EFW Calc] Using INTERGROWTH-21st (HC,AC,FL) formula.");
+            calculationPerformed = true;
+            const hc_cm = hc_mm / 10.0;
+            const ac_cm = ac_mm / 10.0;
+            const fl_cm = fl_mm / 10.0;
+            const log10EFW = 1.326 + (0.0107 * hc_cm) + (0.0438 * ac_cm) + (0.158 * fl_cm) - (0.00326 * ac_cm * fl_cm);
+            efw = Math.pow(10, log10EFW); // Kết quả bằng GAM
+            console.log(`[EFW Calc] IG21 Params (cm): HC=${hc_cm}, AC=${ac_cm}, FL=${fl_cm}. Calculated EFW (g): ${efw}`);
+        }
+        // Có thể thêm các công thức khác nếu cần...
+
+        // --- Hiển thị kết quả ---
+        if (efw !== null && !isNaN(efw) && efw > 0) {
+            efwField.value = efw.toFixed(0); // Làm tròn thành gram
+        } else {
+            efwField.value = ''; // Xóa trống nếu tính toán thất bại hoặc không có công thức phù hợp
+            if (calculationPerformed) { // Chỉ cảnh báo nếu phép tính đã thực sự được thực hiện nhưng kết quả không hợp lệ
+                 console.warn(`[EFW Calc] Calculation resulted in invalid EFW (null, NaN, or <=0) for method ${method}. Inputs (mm): BPD=${bpd_mm}, HC=${hc_mm}, AC=${ac_mm}, FL=${fl_mm}`);
+            }
+        }
+    } catch (e) {
+        console.error(`Error calculating EFW for fetus ${fetusNumber} using method ${method}:`, e);
+        efwField.value = 'Lỗi'; // Hiển thị lỗi
+    }
 }
+
+// --- Phần còn lại của tệp obstetric-module.js giữ nguyên ---
+
 
 /** Calculates BPP score. */
 function calculateBPPScore() {
