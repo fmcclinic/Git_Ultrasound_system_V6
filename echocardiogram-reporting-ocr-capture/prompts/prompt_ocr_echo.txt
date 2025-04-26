@@ -1,0 +1,116 @@
+Analyze the provided echocardiogram ultrasound image. Your primary task is to identify and extract specific cardiac measurements that are clearly displayed as text overlays on the image.
+
+Use Optical Character Recognition (OCR) and your understanding of common echocardiography measurement labels to find and accurately read the numeric values associated with the following parameters:
+
+**Target Parameters (Extract NUMERIC values ONLY, without units):**
+
+* **2D Measurements:**
+    * `lvidD`: LVIDd (LV Internal Diameter, diastole)
+    * `lvidS`: LVIDs (LV Internal Diameter, systole)
+    * `ivsD`: IVSd (Interventricular Septum, diastole)
+    * `lvpwD`: LVPWd (LV Posterior Wall, diastole)
+    * `laDiamPS`: LA Diam (Left Atrial Diameter, Parasternal)
+    * `laVolIndex`: LAVi (Left Atrial Volume Index)
+    * `aoRootDiam`: Ao Root Diam (Aortic Root Diameter)
+    * `aoAnnulusDiam`: Ao Annulus Diam (Aortic Annulus Diameter)
+    * `ascAoDiam`: Asc Ao Diam (Ascending Aorta Diameter)
+    * `raArea`: RA Area (Right Atrial Area)
+    * `rvDiam`: RV Diam (RV Basal Diameter)
+    * `rvFac`: RV FAC (RV Fractional Area Change) - *Extract value shown as %*
+    * `tapse`: TAPSE (Tricuspid Annular Plane Systolic Excursion)
+    * `ivcDiam`: IVC Diam (Inferior Vena Cava Diameter)
+    * `ivcCollapse`: IVC Collapse - *Extract value shown as %*
+    * `paDiam`: PA Diam (Pulmonary Artery Diameter)
+    * `ef`: EF or EF (Teich) (Ejection Fraction) - *Extract value shown as %*
+
+* **M-Mode Measurements:**
+    * `epss`: EPSS (E-Point Septal Separation)
+
+* **Doppler Measurements - Mitral Inflow:**
+    * `mvPeakE`: Mitral Peak E Velocity
+    * `mvPeakA`: Mitral Peak A Velocity
+    * `decelTime`: DT (Deceleration Time)
+    * `ivrt`: IVRT (Isovolumic Relaxation Time)
+
+* **Doppler Measurements - TDI:**
+    * `tdiSeptalE`: Septal e'
+    * `tdiLateralE`: Lateral e'
+    * `tdiSeptalS`: Septal S'
+    * `tdiLateralS`: Lateral S'
+    * `tdiRvS`: RV S'
+
+* **Doppler Measurements - LVOT:**
+    * `lvotDiam`: LVOT Diam
+    * `lvotVTI`: LVOT VTI
+
+* **Doppler Measurements - Aortic Valve:**
+    * `avPeakVel`: AV Peak Vel / AV Vmax
+    * `avPeakGrad`: AV Peak Grad / AV PG
+    * `avMeanGrad`: AV Mean Grad / AV MG
+    * `avVTI`: AV VTI
+
+* **Doppler Measurements - Mitral Valve:**
+    * `mvPeakVel`: MV Peak Vel / MV Vmax
+    * `mvPeakGrad`: MV Peak Grad / MV PG
+    * `mvMeanGrad`: MV Mean Grad / MV MG
+    * `mvPHT`: MV PHT (Pressure Half-Time)
+
+* **Doppler Measurements - Tricuspid Valve:**
+    * `peakTRVel`: Peak TR Vel / TR Vmax
+    * `estRVSP`: Est. RVSP / PASP (Estimated Pulmonary Artery Systolic Pressure) - *Often calculated based on TR Vmax + RAP, extract the final estimated value if shown*
+
+* **Doppler Measurements - Pulmonic Valve:**
+    * `pvPeakVel`: PV Peak Vel / PV Vmax
+    * `pvPeakGrad`: PV Peak Grad / PV PG
+    * `padpFromPR`: PADP (Pulmonary Artery Diastolic Pressure from PR) - *Extract estimated value if shown*
+
+* **Doppler Measurements - Regurgitation Quantification (if present):**
+    * `mrPisaRadius`: MR PISA Radius
+    * `mrEROA`: MR EROA
+    * `mrRegVol`: MR Reg Vol
+    * `mrVenaContracta`: MR Vena Contracta
+    * `arPHT`: AR PHT
+    * `arVenaContracta`: AR Vena Contracta
+
+* **Other Potential Numeric Fields (if present):**
+    * `ptHeight`: Patient Height
+    * `ptWeight`: Patient Weight
+    * `heartRate`: Heart Rate / HR
+    * `gls`: GLS (Global Longitudinal Strain) - *Extract value shown as %*
+
+
+**Output Requirements:**
+
+1.  **Format:** Return the extracted data as a single, valid **JSON object**. Do not include any explanatory text before or after the JSON object itself.
+2.  **Keys:** Use the **exact lowercase keys** listed above (e.g., `lvidD`, `ef`, `mvPeakE`, `peakTRVel`) in the JSON object. These keys correspond to form field names/IDs. [cite: 13]
+3.  **Values:** The value for each key must be the **numeric measurement ONLY**, represented as a number (integer or float). **DO NOT include units** (like "mm", "cm", "m/s", "mmHg", "%", "bpm", "g"). If a value has a unit like '%', extract only the numeric part.
+4.  **Accuracy and Confidence:**
+    * Only extract values that are clearly readable and directly associated with one of the target parameter labels (or common abbreviations like LVEDD for LVIDd, RVSP for estRVSP, Ao Vmax for avPeakVel, etc.).
+    * **CRITICAL: If a parameter is not found on the image, or if its value cannot be read with high confidence, DO NOT include its key-value pair in the JSON output.**
+    * **ABSOLUTELY DO NOT GUESS, ESTIMATE, OR HALLUCINATE values.** Omission is required if uncertain.
+5.  **Focus:** Ignore non-measurement text (like patient name, date, qualitative descriptions), annotations, logos, ECG tracings, or other image elements unless they directly identify a target parameter label.
+
+**Example JSON Output Structure:**
+
+```json
+{
+  "lvidD": 48,
+  "lvidS": 30,
+  "ivsD": 9,
+  "lvpwD": 9,
+  "laVolIndex": 28,
+  "rvDiam": 35,
+  "tapse": 20,
+  "ef": 65,
+  "mvPeakE": 0.8,
+  "mvPeakA": 0.6,
+  "decelTime": 180,
+  "tdiSeptalE": 9,
+  "tdiLateralE": 12,
+  "lvotDiam": 2.0,
+  "lvotVTI": 20,
+  "avPeakVel": 1.2,
+  "avMeanGrad": 5,
+  "peakTRVel": 2.0,
+  "estRVSP": 21
+}

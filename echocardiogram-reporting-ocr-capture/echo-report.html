@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Echocardiogram Report / Báo cáo Siêu âm Tim</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="ocr-feature-disabled video-capture-disabled">
+    <div class="container">
+        <h1>Echocardiogram Reporting System / Hệ thống Báo cáo Siêu âm Tim</h1>
+
+        <div class="tab-container">
+            <div class="tab-nav">
+                <button class="tab-button active" data-tab="patient-info">Patient Info / Thông tin BN</button>
+                <button class="tab-button" data-tab="echo-assessment">Echo Assessment / Đánh giá Siêu âm Tim</button>
+                <button class="tab-button" data-tab="images">Images / Hình ảnh</button>
+                <button class="tab-button" data-tab="templates">Templates / Mẫu</button>
+                <button class="tab-button" data-tab="report">Report / Báo cáo</button>
+            </div>
+
+            <div class="tab-content active" id="patient-info">
+                 <h2>Patient Information / Thông tin Bệnh nhân</h2>
+                 <form id="patient-info-form">
+                    <div class="form-group">
+                        <label for="patient-name">Họ và Tên / Full Name:</label>
+                        <input type="text" id="patient-name" name="patientName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patient-id">Mã BN / Patient ID:</label>
+                        <input type="text" id="patient-id" name="patientId" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="patient-dob">Ngày sinh / Date of Birth:</label>
+                        <input type="date" id="patient-dob" name="patientDob">
+                    </div>
+                    <div class="form-group">
+                        <label for="requesting-physician">Bác sĩ chỉ định / Requesting Physician:</label>
+                        <input type="text" id="requesting-physician" name="requestingPhysician">
+                    </div>
+                    <div class="form-group">
+                        <label for="exam-date">Ngày siêu âm / Exam Date:</label>
+                        <input type="date" id="exam-date" name="examDate" value=""> </div>
+                    <div class="form-group">
+                        <label for="reason">Reason for Exam / Indications / Lý do khám / Chỉ định:</label>
+                        <input type="text" id="reason" name="reason" list="reason-suggestions-echo" placeholder="Enter reason or select from list... / Nhập lý do hoặc chọn từ danh sách...">
+                        <datalist id="reason-suggestions-echo">
+                            <option value="Chest pain / Đau ngực"></option>
+                            <option value="Shortness of breath / Dyspnea / Khó thở"></option>
+                            <option value="Murmur evaluation / Đánh giá tiếng thổi"></option>
+                            <option value="Syncope / Pre-syncope / Ngất / Tiền ngất"></option>
+                            <option value="Palpitations / Arrhythmia / Hồi hộp / Loạn nhịp"></option>
+                            <option value="Heart failure evaluation / Đánh giá suy tim"></option>
+                            <option value="Cardiomyopathy evaluation / Đánh giá bệnh cơ tim"></option>
+                            <option value="Valvular heart disease evaluation / Đánh giá bệnh van tim"></option>
+                            <option value="Endocarditis evaluation / Đánh giá viêm nội tâm mạc"></option>
+                            <option value="Pericardial disease evaluation / Đánh giá bệnh màng ngoài tim"></option>
+                            <option value="Systemic hypertension evaluation / Đánh giá tăng huyết áp"></option>
+                            <option value="Pulmonary hypertension evaluation / Đánh giá tăng áp phổi"></option>
+                            <option value="Congenital heart disease evaluation / Đánh giá bệnh tim bẩm sinh"></option>
+                            <option value="Stroke / TIA / Embolic source evaluation / Đột quỵ / TIA / Tìm nguồn thuyên tắc"></option>
+                            <option value="Pre-operative evaluation / Đánh giá trước phẫu thuật"></option>
+                            <option value="Chemotherapy cardiotoxicity monitoring / Theo dõi độc tính tim do hóa trị"></option>
+                            <option value="Follow-up study / Theo dõi"></option>
+                        </datalist>
+                    </div>
+                     <div class="form-group">
+                        <label for="reporting-doctor">Reporting Doctor / Bác sĩ siêu âm:</label>
+                        <input type="text" id="reporting-doctor" name="reportingDoctor" placeholder="Enter reporting doctor's name / Nhập tên BS đọc KQ">
+                    </div>
+                </form>
+            </div>
+
+            <div class="tab-content" id="echo-assessment">
+                <h2>Echo Assessment / Đánh giá Siêu âm Tim</h2>
+                <form id="echo-assessment-form">
+
+                    <details class="section">
+                        <summary class="section-toggle"><h3><i class="fas fa-info-circle"></i> Clinical Information / Thông tin lâm sàng</h3></summary>
+                        <div class="section-content organ-details-grid">
+                            <div class="form-group">
+                                <label for="ptHeight">Height / Chiều cao (m):</label>
+                                <input type="number" step="0.01" id="ptHeight" name="ptHeight" placeholder="e.g., 1.65">
+                            </div>
+                             <div class="form-group">
+                                <label for="ptWeight">Weight / Cân nặng (kg):</label>
+                                <input type="number" step="0.1" id="ptWeight" name="ptWeight" placeholder="e.g., 60.5">
+                            </div>
+                             <div class="form-group">
+                                <label for="bsa">BSA / Diện tích da (m²):</label>
+                                <input type="number" step="0.01" id="bsa" name="bsa" readonly placeholder="Calculated / Tính toán">
+                            </div>
+                             <div class="form-group">
+                                <label for="heartRate">Heart Rate / Nhịp tim (bpm):</label>
+                                <input type="number" step="1" id="heartRate" name="heartRate" placeholder="e.g., 75">
+                            </div>
+                            <div class="form-group">
+                                <label for="bloodPressure">Blood Pressure / Huyết áp (mmHg):</label>
+                                <input type="text" id="bloodPressure" name="bloodPressure" placeholder="e.g., 120/80">
+                            </div>
+                             <div class="form-group">
+                                <label for="studyQuality">Study Quality / Chất lượng khảo sát:</label>
+                                <select id="studyQuality" name="studyQuality">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="Good / Tốt">Good / Tốt</option>
+                                    <option value="Adequate / Đủ tốt">Adequate / Đủ tốt</option>
+                                    <option value="Suboptimal / Chưa tối ưu">Suboptimal / Chưa tối ưu</option>
+                                    <option value="Technically difficult / Khó khăn kỹ thuật">Technically difficult / Khó khăn kỹ thuật</option>
+                                </select>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="indications">Indications / Ghi chú chỉ định:</label>
+                                <textarea id="indications" name="indications" rows="2" placeholder="Additional details about indications... / Chi tiết thêm về chỉ định..."></textarea>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="section">
+                         <summary class="section-toggle"><h3><i class="fas fa-ruler-combined"></i> 2D Measurements / Các số đo 2D</h3></summary>
+                         <div class="section-content organ-details-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));"> {/* Wider columns */}
+                            <div class="form-group">
+                                <label for="lvidD">LVIDd (mm, N: 39-56) / ĐK cuối tâm trương TT:</label>
+                                <input type="number" step="0.1" id="lvidD" name="lvidD">
+                            </div>
+                            <div class="form-group">
+                                <label for="lvidS">LVIDs (mm, N: 22-38) / ĐK cuối tâm thu TT:</label>
+                                <input type="number" step="0.1" id="lvidS" name="lvidS">
+                            </div>
+                             <div class="form-group">
+                                <label for="ivsD">IVSd (mm, N: 6-10) / Bề dày VLT cuối tâm trương:</label>
+                                <input type="number" step="0.1" id="ivsD" name="ivsD">
+                            </div>
+                            <div class="form-group">
+                                <label for="lvpwD">LVPWd (mm, N: 6-10) / Bề dày thành sau TT cuối tâm trương:</label>
+                                <input type="number" step="0.1" id="lvpwD" name="lvpwD">
+                            </div>
+                             <div class="form-group">
+                                <label for="lvMass">LV Mass / Khối lượng cơ TT (g):</label>
+                                <input type="number" step="1" id="lvMass" name="lvMass" readonly placeholder="Calculated / Tính toán">
+                            </div>
+                             <div class="form-group">
+                                <label for="lvMassIndex">LV Mass Index / Chỉ số khối cơ TT (g/m²):</label>
+                                <input type="number" step="1" id="lvMassIndex" name="lvMassIndex" readonly placeholder="Calculated / Tính toán">
+                            </div>
+                             <div class="form-group">
+                                <label for="rwt">RWT / Độ dày thành tương đối:</label>
+                                <input type="number" step="0.01" id="rwt" name="rwt" readonly placeholder="Calculated / Tính toán">
+                            </div>
+                             <div class="form-group">
+                                <label for="laDiamPS">LA Diam (Parasternal) / ĐK Nhĩ trái (Cạnh ức) (mm):</label>
+                                <input type="number" step="0.1" id="laDiamPS" name="laDiamPS">
+                            </div>
+                             <div class="form-group">
+                                <label for="laVolIndex">LAVi (ml/m², N: &lt;34) / Chỉ số thể tích Nhĩ trái:</label>
+                                <input type="number" step="0.1" id="laVolIndex" name="laVolIndex">
+                            </div>
+                            <div class="form-group">
+                                <label for="aoRootDiam">Ao Root Diam / ĐK Gốc ĐMC (mm):</label>
+                                <input type="number" step="0.1" id="aoRootDiam" name="aoRootDiam">
+                            </div>
+                             <div class="form-group">
+                                <label for="aoAnnulusDiam">Ao Annulus Diam / ĐK Vòng van ĐMC (mm):</label>
+                                <input type="number" step="0.1" id="aoAnnulusDiam" name="aoAnnulusDiam">
+                            </div>
+                            <div class="form-group">
+                                <label for="ascAoDiam">Asc Ao Diam / ĐK ĐMC lên (mm):</label>
+                                <input type="number" step="0.1" id="ascAoDiam" name="ascAoDiam">
+                            </div>
+                             <div class="form-group">
+                                <label for="raArea">RA Area / Diện tích Nhĩ phải (cm²):</label>
+                                <input type="number" step="0.1" id="raArea" name="raArea">
+                            </div>
+                            <div class="form-group">
+                                <label for="rvDiam">RV Basal Diam / ĐK Đáy Thất phải (mm):</label>
+                                <input type="number" step="0.1" id="rvDiam" name="rvDiam">
+                            </div>
+                             <div class="form-group">
+                                <label for="rvFac">RV FAC (%, N: >35) / Phân suất thay đổi diện tích TP:</label>
+                                <input type="number" step="1" id="rvFac" name="rvFac">
+                            </div>
+                             <div class="form-group">
+                                <label for="tapse">TAPSE (mm, N: >17) / Biên độ di chuyển vòng van Ba lá:</label>
+                                <input type="number" step="0.1" id="tapse" name="tapse">
+                            </div>
+                            <div class="form-group">
+                                <label for="ivcDiam">IVC Diam / ĐK Tĩnh mạch chủ dưới (mm):</label>
+                                <input type="number" step="0.1" id="ivcDiam" name="ivcDiam">
+                            </div>
+                             <div class="form-group">
+                                <label for="ivcCollapse">IVC Collapse / Xẹp TMCD (%):</label>
+                                <input type="number" step="1" id="ivcCollapse" name="ivcCollapse" placeholder=">50% or <50%">
+                            </div>
+                             <div class="form-group">
+                                <label for="paDiam">PA Diam / ĐK ĐM Phổi (mm):</label>
+                                <input type="number" step="0.1" id="paDiam" name="paDiam">
+                            </div>
+                             <div class="form-group">
+                                <label for="ef">EF (Teich) / Phân suất tống máu (%) (Teichholz):</label>
+                                <input type="number" step="1" id="ef" name="ef" readonly placeholder="Calculated / Tính toán">
+                            </div>
+                         </div>
+                    </details>
+
+                     <details class="section">
+                        <summary class="section-toggle"><h3><i class="fas fa-chart-line"></i> M-Mode Measurements / Các số đo TM</h3></summary>
+                        <div class="section-content organ-details-grid">
+                             <div class="form-group">
+                                <label for="epss">EPSS (mm, N: &lt;7) / Khoảng cách E-Vách:</label>
+                                <input type="number" step="0.1" id="epss" name="epss">
+                            </div>
+                            </div>
+                    </details>
+
+                    <details class="section">
+                         <summary class="section-toggle"><h3><i class="fas fa-wave-square"></i> Doppler Measurements / Các số đo Doppler</h3></summary>
+                         <div class="section-content">
+
+                            <h4>Mitral Inflow / Dòng chảy qua van Hai lá:</h4>
+                            <div class="organ-details-grid">
+                                <div class="form-group">
+                                    <label for="mvPeakE">Peak E / Đỉnh sóng E (m/s):</label>
+                                    <input type="number" step="0.01" id="mvPeakE" name="mvPeakE">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mvPeakA">Peak A / Đỉnh sóng A (m/s):</label>
+                                    <input type="number" step="0.01" id="mvPeakA" name="mvPeakA">
+                                </div>
+                                <div class="form-group">
+                                    <label for="eaRatio">E/A Ratio / Tỷ lệ E/A:</label>
+                                    <input type="number" step="0.01" id="eaRatio" name="eaRatio" readonly placeholder="Calculated / Tính toán">
+                                </div>
+                                <div class="form-group">
+                                    <label for="decelTime">DT / Thời gian giảm tốc E (ms):</label>
+                                    <input type="number" step="1" id="decelTime" name="decelTime">
+                                </div>
+                                <div class="form-group">
+                                    <label for="ivrt">IVRT / Thời gian thư giãn đồng thể tích (ms):</label>
+                                    <input type="number" step="1" id="ivrt" name="ivrt">
+                                </div>
+                            </div>
+
+                            <h4>Tissue Doppler (TDI) / Doppler Mô cơ tim:</h4>
+                            <div class="organ-details-grid">
+                                <div class="form-group">
+                                    <label for="tdiSeptalE">Septal e' / Sóng e' tại vách (cm/s):</label>
+                                    <input type="number" step="0.1" id="tdiSeptalE" name="tdiSeptalE">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tdiLateralE">Lateral e' / Sóng e' tại thành bên (cm/s):</label>
+                                    <input type="number" step="0.1" id="tdiLateralE" name="tdiLateralE">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tdiAvgE">Average e' / Sóng e' trung bình (cm/s):</label>
+                                    <input type="number" step="0.1" id="tdiAvgE" name="tdiAvgE" readonly placeholder="Calculated / Tính toán">
+                                </div>
+                                <div class="form-group">
+                                    <label for="e_ePrimeAvg">E/e' ratio (average) / Tỷ lệ E/e' trung bình:</label>
+                                    <input type="number" step="0.1" id="e_ePrimeAvg" name="e_ePrimeAvg" readonly placeholder="Calculated / Tính toán">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tdiSeptalS">Septal S' / Sóng S' tại vách (cm/s):</label>
+                                    <input type="number" step="0.1" id="tdiSeptalS" name="tdiSeptalS">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tdiLateralS">Lateral S' / Sóng S' tại thành bên (cm/s):</label>
+                                    <input type="number" step="0.1" id="tdiLateralS" name="tdiLateralS">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tdiRvS">RV S' / Sóng S' tại vòng van Ba lá (cm/s):</label>
+                                    <input type="number" step="0.1" id="tdiRvS" name="tdiRvS">
+                                </div>
+                            </div>
+
+                            <h4>Pulmonary Vein Doppler / Doppler Tĩnh mạch phổi:</h4>
+                            <div class="organ-details-grid">
+                                <div class="form-group">
+                                    <label for="pvS">S wave / Sóng S (m/s):</label>
+                                    <input type="number" step="0.01" id="pvS" name="pvS">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pvD">D wave / Sóng D (m/s):</label>
+                                    <input type="number" step="0.01" id="pvD" name="pvD">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pvArMinusMvA">Ar-A duration difference / Chênh lệch thời gian Ar-A (ms):</label>
+                                    <input type="number" step="1" id="pvArMinusMvA" name="pvArMinusMvA">
+                                </div>
+                            </div>
+
+                             <h4>LVOT / Stroke Volume / Cardiac Output:</h4>
+                            <div class="organ-details-grid">
+                                <div class="form-group">
+                                    <label for="lvotDiam">LVOT Diam / ĐK đường ra thất trái (cm):</label>
+                                    <input type="number" step="0.01" id="lvotDiam" name="lvotDiam">
+                                </div>
+                                <div class="form-group">
+                                    <label for="lvotVTI">LVOT VTI / VTI đường ra thất trái (cm):</label>
+                                    <input type="number" step="0.1" id="lvotVTI" name="lvotVTI">
+                                </div>
+                                <div class="form-group">
+                                    <label for="sv">SV / Thể tích nhát bóp (ml):</label>
+                                    <input type="number" step="0.1" id="sv" name="sv" readonly placeholder="Calculated / Tính toán">
+                                </div>
+                                <div class="form-group">
+                                    <label for="co">CO / Cung lượng tim (L/min):</label>
+                                    <input type="number" step="0.1" id="co" name="co" readonly placeholder="Calculated / Tính toán">
+                                </div>
+                                <div class="form-group">
+                                    <label for="ci">CI / Chỉ số tim (L/min/m²):</label>
+                                    <input type="number" step="0.1" id="ci" name="ci" readonly placeholder="Calculated / Tính toán">
+                                </div>
+                            </div>
+
+                             <h4>Aortic Valve (AV) / Van ĐMC:</h4>
+                            <div class="organ-details-grid">
+                                <div class="form-group">
+                                    <label for="avPeakVel">Peak Vel / Vận tốc đỉnh (m/s):</label>
+                                    <input type="number" step="0.01" id="avPeakVel" name="avPeakVel">
+                                </div>
+                                 <div class="form-group">
+                                    <label for="avPeakGrad">Peak Grad / Chênh áp đỉnh (mmHg):</label>
+                                    <input type="number" step="0.1" id="avPeakGrad" name="avPeakGrad">
+                                </div>
+                                <div class="form-group">
+                                    <label for="avMeanGrad">Mean Grad / Chênh áp trung bình (mmHg):</label>
+                                    <input type="number" step="0.1" id="avMeanGrad" name="avMeanGrad">
+                                </div>
+                                <div class="form-group">
+                                    <label for="avVTI">AV VTI / VTI qua van ĐMC (cm):</label>
+                                    <input type="number" step="0.1" id="avVTI" name="avVTI">
+                                </div>
+                                <div class="form-group">
+                                    <label for="avaContinuity">AVA (Continuity) / Diện tích van ĐMC (Phương trình liên tục) (cm²):</label>
+                                    <input type="number" step="0.01" id="avaContinuity" name="avaContinuity" readonly placeholder="Calculated / Tính toán">
+                                </div>
+                                 <div class="form-group">
+                                    <label for="avDI">DI / Chỉ số Doppler (LVOT VTI / AV VTI):</label>
+                                    <input type="number" step="0.01" id="avDI" name="avDI" readonly placeholder="Calculated / Tính toán">
+                                </div>
+                            </div>
+
+                            <h4>Mitral Valve (MV) / Van Hai lá:</h4>
+                            <div class="organ-details-grid">
+                                <div class="form-group">
+                                    <label for="mvPeakVel">Peak Vel / Vận tốc đỉnh (m/s):</label>
+                                    <input type="number" step="0.01" id="mvPeakVel" name="mvPeakVel">
+                                </div>
+                                 <div class="form-group">
+                                    <label for="mvPeakGrad">Peak Grad / Chênh áp đỉnh (mmHg):</label>
+                                    <input type="number" step="0.1" id="mvPeakGrad" name="mvPeakGrad">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mvMeanGrad">Mean Grad / Chênh áp trung bình (mmHg):</label>
+                                    <input type="number" step="0.1" id="mvMeanGrad" name="mvMeanGrad">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mvPHT">MV PHT / Thời gian bán giảm áp lực van Hai lá (ms):</label>
+                                    <input type="number" step="1" id="mvPHT" name="mvPHT">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mvaPHT">MVA (PHT) / Diện tích van Hai lá (PHT) (cm²):</label>
+                                    <input type="number" step="0.01" id="mvaPHT" name="mvaPHT" readonly placeholder="Calculated / Tính toán">
+                                </div>
+                            </div>
+
+                            <h4>Tricuspid Valve (TV) / Van Ba lá:</h4>
+                            <div class="organ-details-grid">
+                                <div class="form-group">
+                                    <label for="peakTRVel">Peak TR Vel / Vận tốc đỉnh dòng hở Ba lá (m/s):</label>
+                                    <input type="number" step="0.01" id="peakTRVel" name="peakTRVel">
+                                </div>
+                                <div class="form-group">
+                                    <label for="estRVSP">Est. RVSP/PASP / Ước tính Áp lực ĐMP tâm thu (mmHg):</label>
+                                    <input type="number" step="1" id="estRVSP" name="estRVSP" readonly placeholder="Calculated / Tính toán">
+                                </div>
+                            </div>
+
+                            <h4>Pulmonic Valve (PV) / Van ĐM Phổi:</h4>
+                            <div class="organ-details-grid">
+                                <div class="form-group">
+                                    <label for="pvPeakVel">Peak Vel / Vận tốc đỉnh (m/s):</label>
+                                    <input type="number" step="0.01" id="pvPeakVel" name="pvPeakVel">
+                                </div>
+                                <div class="form-group">
+                                    <label for="pvPeakGrad">Peak Grad / Chênh áp đỉnh (mmHg):</label>
+                                    <input type="number" step="0.1" id="pvPeakGrad" name="pvPeakGrad">
+                                </div>
+                                 <div class="form-group">
+                                    <label for="padpFromPR">PADP from PR / Áp lực ĐMP tâm trương (từ hở Phổi) (mmHg):</label>
+                                    <input type="number" step="1" id="padpFromPR" name="padpFromPR">
+                                </div>
+                            </div>
+
+                            <h4>MR Severity Quant / Định lượng độ nặng hở Hai lá:</h4>
+                            <div class="organ-details-grid">
+                                <div class="form-group">
+                                    <label for="mrPisaRadius">PISA Radius / Bán kính PISA (cm):</label>
+                                    <input type="number" step="0.1" id="mrPisaRadius" name="mrPisaRadius">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mrEROA">EROA / Diện tích lỗ hở hiệu dụng (cm²):</label>
+                                    <input type="number" step="0.01" id="mrEROA" name="mrEROA">
+                                </div>
+                                 <div class="form-group">
+                                    <label for="mrRegVol">Regurgitant Volume / Thể tích dòng hở (ml):</label>
+                                    <input type="number" step="1" id="mrRegVol" name="mrRegVol">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mrVenaContracta">Vena Contracta / Độ rộng dòng hở (cm):</label>
+                                    <input type="number" step="0.1" id="mrVenaContracta" name="mrVenaContracta">
+                                </div>
+                            </div>
+
+                            <h4>AR Severity Quant / Định lượng độ nặng hở ĐMC:</h4>
+                            <div class="organ-details-grid">
+                                <div class="form-group">
+                                    <label for="arPHT">PHT / Thời gian bán giảm áp lực (ms):</label>
+                                    <input type="number" step="1" id="arPHT" name="arPHT">
+                                </div>
+                                <div class="form-group">
+                                    <label for="arVenaContracta">Vena Contracta / Độ rộng dòng hở (cm):</label>
+                                    <input type="number" step="0.1" id="arVenaContracta" name="arVenaContracta">
+                                </div>
+                            </div>
+
+                        </div>
+                    </details>
+
+                    <details class="section">
+                         <summary class="section-toggle"><h3><i class="fas fa-heartbeat"></i> Left Ventricle (LV) / Thất Trái</h3></summary>
+                         <div class="section-content organ-details-grid">
+                             <div class="form-group">
+                                <label for="lvSize">LV Size / Kích thước TT:</label>
+                                <select id="lvSize" name="lvSize">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="Normal / Bình thường">Normal / Bình thường</option>
+                                    <option value="Mildly dilated / Giãn nhẹ">Mildly dilated / Giãn nhẹ</option>
+                                    <option value="Moderately dilated / Giãn vừa">Moderately dilated / Giãn vừa</option>
+                                    <option value="Severely dilated / Giãn nặng">Severely dilated / Giãn nặng</option>
+                                </select>
+                            </div>
+                             <div class="form-group">
+                                <label for="lvWallThickness">LV Wall Thickness / Bề dày thành TT:</label>
+                                <select id="lvWallThickness" name="lvWallThickness">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="Normal / Bình thường">Normal / Bình thường</option>
+                                    <option value="Concentric hypertrophy / Phì đại đồng tâm">Concentric hypertrophy / Phì đại đồng tâm</option>
+                                    <option value="Eccentric hypertrophy / Phì đại lệch tâm">Eccentric hypertrophy / Phì đại lệch tâm</option>
+                                     <option value="Asymmetric septal hypertrophy / Phì đại vách liên thất không đối xứng">Asymmetric septal hypertrophy / Phì đại VLT không đối xứng</option> <option value="Mild hypertrophy / Phì đại nhẹ">Mild hypertrophy / Phì đại nhẹ</option>
+                                    <option value="Moderate hypertrophy / Phì đại vừa">Moderate hypertrophy / Phì đại vừa</option>
+                                    <option value="Severe hypertrophy / Phì đại nặng">Severe hypertrophy / Phì đại nặng</option>
+                                     <option value="Thin walls / Thành mỏng">Thin walls / Thành mỏng</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="lvSystolicFuncQual">LV Systolic Function (Qualitative) / Chức năng tâm thu TT (Định tính):</label>
+                                <select id="lvSystolicFuncQual" name="lvSystolicFuncQual">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="Normal / Bình thường">Normal / Bình thường</option>
+                                    <option value="Mildly reduced / Giảm nhẹ">Mildly reduced / Giảm nhẹ</option>
+                                    <option value="Moderately reduced / Giảm vừa">Moderately reduced / Giảm vừa</option>
+                                    <option value="Severely reduced / Giảm nặng">Severely reduced / Giảm nặng</option>
+                                    <option value="Hyperdynamic / Tăng động">Hyperdynamic / Tăng động</option>
+                                </select>
+                            </div>
+                             <div class="form-group">
+                                <label for="gls">GLS / Sức căng dọc toàn bộ (%, N: &lt; -18):</label>
+                                <input type="number" step="0.1" id="gls" name="gls">
+                            </div>
+                             <div class="form-group full-width">
+                                <label for="rwma">Regional Wall Motion Abnormalities (RWMA) / Rối loạn vận động vùng:</label>
+                                <textarea id="rwma" name="rwma" rows="3" placeholder="Describe wall motion (normokinetic, hypokinetic, akinetic, dyskinetic, aneurysmal) and segments involved... / Mô tả vận động thành (bình thường, giảm động, vô động, loạn động, phình) và các thành liên quan..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="No regional wall motion abnormalities identified. All segments are normokinetic. / Không ghi nhận rối loạn vận động vùng. Tất cả các thành vận động bình thường.">No RWMA / Không RLVĐV</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Global hypokinesis. / Giảm động toàn bộ.">Global Hypokinesis / Giảm động toàn bộ</button> <button type="button" class="suggestion-btn" data-insert="Hypokinesis of the [e.g., anterior, inferior, septal, lateral] wall(s). / Giảm động thành [ví dụ: trước, dưới, vách, bên].">Hypokinesis / Giảm động</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Akinesis of the [e.g., apical, mid-anterior] wall(s). / Vô động thành [ví dụ: mỏm, giữa thành trước].">Akinesis / Vô động</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Dyskinesis of the [e.g., apex]. / Loạn động thành [ví dụ: mỏm].">Dyskinesis / Loạn động</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Apical aneurysm noted. / Ghi nhận phình mỏm tim.">Aneurysm / Phình</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Paradoxical septal motion noted. / Ghi nhận VLT di động nghịch thường.">Paradoxical Septal Motion / VLT nghịch thường</button> <button type="button" class="suggestion-btn" data-insert="Findings consistent with prior infarction in the [e.g., LAD, RCA, LCx] territory. / Hình ảnh phù hợp với nhồi máu cũ vùng cấp máu của ĐM [ví dụ: Vành T(LAD), Vành P(RCA), Mũ(LCx)].">Prior Infarct / Nhồi máu cũ</button>
+                                </div>
+                            </div>
+                         </div>
+                    </details>
+
+                     <details class="section">
+                        <summary class="section-toggle"><h3><i class="fas fa-chart-area"></i> LV Diastolic Function / Chức năng tâm trương Thất Trái</h3></summary>
+                         <div class="section-content organ-details-grid">
+                            <div class="form-group">
+                                <label for="diastolicGrade">Grade / Phân độ:</label>
+                                <select id="diastolicGrade" name="diastolicGrade">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="Normal / Bình thường">Normal / Bình thường</option>
+                                    <option value="Grade I (Impaired Relaxation) / Độ I (RL Thư giãn)">Grade I (Impaired Relaxation) / Độ I (RL Thư giãn)</option>
+                                    <option value="Grade II (Pseudonormal) / Độ II (Giả bình thường)">Grade II (Pseudonormal) / Độ II (Giả bình thường)</option>
+                                    <option value="Grade III (Restrictive) / Độ III (Hạn chế)">Grade III (Restrictive) / Độ III (Hạn chế)</option>
+                                    <option value="Indeterminate / Không xác định">Indeterminate / Không xác định</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="laPressureEst">LA Pressure Estimation / Ước tính áp lực Nhĩ trái:</label>
+                                <select id="laPressureEst" name="laPressureEst">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="Normal / Bình thường">Normal / Bình thường</option>
+                                    <option value="Elevated / Tăng">Elevated / Tăng</option>
+                                    <option value="Cannot be determined / Không xác định được">Cannot be determined / Không xác định được</option>
+                                </select>
+                            </div>
+                         </div>
+                    </details>
+
+                    <details class="section">
+                         <summary class="section-toggle"><h3><i class="fas fa-heart"></i> Right Ventricle (RV) / Thất Phải</h3></summary>
+                         <div class="section-content organ-details-grid">
+                             <div class="form-group">
+                                <label for="rvSize">RV Size / Kích thước TP:</label>
+                                <select id="rvSize" name="rvSize">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="Normal / Bình thường">Normal / Bình thường</option>
+                                    <option value="Mildly dilated / Giãn nhẹ">Mildly dilated / Giãn nhẹ</option>
+                                    <option value="Moderately dilated / Giãn vừa">Moderately dilated / Giãn vừa</option>
+                                    <option value="Severely dilated / Giãn nặng">Severely dilated / Giãn nặng</option>
+                                </select>
+                            </div>
+                             <div class="form-group">
+                                <label for="rvWallThickness">RV Wall Thickness / Bề dày thành TP:</label>
+                                <select id="rvWallThickness" name="rvWallThickness">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="Normal / Bình thường">Normal / Bình thường</option>
+                                    <option value="Hypertrophied / Phì đại">Hypertrophied / Phì đại</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="rvSystolicFuncQual">RV Systolic Function (Qualitative) / Chức năng tâm thu TP (Định tính):</label>
+                                <select id="rvSystolicFuncQual" name="rvSystolicFuncQual">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="Normal / Bình thường">Normal / Bình thường</option>
+                                    <option value="Mildly reduced / Giảm nhẹ">Mildly reduced / Giảm nhẹ</option>
+                                    <option value="Moderately reduced / Giảm vừa">Moderately reduced / Giảm vừa</option>
+                                    <option value="Severely reduced / Giảm nặng">Severely reduced / Giảm nặng</option>
+                                </select>
+                            </div>
+                         </div>
+                    </details>
+
+                    <details class="section">
+                         <summary class="section-toggle"><h3><i class="far fa-heart"></i> Atria / Nhĩ Trái & Phải</h3></summary>
+                         <div class="section-content organ-details-grid">
+                            <div class="form-group">
+                                <label for="laSizeVolume">LA Size/Volume / Kích thước/Thể tích Nhĩ trái:</label>
+                                <select id="laSizeVolume" name="laSizeVolume">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="Normal / Bình thường">Normal / Bình thường</option>
+                                    <option value="Mildly dilated / Giãn nhẹ">Mildly dilated / Giãn nhẹ</option>
+                                    <option value="Moderately dilated / Giãn vừa">Moderately dilated / Giãn vừa</option>
+                                    <option value="Severely dilated / Giãn nặng">Severely dilated / Giãn nặng</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="raSizeVolume">RA Size/Volume / Kích thước/Thể tích Nhĩ phải:</label>
+                                <select id="raSizeVolume" name="raSizeVolume">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="Normal / Bình thường">Normal / Bình thường</option>
+                                    <option value="Mildly dilated / Giãn nhẹ">Mildly dilated / Giãn nhẹ</option>
+                                    <option value="Moderately dilated / Giãn vừa">Moderately dilated / Giãn vừa</option>
+                                    <option value="Severely dilated / Giãn nặng">Severely dilated / Giãn nặng</option>
+                                </select>
+                            </div>
+                         </div>
+                    </details>
+
+                    <details class="section">
+                        <summary class="section-toggle"><h3><i class="fas fa-door-closed"></i> Aortic Valve (AV) / Van ĐMC</h3></summary>
+                        <div class="section-content">
+                            <div class="form-group">
+                                <label for="avMorphology">Morphology / Hình thái van:</label>
+                                <textarea id="avMorphology" name="avMorphology" rows="2" placeholder="Describe leaflets, mobility, calcification... / Mô tả lá van, di động, vôi hóa..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="Tricuspid aortic valve with normal leaflet morphology and mobility. / Van ĐMC ba lá van, hình thái và di động lá van bình thường.">Normal Tricuspid / Ba lá van BT</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Bicuspid aortic valve, type [e.g., 1, RL fusion]. / Van ĐMC hai lá van, type [ví dụ: 1, dính mép Phải-Trái].">Bicuspid / Hai lá van</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Thickened and calcified aortic valve leaflets with reduced mobility. / Các lá van ĐMC dày, vôi hóa, di động giảm.">Calcified/Thickened / Dày/Vôi hóa</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Rheumatic changes noted (leaflet thickening, commissural fusion). / Ghi nhận thay đổi dạng thấp (dày lá van, dính mép van).">Rheumatic / Dạng thấp</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Vegetation seen on the [e.g., non-coronary] cusp, measuring [X] mm. / Thấy sùi trên lá van [ví dụ: không vành], kích thước [X] mm.">Vegetation / Sùi</button>
+                                </div>
+                            </div>
+                            <div class="organ-details-grid">
+                                <div class="form-group">
+                                    <label for="asGrade">Aortic Stenosis (AS) Grade / Độ hẹp van ĐMC:</label>
+                                    <select id="asGrade" name="asGrade">
+                                        <option value="">-- Select / Chọn --</option>
+                                        <option value="None / Không">None / Không</option>
+                                        <option value="Mild / Nhẹ">Mild / Nhẹ</option>
+                                        <option value="Moderate / Vừa">Moderate / Vừa</option>
+                                        <option value="Severe / Nặng">Severe / Nặng</option>
+                                         <option value="Critical / Rất nặng (Khít)">Critical / Rất nặng (Khít)</option>
+                                        <option value="Aortic Sclerosis / Xơ van ĐMC">Aortic Sclerosis / Xơ van ĐMC</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="arGrade">Aortic Regurgitation (AR) Grade / Độ hở van ĐMC:</label>
+                                     <select id="arGrade" name="arGrade">
+                                        <option value="">-- Select / Chọn --</option>
+                                        <option value="None/Trivial / Không/Không đáng kể">None/Trivial / Không/Không đáng kể</option>
+                                        <option value="Mild (1+) / Nhẹ (1+)">Mild (1+) / Nhẹ (1+)</option>
+                                        <option value="Moderate (2+) / Vừa (2+)">Moderate (2+) / Vừa (2+)</option>
+                                        <option value="Moderately Severe (3+) / Vừa-Nặng (3+)">Moderately Severe (3+) / Vừa-Nặng (3+)</option>
+                                        <option value="Severe (4+) / Nặng (4+)">Severe (4+) / Nặng (4+)</option>
+                                    </select>
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <label for="arDescription">AR Description / Mô tả hở van ĐMC:</label>
+                                <textarea id="arDescription" name="arDescription" rows="2" placeholder="Describe jet direction, cause (prolapse, dilatation)... / Mô tả hướng dòng hở, nguyên nhân (sa, giãn)..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="Central jet. / Dòng hở trung tâm.">Central Jet / Dòng trung tâm</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Eccentric jet directed towards [e.g., anterior mitral leaflet]. / Dòng hở lệch tâm hướng về [ví dụ: lá trước van hai lá].">Eccentric Jet / Dòng lệch tâm</button>
+                                     <button type="button" class="suggestion-btn" data-insert="AR likely due to aortic root dilatation. / Hở ĐMC nhiều khả năng do giãn gốc ĐMC.">Due to Root Dilatation / Do giãn gốc</button>
+                                    <button type="button" class="suggestion-btn" data-insert="AR likely due to leaflet thickening/restriction. / Hở ĐMC nhiều khả năng do dày/hạn chế lá van.">Due to Leaflet Thickening / Do dày lá van</button>
+                                    <button type="button" class="suggestion-btn" data-insert="AR likely due to leaflet prolapse. / Hở ĐMC nhiều khả năng do sa lá van.">Due to Prolapse / Do sa lá van</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="section">
+                         <summary class="section-toggle"><h3><i class="fas fa-door-open"></i> Mitral Valve (MV) / Van Hai lá</h3></summary>
+                         <div class="section-content">
+                            <div class="form-group">
+                                <label for="mvMorphology">Morphology / Hình thái van:</label>
+                                <textarea id="mvMorphology" name="mvMorphology" rows="2" placeholder="Describe leaflets, mobility, calcification, prolapse... / Mô tả lá van, di động, vôi hóa, sa van..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="Normal mitral valve leaflets and mobility. / Lá van hai lá và di động bình thường.">Normal / Bình thường</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Thickened and calcified mitral valve leaflets with reduced mobility (Rheumatic changes). / Lá van hai lá dày, vôi hóa, di động giảm (Thay đổi dạng thấp).">Rheumatic / Dạng thấp</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Mitral Annular Calcification (MAC) noted. / Ghi nhận vôi hóa vòng van hai lá (MAC).">MAC / Vôi hóa vòng van</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Mitral Valve Prolapse (MVP) of the [anterior/posterior/both] leaflet(s). / Sa van hai lá (MVP) lá [trước/sau/cả hai].">MVP / Sa van</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Flail [anterior/posterior] mitral leaflet. / Sa Lật lá van hai lá [trước/sau].">Flail Leaflet / Sa lật lá van</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Leaflet thickening and mild restriction. / Dày lá van và hạn chế nhẹ.">Thickened/Restricted / Dày/Hạn chế</button>
+                                      <button type="button" class="suggestion-btn" data-insert="Vegetation seen on the [anterior/posterior] leaflet. / Thấy sùi trên lá van [trước/sau].">Vegetation / Sùi</button>
+                                </div>
+                            </div>
+                             <div class="organ-details-grid">
+                                <div class="form-group">
+                                    <label for="msGrade">Mitral Stenosis (MS) Grade / Độ hẹp van Hai lá:</label>
+                                    <select id="msGrade" name="msGrade">
+                                        <option value="">-- Select / Chọn --</option>
+                                        <option value="None / Không">None / Không</option>
+                                        <option value="Mild / Nhẹ">Mild / Nhẹ</option>
+                                        <option value="Moderate / Vừa">Moderate / Vừa</option>
+                                        <option value="Severe / Nặng">Severe / Nặng</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mrGrade">Mitral Regurgitation (MR) Grade / Độ hở van Hai lá:</label>
+                                    <select id="mrGrade" name="mrGrade">
+                                         <option value="">-- Select / Chọn --</option>
+                                        <option value="None/Trivial / Không/Không đáng kể">None/Trivial / Không/Không đáng kể</option>
+                                        <option value="Mild (1+) / Nhẹ (1+)">Mild (1+) / Nhẹ (1+)</option>
+                                        <option value="Moderate (2+) / Vừa (2+)">Moderate (2+) / Vừa (2+)</option>
+                                        <option value="Moderately Severe (3+) / Vừa-Nặng (3+)">Moderately Severe (3+) / Vừa-Nặng (3+)</option>
+                                        <option value="Severe (4+) / Nặng (4+)">Severe (4+) / Nặng (4+)</option>
+                                    </select>
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <label for="mrDescription">MR Description / Mô tả hở van Hai lá:</label>
+                                <textarea id="mrDescription" name="mrDescription" rows="2" placeholder="Describe jet direction, cause (prolapse, rheumatic)... / Mô tả hướng dòng hở, nguyên nhân (sa, thấp)..."></textarea>
+                                <div class="suggestion-button-container">
+                                     <button type="button" class="suggestion-btn" data-insert="Central jet. / Dòng hở trung tâm.">Central Jet / Dòng trung tâm</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Eccentric jet directed posteriorly. / Dòng hở lệch tâm hướng ra sau.">Eccentric Jet (Posterior) / Dòng lệch tâm (Sau)</button>
+                                      <button type="button" class="suggestion-btn" data-insert="Eccentric jet directed anteriorly. / Dòng hở lệch tâm hướng ra trước.">Eccentric Jet (Anterior) / Dòng lệch tâm (Trước)</button>
+                                     <button type="button" class="suggestion-btn" data-insert="MR likely due to MVP. / Hở hai lá nhiều khả năng do sa van.">Due to MVP / Do sa van</button>
+                                     <button type="button" class="suggestion-btn" data-insert="MR likely due to rheumatic changes. / Hở hai lá nhiều khả năng do thay đổi dạng thấp.">Due to Rheumatic / Do thấp</button>
+                                     <button type="button" class="suggestion-btn" data-insert="MR likely functional due to LV dilatation. / Hở hai lá nhiều khả năng do cơ năng (giãn thất trái).">Functional MR / Hở cơ năng</button>
+                                     <button type="button" class="suggestion-btn" data-insert="MR associated with MAC. / Hở hai lá liên quan vôi hóa vòng van.">Associated with MAC / Liên quan MAC</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="section">
+                        <summary class="section-toggle"><h3><i class="fas fa-door-closed"></i> Tricuspid Valve (TV) / Van Ba lá</h3></summary>
+                        <div class="section-content">
+                            <div class="form-group">
+                                <label for="tvMorphology">Morphology / Hình thái van:</label>
+                                <textarea id="tvMorphology" name="tvMorphology" rows="2" placeholder="Describe leaflets, mobility, annulus... / Mô tả lá van, di động, vòng van..."></textarea>
+                                <div class="suggestion-button-container">
+                                     <button type="button" class="suggestion-btn" data-insert="Normal tricuspid valve leaflets and mobility. / Lá van ba lá và di động bình thường.">Normal / Bình thường</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Thickened leaflets. / Dày lá van.">Thickened / Dày</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Annular dilatation noted. / Ghi nhận giãn vòng van.">Annular Dilatation / Giãn vòng van</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Tricuspid valve prolapse. / Sa van ba lá.">Prolapse / Sa van</button>
+                                      <button type="button" class="suggestion-btn" data-insert="Vegetation seen on the [septal/anterior/posterior] leaflet. / Thấy sùi trên lá van [vách/trước/sau].">Vegetation / Sùi</button>
+                                </div>
+                            </div>
+                            <div class="organ-details-grid">
+                                <div class="form-group">
+                                    <label for="tsGrade">Tricuspid Stenosis (TS) Grade / Độ hẹp van Ba lá:</label>
+                                     <select id="tsGrade" name="tsGrade">
+                                        <option value="">-- Select / Chọn --</option>
+                                        <option value="None / Không">None / Không</option>
+                                        <option value="Mild / Nhẹ">Mild / Nhẹ</option>
+                                        <option value="Moderate / Vừa">Moderate / Vừa</option>
+                                        <option value="Severe / Nặng">Severe / Nặng</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="trGrade">Tricuspid Regurgitation (TR) Grade / Độ hở van Ba lá:</label>
+                                    <select id="trGrade" name="trGrade">
+                                         <option value="">-- Select / Chọn --</option>
+                                         <option value="None/Trivial / Không/Không đáng kể">None/Trivial / Không/Không đáng kể</option>
+                                         <option value="Mild (1+) / Nhẹ (1+)">Mild (1+) / Nhẹ (1+)</option>
+                                         <option value="Moderate (2+) / Vừa (2+)">Moderate (2+) / Vừa (2+)</option>
+                                         <option value="Severe (3-4+) / Nặng (3-4+)">Severe (3-4+) / Nặng (3-4+)</option>
+                                    </select>
+                                </div>
+                            </div>
+                         </div>
+                    </details>
+
+                    <details class="section">
+                        <summary class="section-toggle"><h3><i class="fas fa-door-closed"></i> Pulmonic Valve (PV) / Van ĐM Phổi</h3></summary>
+                        <div class="section-content">
+                             <div class="form-group">
+                                <label for="pvMorphology">Morphology / Hình thái van:</label>
+                                <textarea id="pvMorphology" name="pvMorphology" rows="2" placeholder="Describe leaflets, mobility... / Mô tả lá van, di động..."></textarea>
+                                <div class="suggestion-button-container">
+                                     <button type="button" class="suggestion-btn" data-insert="Normal pulmonic valve morphology and mobility. / Hình thái và di động van ĐMP bình thường.">Normal / Bình thường</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Thickened leaflets. / Dày lá van.">Thickened / Dày</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Doming of leaflets noted. / Ghi nhận lá van hình vòm.">Doming / Vòm</button>
+                                </div>
+                            </div>
+                             <div class="organ-details-grid">
+                                <div class="form-group">
+                                    <label for="psGrade">Pulmonic Stenosis (PS) Grade / Độ hẹp van ĐM Phổi:</label>
+                                    <select id="psGrade" name="psGrade">
+                                        <option value="">-- Select / Chọn --</option>
+                                        <option value="None / Không">None / Không</option>
+                                        <option value="Mild / Nhẹ">Mild / Nhẹ</option>
+                                        <option value="Moderate / Vừa">Moderate / Vừa</option>
+                                        <option value="Severe / Nặng">Severe / Nặng</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="prGrade">Pulmonic Regurgitation (PR) Grade / Độ hở van ĐM Phổi:</label>
+                                    <select id="prGrade" name="prGrade">
+                                        <option value="">-- Select / Chọn --</option>
+                                        <option value="None/Trivial / Không/Không đáng kể">None/Trivial / Không/Không đáng kể</option>
+                                        <option value="Mild (1+) / Nhẹ (1+)">Mild (1+) / Nhẹ (1+)</option>
+                                        <option value="Moderate (2+) / Vừa (2+)">Moderate (2+) / Vừa (2+)</option>
+                                        <option value="Severe (3-4+) / Nặng (3-4+)">Severe (3-4+) / Nặng (3-4+)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="section">
+                        <summary class="section-toggle"><h3><i class="fas fa-cogs"></i> Prosthetic Valves / Van nhân tạo</h3></summary>
+                         <div class="section-content">
+                             <div class="form-group">
+                                <label for="prostheticValveTypePos">Type/Position / Loại/Vị trí van:</label>
+                                <textarea id="prostheticValveTypePos" name="prostheticValveTypePos" rows="1" placeholder="e.g., Mechanical bileaflet in aortic position / Van cơ học 2 cánh ở vị trí ĐMC"></textarea>
+                            </div>
+                             <div class="form-group">
+                                <label for="prostheticValveAssess">Assessment / Đánh giá:</label>
+                                <textarea id="prostheticValveAssess" name="prostheticValveAssess" rows="3" placeholder="Describe seating, motion, gradients, regurgitation, dehiscence... / Mô tả vị trí, vận động, chênh áp, hở van, hở chân van..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="Prosthetic valve appears well-seated with normal occluder motion. / Van nhân tạo có vẻ đúng vị trí, vận động cánh van bình thường.">Well-seated, Normal Motion / Đúng vị trí, VĐ BT</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Mean gradient across the prosthetic valve is [X] mmHg. / Chênh áp trung bình qua van nhân tạo là [X] mmHg.">Mean Gradient / Chênh áp TB</button>
+                                    <button type="button" class="suggestion-btn" data-insert="[Trivial/Mild/Moderate/Severe] paravalvular regurgitation noted. / Ghi nhận hở cạnh van mức độ [Không đáng kể/Nhẹ/Vừa/Nặng].">Paravalvular Leak / Hở cạnh van</button>
+                                    <button type="button" class="suggestion-btn" data-insert="[Trivial/Mild/Moderate/Severe] transvalvular regurgitation noted. / Ghi nhận hở trong van mức độ [Không đáng kể/Nhẹ/Vừa/Nặng].">Transvalvular Regurgitation / Hở trong van</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Suspected prosthetic valve dysfunction. Recommend further evaluation (e.g., TEE). / Nghi ngờ rối loạn chức năng van nhân tạo. Đề nghị khảo sát thêm (ví dụ: Siêu âm tim qua thực quản).">Suspected Dysfunction / Nghi RLCN</button>
+                                     <button type="button" class="suggestion-btn" data-insert="No evidence of prosthetic valve dehiscence or obstruction. / Không có bằng chứng hở chân van hay tắc nghẽn van nhân tạo.">No Dehiscence/Obstruction / Không hở chân/tắc</button>
+                                </div>
+                            </div>
+                         </div>
+                    </details>
+
+                     <details class="section">
+                         <summary class="section-toggle"><h3><i class="far fa-square"></i> Pericardium / Màng ngoài tim</h3></summary>
+                         <div class="section-content organ-details-grid">
+                            <div class="form-group">
+                                <label for="pericardiumAppearance">Appearance / Hình thái:</label>
+                                <select id="pericardiumAppearance" name="pericardiumAppearance">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="Normal / Bình thường">Normal / Bình thường</option>
+                                    <option value="Thickened / Dày">Thickened / Dày</option>
+                                    <option value="Calcified / Vôi hóa">Calcified / Vôi hóa</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pericardialEffusion">Effusion / Tràn dịch:</label>
+                                <select id="pericardialEffusion" name="pericardialEffusion">
+                                    <option value="">-- Select / Chọn --</option>
+                                    <option value="None / Không">None / Không</option>
+                                    <option value="Trivial / Không đáng kể">Trivial / Không đáng kể</option>
+                                    <option value="Small / Ít">Small / Ít</option>
+                                    <option value="Moderate / Vừa">Moderate / Vừa</option>
+                                    <option value="Large / Nhiều">Large / Nhiều</option>
+                                </select>
+                            </div>
+                             <div class="form-group full-width">
+                                <label for="effusionDescription">Effusion Description / Mô tả tràn dịch:</label>
+                                <textarea id="effusionDescription" name="effusionDescription" rows="2" placeholder="Location (circumferential, loculated), size (max dimension), hemodynamic significance... / Vị trí (lan tỏa, khu trú), kích thước (lớn nhất), ảnh hưởng huyết động..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="Small circumferential pericardial effusion. / Tràn dịch màng ngoài tim lượng ít, lan tỏa.">Small Circumferential / Ít, lan tỏa</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Moderate pericardial effusion, largest dimension [X] mm posteriorly. / Tràn dịch màng ngoài tim lượng vừa, lớp dịch lớn nhất [X] mm ở phía sau.">Moderate Posterior / Vừa, phía sau</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Large circumferential pericardial effusion with evidence of tamponade physiology (RA/RV collapse). / Tràn dịch màng ngoài tim lượng nhiều, lan tỏa, có dấu hiệu chèn ép tim (đè sụp nhĩ phải/thất phải).">Large w/ Tamponade Signs / Nhiều, DH Chèn ép</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Loculated effusion noted near the right atrium. / Ghi nhận tràn dịch khu trú gần nhĩ phải.">Loculated Effusion / Dịch khu trú</button>
+                                    <button type="button" class="suggestion-btn" data-insert="No significant respiratory variation in inflow velocities. / Không có thay đổi đáng kể vận tốc dòng chảy qua van theo hô hấp.">No Respiratory Variation / Ko đổi theo hô hấp</button>
+                                    <button type="button" class="suggestion-btn" data-insert="No echocardiographic signs of tamponade. / Không có dấu hiệu chèn ép tim trên siêu âm.">No Tamponade Signs / Ko DH Chèn ép</button> </div>
+                            </div>
+                         </div>
+                    </details>
+
+                    <details class="section">
+                        <summary class="section-toggle"><h3><i class="fas fa-puzzle-piece"></i> Congenital Findings / Bất thường bẩm sinh</h3></summary>
+                         <div class="section-content">
+                             <div class="form-group">
+                                <label for="congenitalDesc">Description / Mô tả:</label>
+                                <textarea id="congenitalDesc" name="congenitalDesc" rows="3" placeholder="Describe ASD, VSD, PDA, Coarctation, etc... / Mô tả thông liên nhĩ, thông liên thất, còn ống động mạch, hẹp eo ĐMC, v.v..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="No gross congenital abnormalities identified. / Không thấy bất thường bẩm sinh đại thể.">No Gross Abnormality / Không thấy BTBS</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Atrial Septal Defect (ASD), secundum type, measuring approximately [X] mm with left-to-right shunt. / Thông liên nhĩ (ASD), lỗ thứ phát, kích thước khoảng [X] mm, shunt Trái-Phải.">ASD Secundum</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Small membranous Ventricular Septal Defect (VSD) with left-to-right shunt. / Thông liên thất (VSD) phần màng kích thước nhỏ, shunt Trái-Phải.">VSD Membranous</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Patent Ductus Arteriosus (PDA) identified with continuous left-to-right flow. / Ghi nhận Còn ống động mạch (PDA) với dòng chảy liên tục Trái-Phải.">PDA</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Coarctation of the aorta suspected based on suprasternal view findings. / Nghi ngờ hẹp eo động mạch chủ dựa trên hình ảnh mặt cắt trên ức.">Coarctation? / Hẹp eo ĐMC?</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Findings consistent with Tetralogy of Fallot. / Hình ảnh phù hợp Tứ chứng Fallot.">Tetralogy of Fallot / Tứ chứng Fallot</button>
+                                      <button type="button" class="suggestion-btn" data-insert="Patent Foramen Ovale (PFO) demonstrated with bubble study. / Thấy Lỗ bầu dục thông (PFO) qua nghiệm pháp cản âm.">PFO (Bubble Study)</button>
+                                      <button type="button" class="suggestion-btn" data-insert="Bicuspid aortic valve noted (see AV description). / Ghi nhận van ĐMC hai lá van (xem mô tả van ĐMC).">Bicuspid AV Ref</button> </div>
+                            </div>
+                         </div>
+                    </details>
+
+                    <details class="section">
+                        <summary class="section-toggle"><h3><i class="fas fa-project-diagram"></i> Aorta & Great Vessels / ĐMC & Mạch máu lớn</h3></summary>
+                        <div class="section-content">
+                            <div class="form-group">
+                                <label for="aorticArchDesc">Aortic Arch / Cung ĐMC:</label>
+                                <textarea id="aorticArchDesc" name="aorticArchDesc" rows="2" placeholder="Describe arch morphology, flow... / Mô tả hình thái cung ĐMC, dòng chảy..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="Normal appearance and flow pattern in the visualized portions of the aortic arch. / Hình ảnh và dòng chảy bình thường ở các phần khảo sát được của cung ĐMC.">Normal Arch / Cung ĐMC BT</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Atherosclerotic plaque noted in the aortic arch. / Ghi nhận mảng xơ vữa ở cung ĐMC.">Arch Plaque / MXV Cung ĐMC</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Aortic root is [mildly/moderately/severely] dilated ([X] mm). / Gốc ĐMC giãn [nhẹ/vừa/nặng] ([X] mm).">Root Dilatation</button> <button type="button" class="suggestion-btn" data-insert="Ascending aorta is [mildly/moderately/severely] dilated ([X] mm). / ĐMC lên giãn [nhẹ/vừa/nặng] ([X] mm).">Asc Ao Dilatation</button> </div>
+                            </div>
+                             <div class="form-group">
+                                <label for="paDesc">Pulmonary Artery / Động mạch phổi:</label>
+                                <textarea id="paDesc" name="paDesc" rows="2" placeholder="Describe PA size, flow... / Mô tả kích thước ĐMP, dòng chảy..."></textarea>
+                                 <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="Main pulmonary artery is normal in size. / Thân động mạch phổi kích thước bình thường.">Normal PA Size / KT ĐMP BT</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Pulmonary artery is dilated ([X] mm). / Động mạch phổi giãn ([X] mm).">Dilated PA / Giãn ĐMP</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Normal flow pattern in the pulmonary artery. / Dòng chảy trong động mạch phổi bình thường.">Normal PA Flow / Dòng ĐMP BT</button>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="section" open>
+                        <summary class="section-toggle"><h3><i class="fas fa-file-medical-alt"></i> Impression & Recommendation / Kết luận & Đề nghị</h3></summary>
+                         <div class="section-content">
+                            <div class="form-group">
+                                <label for="echo-impression">Impression / Kết luận:</label>
+                                <textarea id="echo-impression" name="impression" rows="6" placeholder="Summarize key findings and main conclusions... / Tóm tắt các kết quả chính và kết luận..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="Normal echocardiogram. Normal left ventricular size and systolic function. No significant valvular abnormalities. / Siêu âm tim bình thường. Kích thước và chức năng tâm thu thất trái bình thường. Không có bất thường van tim đáng kể.">Normal Echo / Siêu âm tim BT</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Mild left ventricular hypertrophy. Normal LV systolic function. / Phì đại thất trái nhẹ. Chức năng tâm thu thất trái bình thường.">Mild LVH / Phì đại TT nhẹ</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Moderate left ventricular dilatation with severely reduced systolic function (EF estimated [X]%). / Giãn thất trái mức độ vừa, chức năng tâm thu giảm nặng (EF ước tính [X]%).">Mod Dilated LV, Severe Dysfunction / Giãn TT vừa, RLCN nặng</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Severe aortic stenosis (AVA [X] cm², Mean Grad [Y] mmHg). / Hẹp van động mạch chủ nặng (AVA [X] cm², Chênh áp TB [Y] mmHg).">Severe AS / Hẹp ĐMC nặng</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Severe mitral regurgitation likely due to flail posterior leaflet. / Hở van hai lá nặng nhiều khả năng do sa lật lá sau.">Severe MR (Flail) / Hở HL nặng (Sa lật)</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Moderate pulmonary hypertension (estimated PASP [X] mmHg). Right ventricle is mildly dilated with normal systolic function. / Tăng áp động mạch phổi mức độ vừa (PASP ước tính [X] mmHg). Thất phải giãn nhẹ, chức năng tâm thu bình thường.">Mod Pulm HTN / Tăng áp phổi vừa</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Small pericardial effusion without hemodynamic compromise. / Tràn dịch màng ngoài tim lượng ít, không ảnh hưởng huyết động.">Small PE / TD MNT ít</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Diastolic dysfunction grade [I/II/III]. / Rối loạn chức năng tâm trương độ [I/II/III].">Diastolic Dysfunction / RLCN Tâm trương</button>
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <label for="echo-recommendation">Recommendation / Đề nghị:</label>
+                                <textarea id="echo-recommendation" name="recommendation" rows="3" placeholder="e.g., Clinical correlation, Follow-up study... / Ví dụ: Tương quan lâm sàng, Theo dõi..."></textarea>
+                                <div class="suggestion-button-container">
+                                    <button type="button" class="suggestion-btn" data-insert="Clinical correlation recommended. / Đề nghị tương quan lâm sàng.">Clinical Correlation / Tương quan LS</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Follow-up echocardiogram in [6/12] months. / Siêu âm tim kiểm tra sau [6/12] tháng.">Follow-up Echo / SA Tim kiểm tra</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Consider Transesophageal Echocardiogram (TEE) for further evaluation. / Cân nhắc siêu âm tim qua thực quản (TEE) để đánh giá thêm.">Consider TEE / Cân nhắc TEE</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Consider Cardiac MRI for further evaluation. / Cân nhắc MRI tim để đánh giá thêm.">Consider Cardiac MRI / Cân nhắc MRI Tim</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Cardiology consultation recommended. / Đề nghị hội chẩn Tim mạch.">Cardiology Consult / HC Tim mạch</button>
+                                    <button type="button" class="suggestion-btn" data-insert="Cardiac surgery consultation recommended. / Đề nghị hội chẩn Ngoại Tim mạch.">Cardiac Surgery Consult / HC Ngoại Tim mạch</button>
+                                     <button type="button" class="suggestion-btn" data-insert="Optimize medical therapy. / Tối ưu hóa điều trị nội khoa.">Optimize Medical Tx / Tối ưu ĐT Nội</button>
+                                </div>
+                            </div>
+                         </div>
+                    </details>
+
+                </form>
+            </div>
+
+            <div class="tab-content" id="images">
+                 <h2>Ultrasound Images / Hình ảnh Siêu âm</h2>
+
+                 <div id="video-capture-area">
+                    <h4><i class="fas fa-video"></i> Live Capture / Chụp ảnh Trực tiếp</h4>
+                    <div id="video-capture-controls">
+                        <div class="form-group">
+                            <label for="video-source-select">Nguồn Video:</label>
+                            <select id="video-source-select">
+                                <option value="">-- Vui lòng chọn --</option>
+                                </select>
+                            <button type="button" id="start-preview-btn" class="small-btn"><i class="fas fa-play"></i> Bắt đầu / Chọn</button>
+                        </div>
+                    </div>
+                    <video id="live-video-feed" playsinline muted style="display: none; max-width: 100%; height: auto; border: 1px solid #ccc;"></video>
+                    <button type="button" id="capture-frame-btn" disabled style="margin-top: 10px;"><i class="fas fa-camera"></i> Chụp Khung hình Hiện tại</button>
+                    <canvas id="capture-canvas" style="display:none;"></canvas>
+                 </div>
+                 <hr>
+                 <div class="form-group">
+                    <label for="image-upload">Upload Images / Tải ảnh lên (từ file):</label>
+                    <input type="file" id="image-upload" multiple accept="image/*" style="display: block; margin-top: 5px;">
+                </div>
+
+                <h4><i class="fas fa-images"></i> Uploaded / Captured Images / Ảnh đã Tải lên / Chụp</h4>
+                <div id="image-preview-container" style="margin-top: 15px;">
+                    </div>
+            </div>
+
+            <div class="tab-content" id="templates">
+                 <h2>Template Management / Quản lý Mẫu</h2>
+                <div class="form-group">
+                    <label for="template-name">Template Name / Tên Mẫu:</label>
+                    <input type="text" id="template-name" placeholder="Enter name to save / Nhập tên để lưu">
+                    <button type="button" id="save-template-btn"><i class="fas fa-save"></i> Save Current as Template / Lưu thành Mẫu</button>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="load-template-select">Select Template to Load / Chọn Mẫu để tải:</label>
+                    <select id="load-template-select">
+                        <option value="">-- Select Template / Chọn Mẫu --</option>
+                        <optgroup label="Presets / Mẫu có sẵn" id="preset-templates-group"></optgroup>
+                        <optgroup label="My Templates / Mẫu của tôi" id="user-templates-group"></optgroup>
+                    </select>
+                    <button type="button" id="load-template-btn"><i class="fas fa-download"></i> Load Template / Tải Mẫu</button>
+                    <button type="button" id="delete-template-btn" class="danger-btn"><i class="fas fa-trash-alt"></i> Delete Selected Template / Xóa Mẫu</button>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="import-template-file">Import Template (JSON) / Nhập Mẫu (JSON):</label>
+                    <input type="file" id="import-template-file" accept=".json" style="display: none;"> <button type="button" id="import-template-btn"><i class="fas fa-file-import"></i> Choose File & Import / Chọn file & Nhập</button>
+                </div>
+                <div class="form-group">
+                    <label>Export Current State / Xuất trạng thái hiện tại:</label>
+                    <button type="button" id="export-template-btn"><i class="fas fa-file-export"></i> Export Current State (JSON) / Xuất (JSON)</button>
+                </div>
+            </div>
+
+            <div class="tab-content" id="report">
+                 <h2>Report Preview & Actions / Xem trước & Thao tác Báo cáo</h2>
+
+                <div id="report-preview" class="report-output-area">
+                    <p class="placeholder-text"><i>Report preview (EN) will appear here after generation. / Bản xem trước (EN) sẽ hiện ở đây sau khi tạo.</i></p>
+                </div>
+
+                <div class="report-section-container" id="translation-section" style="margin-top: 20px; display: none;">
+                    <div class="report-header">
+                        <h3><i class="fas fa-language"></i> Vietnamese Translation / Bản dịch Tiếng Việt (VI)</h3>
+                        <button type="button" id="edit-translation-btn" class="edit-toggle-btn" style="display: none;"><i class="fas fa-edit"></i> Sửa bản dịch</button>
+                    </div>
+                    <div id="translation-content" class="report-output-area" style="border-top: 1px solid #ddd; border-radius: 0 0 5px 5px; min-height: 100px;">
+                        <p class="placeholder-text"><i>Translation (VI) will appear here. / Bản dịch (VI) sẽ hiện ở đây.</i></p>
+                    </div>
+                    <textarea id="translation-edit-area" class="report-textarea" rows="15" style="display: none; border-radius: 0 0 5px 5px; border-top: 1px solid #ddd; margin-top: -1px;" placeholder="Edit the Markdown translation here... / Chỉnh sửa bản dịch dạng Markdown tại đây..."></textarea>
+                </div>
+
+                 <div id="translation-loading" style="text-align: center; margin-top: 15px; display: none;">
+                    <span class="loading-spinner"></span> Translating report... / Đang dịch báo cáo...
+                </div>
+
+                <div class="report-actions">
+                    <button type="button" id="generate-report-btn"><i class="fas fa-cogs"></i> Generate Report / Tạo Báo cáo</button>
+                    <button type="button" id="translate-report-btn" style="display: none;" class="action-btn-translate"><i class="fas fa-language"></i> Dịch (VI)</button>
+                    <button type="button" id="print-report-btn" style="display: none;"><i class="fas fa-print"></i> Print / In (EN)</button>
+                    <button type="button" id="print-translation-btn" style="display: none;" class="action-btn-print-vi"><i class="fas fa-print"></i> Print / In (VI)</button>
+                    <button type="button" id="export-report-html-btn" style="display: none;"><i class="fas fa-file-export"></i> Export / Xuất (HTML)</button>
+                </div>
+            </div>
+
+        </div> <div id="notifications"></div>
+
+    </div>
+    <script type="module" src="js/main.js"></script>
+
+</body>
+</html>
